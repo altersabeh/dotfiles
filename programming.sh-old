@@ -1,0 +1,149 @@
+#!/usr/bin/env sh
+
+# DENO JS
+export DENO_INSTALL="/home/josh/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+# FACTOR
+export PATH="$HOME/.factor:$PATH"
+
+# PROCESSING
+export PATH="$HOME/.processing:$PATH"
+export PROCESSING_JAVA="$HOME/.processing/processing-java"
+
+# SCRIPTCS
+source "$HOME/.svm_profile"
+
+# CRYSTAL
+export CRENV_ROOT="$HOME/.crenv"
+export PATH="$HOME/.crenv/bin:$PATH"
+eval "$(crenv init -)"
+
+# BALLERINA
+export PATH="$HOME/.ballerina/bin:$PATH"
+
+# PHARO
+export PATH="$PATH:$HOME/.pharo/bin"
+
+# GNAT
+export PATH="$PATH:$HOME/.alire/bin"
+
+# NEOVIM
+export PATH="$HOME/.bob/neovim/bin:$PATH:$HOME/.bob/bin"
+
+# SDKMAN {JAVA, KOTLIN, GROOVY, LEIN, ETC.}
+export GRAALVM_HOME=/home/josh/.sdkman/candidates/java/enterprise-grl
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# CLEAN
+export CLEAN_HOME="$HOME/.clean"
+export PATH="$HOME/.clean/bin:$HOME/.nitrile/bin:$PATH"
+
+# Zeek
+export PATH="/opt/zeek/bin:$PATH"
+
+# Elixir
+# [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex"
+# export PATH="$HOME/.mix/escripts:$PATH"
+
+# Erlang
+[[ -s "$HOME/.evm/scripts/evm" ]] && source "$HOME/.evm/scripts/evm"
+export PATH="$PATH:$HOME/.evm/erlang_rebar/bin"
+
+# Raku
+eval "$($HOME/.rakubrew/bin/rakubrew init Bash)"
+
+# Ruby
+export RBENV_ROOT="$HOME/.rbenv"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init - --no-rehash)"
+
+# Python
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - --no-rehash)"
+
+# SWIFT
+export SWIFTENV_ROOT="$HOME/.swiftenv"
+export PATH="$SWIFTENV_ROOT/bin:$PATH"
+eval "$(swiftenv init - --no-rehash)"
+
+# RUST
+export RUSTUP_HOME="$HOME/.rust/rustup"
+export CARGO_HOME="$HOME/.rust/cargo"
+source "$HOME/.rust/cargo/env"
+
+# PHP
+export COMPOSER_ALLOW_SUPERUSER=1
+export PHPENV_ROOT="$HOME/.phpenv"
+export PATH="${PHPENV_ROOT}/bin:${PATH}"
+eval "$(phpenv init - --no-rehash)"
+export PHP_DTRACE=yes
+
+# NODE
+export NODENV_ROOT="$HOME/.nodenv"
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init - --no-rehash)"
+
+# GO
+export GOENV_ROOT="$HOME/.goenv"
+export GOENV_GOPATH_PREFIX="$HOME/.go"
+export PATH="$GOENV_ROOT/bin:$PATH"
+eval "$(goenv init - --no-rehash)"
+export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
+
+# R
+export RENV_ROOT="$HOME/.renv"
+export PATH="$RENV_ROOT/bin:$PATH"
+eval "$(renv init - --no-rehash)"
+
+# SCALA VERSION MANAGER
+export SCALAENV_ROOT="$HOME/.scalaenv"
+export PATH="$HOME/.scalaenv/bin:$PATH"
+eval "$(scalaenv init - --no-rehash)"
+
+# CLOJURE
+export PATH="$HOME/.lein/bin:$PATH"
+export PATH="$HOME/.clojure/bin:$PATH"
+
+# RED
+export PATH="$HOME/.red/bin:$PATH"
+
+# HASKELL
+export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
+
+# JULIA
+case ":$PATH:" in *:$HOME/.julia/juliaup/bin:*);; *)
+    export PATH=$HOME/.julia/juliaup/bin${PATH:+:${PATH}};;
+esac
+
+# NIM
+export PATH="$HOME/.nimble/bin:$PATH"
+
+# LUA
+export PATH="$HOME/.luaenv/bin:$PATH"
+eval "$(luaenv init - --no-rehash)"
+
+# PERL
+export PLENV_ROOT="$HOME/.plenv"
+export PATH="$PLENV_ROOT/bin:$PATH"
+eval "$(plenv init - --no-rehash)"
+export PERL_CPANM_OPT="--prompt --notest"
+
+# Pony
+export PATH="$HOME/.ponyup/bin:$PATH"
+
+# DART
+export FVM_HOME=~/.fvm
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+if [[ -f ~/.dvm/scripts/dvm ]]; then
+  . ~/.dvm/scripts/dvm
+fi
+export PATH="$FVM_HOME/default/bin:$PATH"
+
+# V
+export PATH="$HOME/.v:$PATH"
+
+# opam configuration
+test -r /home/josh/.opam/opam-init/init.sh && . /home/josh/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
