@@ -23,20 +23,25 @@ plxenv() {
         shift
         command plenv migrate-modules "$@"
     elif [ "$1" = "install" ]; then
-	shift
-	command plenv install "$@" --jobs 4 "${PERL_BUILD_CONFIGURE_OPTS[@]}"
+	    shift
+	    command plenv install "$@" --jobs 4 "${PERL_BUILD_CONFIGURE_OPTS[@]}"
     elif [ "$1" = "set" ]; then
         export PL_PATH=$(plenv root)/perls
         if [[ -n "$2" ]]; then
             plxenv unset
-            export PATH="$PL_PATH/$2/bin:$PATH"
+            [ -d $PL_PATH/current ] && rm $PL_PATH/current
+            ln -s $PL_PATH/$2 $PL_PATH/current
+            export PATH="$PL_PATH/current/bin:$PATH"
         else
             plxenv unset
-            export PATH="$PL_PATH/$(plenv global)/bin:$PATH"
+            [ -d $PL_PATH/current ] && rm $PL_PATH/current
+            ln -s $PL_PATH/$(plenv global) $PL_PATH/current
+            export PATH="$PL_PATH/current/bin:$PATH"
         fi
         unset PL_PATH
     elif [ "$1" = unset ]; then
         export RM_PATH=$(plenv root)/perls
+        [ -d $RM_PATH/current ] && rm $RM_PATH/current
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -66,14 +71,19 @@ luaxenv() {
         export LUA_PATH=$(luaenv root)/luas
         if [[ -n "$2" ]]; then
             luaxenv unset
-            export PATH="$LUA_PATH/$2/bin:$PATH"
+            [ -d $LUA_PATH/current ] && rm $LUA_PATH/current
+            ln -s $LUA_PATH/$2 $LUA_PATH/current
+            export PATH="$LUA_PATH/current/bin:$PATH"
         else
             luaxenv unset
-            export PATH="$LUA_PATH/$(luaenv global)/bin:$PATH"
+            [ -d $LUA_PATH/current ] && rm $LUA_PATH/current
+            ln -s $LUA_PATH/$(luaenv global) $LUA_PATH/current
+            export PATH="$LUA_PATH/current/bin:$PATH"
         fi
         unset LUA_PATH
     elif [ "$1" = unset ]; then
         export RM_PATH=$(luaenv root)/luas
+        [ -d $RM_PATH/current ] && rm $RM_PATH/current
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -105,14 +115,19 @@ rxenv() {
         export R_PATH=$(renv root)/R
         if [[ -n "$2" ]]; then
             rxenv unset
-            export PATH="$R_PATH/$2/bin:$PATH"
+            [ -d $R_PATH/current ] && rm $R_PATH/current
+            ln -s $R_PATH/$2 $R_PATH/current
+            export PATH="$R_PATH/current/bin:$PATH"
         else
             rxenv unset
-            export PATH="$R_PATH/$(renv global)/bin:$PATH"
+            [ -d $R_PATH/current ] && rm $R_PATH/current
+            ln -s $R_PATH/$(renv global) $R_PATH/current
+            export PATH="$R_PATH/current/bin:$PATH"
         fi
         unset R_PATH
     elif [ "$1" = unset ]; then
         export RM_PATH=$(renv root)/R
+        [ -d $RM_PATH/current ] && rm $RM_PATH/current
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -137,14 +152,19 @@ pyxenv() {
         PY_PATH="$(pyenv root)/pythons"
         if [[ -n "$2" ]]; then
             pyxenv unset
-            export PATH="$PY_PATH/$2/bin:$PATH"
+            [ -d $PY_PATH/current ] && rm $PY_PATH/current
+            ln -s $PY_PATH/$2 $PY_PATH/current
+            export PATH="$PY_PATH/current/bin:$PATH"
         else
             pyxenv unset
-            export PATH="$PY_PATH/$(pyenv global)/bin:$PATH"
+            [ -d $PY_PATH/current ] && rm $PY_PATH/current
+            ln -s $PY_PATH/$(pyenv global) $PY_PATH/current
+            export PATH="$PY_PATH/current/bin:$PATH"
         fi
         unset PY_PATH
     elif [ "$1" = unset ]; then
         RM_PATH=$(pyenv root)/pythons
+        [ -d $RM_PATH/current ] && rm $RM_PATH/current
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -169,13 +189,18 @@ rbxenv() {
         export RB_PATH=$(rbenv root)/rubies
         if [[ -n "$2" ]]; then
             rbxenv unset
-            export PATH="$RB_PATH/$2/bin:$PATH"
+            [ -d $RB_PATH/current ] && rm $RB_PATH/current
+            ln -s $RB_PATH/$2 $RB_PATH/current
+            export PATH="$RB_PATH/current/bin:$PATH"
         else
             rbxenv unset
-            export PATH="$RB_PATH/$(rbenv global)/bin:$PATH"
+            [ -d $RB_PATH/current ] && rm $RB_PATH/current
+            ln -s $RB_PATH/$(rbenv global) $RB_PATH/current
+            export PATH="$RB_PATH/current/bin:$PATH"
         fi
     elif [ "$1" = unset ]; then
         export RM_PATH=$(rbenv root)/rubies
+        [ -d $RM_PATH/current ] && rm $RM_PATH/current
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -202,16 +227,21 @@ phpxenv() {
             phpxenv unset
             # export COMPOSER_HOME="$PHP_PATH/$2/composer"
             # export PATH="$PHP_PATH/$2/bin:$COMPOSER_HOME:$COMPOSER_HOME/vendor/bin:$PATH"
-            export PATH="$PHP_PATH/$2/bin:$PATH"
+            [ -d $PHP_PATH/current ] && rm $PHP_PATH/current
+            ln -s $PHP_PATH/$2 $PHP_PATH/current
+            export PATH="$PHP_PATH/current/bin:$PATH"
         else
             phpxenv unset
             # export COMPOSER_HOME="$PHP_PATH/$(phpenv global)/composer"
             # export PATH="$PHP_PATH/$(phpenv global)/bin:$COMPOSER_HOME:$COMPOSER_HOME/vendor/bin:$PATH"
-            export PATH="$PHP_PATH/$(phpenv global)/bin:$PATH"
+            [ -d $PHP_PATH/current ] && rm $PHP_PATH/current
+            ln -s $PHP_PATH/$(phpenv global) $PHP_PATH/current
+            export PATH="$PHP_PATH/current/bin:$PATH"
         fi
         unset PHP_PATH
     elif [ "$1" = unset ]; then
         export RM_PATH=$(phpenv root)/php
+        [ -d $RM_PATH/current ] && rm $RM_PATH/current
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         # unset COMPOSER_HOME
         unset RM_PATH
@@ -234,17 +264,22 @@ phpxenv() {
 
 nodxenv() {
     if [ "$1" = "set" ]; then
-        export ND_PATH=$(nodenv root)/nodes
+        export NOD_PATH=$(nodenv root)/nodes
         if [[ -n "$2" ]]; then
             nodxenv unset
-            export PATH="$ND_PATH/$2/bin:$PATH"
+            [ -d $NOD_PATH/current ] && rm $NOD_PATH/current
+            ln -s $NOD_PATH/$2 $NOD_PATH/current
+            export PATH="$NOD_PATH/current/bin:$PATH"
         else
             nodxenv unset
-            export PATH="$ND_PATH/$(nodenv global)/bin:$PATH"
+            [ -d $NOD_PATH/current ] && rm $NOD_PATH/current
+            ln -s $NOD_PATH/$(nodenv global) $NOD_PATH/current
+            export PATH="$NOD_PATH/current/bin:$PATH"
         fi
-        unset ND_PATH
+        unset NOD_PATH
     elif [ "$1" = unset ]; then
         export RM_PATH=$(nodenv root)/nodes
+        [ -d $RM_PATH/current ] && rm $RM_PATH/current
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -269,14 +304,19 @@ swiftxenv() {
         export SW_PATH=$(swiftxenv root)/swifts
         if [[ -n "$2" ]]; then
             swiftxenv unset
-            export PATH="$SW_PATH/$2/bin:$PATH"
+            [ -d $SW_PATH/current ] && rm $SW_PATH/current
+            ln -s $SW_PATH/$2 $SW_PATH/current
+            export PATH="$SW_PATH/current/bin:$PATH"
         else
             swiftxenv unset
-            export PATH="$SW_PATH/$(swiftenv global)/usr/bin:$PATH"
+            [ -d $SW_PATH/current ] && rm $SW_PATH/current
+            ln -s $SW_PATH/$(swiftenv global) $SW_PATH/current
+            export PATH="$SW_PATH/current/bin:$PATH"
         fi
         unset SW_PATH
     elif [ "$1" = unset ]; then
         export RM_PATH=$(swiftxenv root)/swifts
+        [ -d $RM_PATH/current ] && rm $RM_PATH/current
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     elif [ "$1" = root ]; then
@@ -296,15 +336,20 @@ goxenv() {
     elif [ "$1" = "set" ]; then
         export GO_PATH=$(goenv root)/gos
         if [[ -n "$2" ]]; then
-            goxenv unset
-            export PATH="$GO_PATH/$2/bin:$PATH"
+            nodxenv unset
+            [ -d $GO_PATH/current ] && rm $GO_PATH/current
+            ln -s $GO_PATH/$2 $GO_PATH/current
+            export PATH="$GO_PATH/current/bin:$PATH"
         else
-            goxenv unset
-            export PATH="$GO_PATH/$(goenv global)/bin:$PATH"
+            nodxenv unset
+            [ -d $GO_PATH/current ] && rm $GO_PATH/current
+            ln -s $GO_PATH/$(goenv global) $GO_PATH/current
+            export PATH="$GO_PATH/current/bin:$PATH"
         fi
         unset GO_PATH
     elif [ "$1" = unset ]; then
         export RM_PATH=$(goenv root)/gos
+        [ -d $RM_PATH/current ] && rm $RM_PATH/current
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else

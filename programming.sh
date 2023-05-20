@@ -1,9 +1,32 @@
 #!/usr/bin/env sh
 
+# AZUL ZING ==========================================================
+export PATH="/opt/zing/zing-jdk19/bin:$PATH"
+
+# JETBRAINS ==========================================================
+export VMOPTIONSDIR="$XDG_CONFIG_HOME/vmoptions"
+# export JETBRAINSCLIENT_VM_OPTIONS="$VMOPTIONSDIR/jetbrainsclient.vmoptions"
+export GOLAND_VM_OPTIONS="$VMOPTIONSDIR/goland.vmoptions"
+export WEBSTORM_VM_OPTIONS="$VMOPTIONSDIR/webstorm.vmoptions"
+export PHPSTORM_VM_OPTIONS="$VMOPTIONSDIR/phpstorm.vmoptions"
+export WEBIDE_VM_OPTIONS="$VMOPTIONSDIR/webide.vmoptions"
+export GATEWAY_VM_OPTIONS="$VMOPTIONSDIR/gateway.vmoptions"
+export DATASPELL_VM_OPTIONS="$VMOPTIONSDIR/dataspell.vmoptions"
+export APPCODE_VM_OPTIONS="$VMOPTIONSDIR/appcode.vmoptions"
+export IDEA_VM_OPTIONS="$VMOPTIONSDIR/idea.vmoptions"
+# export STUDIO_VM_OPTIONS="$VMOPTIONSDIR/studio.vmoptions"
+export CLION_VM_OPTIONS="$VMOPTIONSDIR/clion.vmoptions"
+export DATAGRIP_VM_OPTIONS="$VMOPTIONSDIR/datagrip.vmoptions"
+export RIDER_VM_OPTIONS="$VMOPTIONSDIR/rider.vmoptions"
+# export JETBRAINS_CLIENT_VM_OPTIONS="$VMOPTIONSDIR/jetbrains_client.vmoptions"
+export PYCHARM_VM_OPTIONS="$VMOPTIONSDIR/pycharm.vmoptions"
+export RUBYMINE_VM_OPTIONS="$VMOPTIONSDIR/rubymine.vmoptions"
+# export DEVECOSTUDIO_VM_OPTIONS="$VMOPTIONSDIR/devecostudio.vmoptions"
+
 # CUBRID
 # source "$XDG_CONFIG_HOME/cubrid.sh"
 
-# IBM ==-- ===========================================================
+# IBM ================================================================
 export INFORMIXDIR="/opt/ibm/informix"
 # source "$HOME/sqllib/db2profile"
 
