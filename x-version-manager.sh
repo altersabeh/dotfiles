@@ -1,6 +1,25 @@
 #!/usr/bin/sh
 # custom functions for version managers
-opamx() {
+
+#nimble() {
+#    ln -s $XDG_DATA_HOME/choosenim $HOME/.choosenim
+#    command nimble "$@"
+#    rm $HOME/.choosenim
+#}
+
+lein() {
+    ln -s $XDG_DATA_HOME/m2 $HOME/.m2
+    command lein "$@"
+    rm $HOME/.m2
+}
+
+zvm() {
+    ln -s $XDG_DATA_HOME/zvm $HOME/.zvm
+    command zvm "$@"
+    rm $HOME/.zvm
+}
+
+opam() {
     if [ $# -gt 0 ] && [ "$1" == "switch" ]; then
         shift
         command opam switch "$@" && eval $(opam env)
@@ -12,7 +31,7 @@ opamx() {
 erlxenv() {
     if [ "$1" = "install" ]; then
         shift
-        evm install "$@" -y "$ERLANG_CONFIGURE_OPTS"
+        evm install "$@" -y --with-docs "$ERLANG_CONFIGURE_OPTS"
     else
         evm "$@"
     fi
@@ -306,12 +325,12 @@ swiftxenv() {
             swiftxenv unset
             [ -d $SW_PATH/current ] && rm $SW_PATH/current
             ln -s $SW_PATH/$2 $SW_PATH/current
-            export PATH="$SW_PATH/current/bin:$PATH"
+            export PATH="$SW_PATH/current/usr/bin:$PATH"
         else
             swiftxenv unset
             [ -d $SW_PATH/current ] && rm $SW_PATH/current
             ln -s $SW_PATH/$(swiftenv global) $SW_PATH/current
-            export PATH="$SW_PATH/current/bin:$PATH"
+            export PATH="$SW_PATH/current/usr/bin:$PATH"
         fi
         unset SW_PATH
     elif [ "$1" = unset ]; then

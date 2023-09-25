@@ -132,4 +132,6 @@ go-tools-update() {
     command go install github.com/charmbracelet/glow@latest
     command go install ghostlang.org/x/ghost@latest
     command go install github.com/jesseduffield/lazydocker@latest
+    command go install mvdan.cc/sh/v3/cmd/shfmt@latest
+    command go install winterdrache.de/goformat/goformat@latest
 }

@@ -1,5 +1,88 @@
 #!/usr/bin/env sh
 
+# DOTNET =============================================================
+export DOTNET_ROOT=/usr/share/dotnet
+
+# PYTHONZ ============================================================
+export PYTHONZ_ROOT="$XDG_DATA_HOME/pythonz"
+export PYTHONZ_HOME="$XDG_DATA_HOME/pythonz"
+source "$PYTHONZ_ROOT/etc/bashrc"
+
+# PYTHONBREW =========================================================
+export PYTHONBREW_ROOT="$XDG_DATA_HOME/pythonbrew"
+export PYTHONBREW_HOME="$XDG_DATA_HOME/pythonbrew"
+eval "$(pythonbrew init)"
+
+# PERLBREW ===========================================================
+export PERLBREW_ROOT="$XDG_DATA_HOME/perlbrew"
+source "$PERLBREW_ROOT/etc/bashrc"
+
+# PHPBREW ============================================================
+export BOX_REQUIREMENT_CHECKER=0
+export PHPBREW_ROOT="$XDG_DATA_HOME/phpbrew"
+export PHPBREW_HOME="$XDG_DATA_HOME/phpbrew"
+source "$PHPBREW_HOME/bashrc"
+
+# RVM (ruby) =========================================================
+export PATH="$PATH:$XDG_DATA_HOME/rvm/bin"
+source "$XDG_DATA_HOME/rvm/scripts/rvm"
+
+# NVM (node) =========================================================
+export NVM_DIR="$XDG_DATA_HOME/nvm"
+source "$NVM_DIR/nvm.sh"
+source "$NVM_DIR/bash_completion"
+
+# ZVM (zig) ==========================================================
+export ZVM_INSTALL="$XDG_DATA_HOME/zvm/self"
+export PATH="$XDG_DATA_HOME/zvm/bin:$PATH"
+export PATH="$PATH:$ZVM_INSTALL"
+
+# NVIDIA CUDA ========================================================
+export CUDA_PATH="/usr/local/cuda"
+export PATH="$CUDA_PATH/bin:$PATH"
+export LD_LIBRARY_PATH="$CUDA_PATH/lib64:$LD_LIBRARY_PATH"
+
+# INTEL ONEAPI =======================================================
+source /opt/intel/oneapi/setvars.sh > /dev/null 2> /dev/null
+
+# REPLY (perl) =======================================================
+alias reply="reply --cfg "$XDG_CONFIG_HOME/reply/replyrc""
+
+# JAVA ===============================================================
+# export _JAVA_OPTIONS="-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java"
+
+# ZEF ================================================================
+export ZEF_CONFIG_STOREDIR="$XDG_DATA_HOME/zef/store"
+export ZEF_CONFIG_TEMPDIR="$XDG_CACHE_HOME/zef/temp"
+
+# OCAML ==============================================================
+mkdir -p "$XDG_CONFIG_HOME/ocaml"
+touch "$XDG_CONFIG_HOME/ocaml/init.ml"
+
+# NUTS (java) ========================================================
+source "$XDG_DATA_HOME/nuts/apps/default-workspace/id/net/thevpc/nuts/nuts/0.8.3/inc/.nuts-init.sh"
+
+# FOUNDRY ============================================================
+export FOUNDRY_DIR="$XDG_DATA_HOME/foundry"
+export PATH="$FOUNDRY_DIR/bin:$PATH"
+
+# MINT (swift) =======================================================
+export MINT_PATH="$XDG_DATA_HOME/mint"
+export MINT_LINK_PATH="$MINT_PATH/bin"
+export PATH="$PATH:$MINT_LINK_PATH"
+
+# PIXI ===============================================================
+export PIXI_DIR="$XDG_DATA_HOME/pixi"
+export PATH="$PATH:$PIXI_DIR"
+eval "$(pixi completion --shell bash)"
+
+# BUN ================================================================
+export BUN_INSTALL="$XDG_DATA_HOME/bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# OX CONSOLE =========================================================
+alias oxl=oxl64
+
 # AZUL ZING ==========================================================
 export PATH="/opt/zing/zing-jdk19/bin:$PATH"
 
@@ -68,7 +151,7 @@ export RLWRAP_HOME="$XDG_DATA_HOME/rlwrap"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 
 # ZSH ================================================================
-export ZDOTDIR="$XDG_CONFIG_HOME/.config/zsh"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
 # WGET ===============================================================
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
@@ -103,7 +186,7 @@ export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 alias gpg="gpg --homedir $XDG_DATA_HOME/gnupg"
 
 # BASH (history) =====================================================
-export HISTFILE="$XDG_STATE_HOME/bash/history"
+export HISTFILE="$XDG_STATE_HOME/bash_history"
 
 # AZURE ==============================================================
 export AZURE_CONFIG_DIR="$XDG_DATA_HOME/azure"
@@ -137,7 +220,7 @@ export CALCHISTFILE="$XDG_CACHE_HOME/calc_history"
 export GNATSTUDIO_HOME="$XDG_DATA_HOME/gnatstudio"
 
 # OCTAVE =============================================================
-export OCTAVE_HISTFILE="$XDG_CACHE_HOME/octave-hsts"
+export OCTAVE_HISTFILE="$XDG_STATE_HOME/octave-history"
 export OCTAVE_SITE_INITFILE="$XDG_CONFIG_HOME/octave/octaverc"
 
 # DENO JS ============================================================
@@ -152,7 +235,8 @@ export PROCESSING_JAVA="$XDG_DATA_HOME/processing/processing-java"
 export PATH="$XDG_DATA_HOME/processing:$PATH"
 
 # BALLERINA ==========================================================
-export PATH="$XDG_DATA_HOME/ballerina/bin:$PATH"
+export BALLERINA_HOME="$XDG_DATA_HOME/ballerina"
+export PATH="$BALLERINA_HOME/bin:$PATH"
 
 # CLEAN ==============================================================
 export CLEAN_HOME="$XDG_DATA_HOME/clean"
@@ -180,6 +264,9 @@ export PATH="$XDG_CACHE_HOME/rebar3/bin:$PATH"
 # RAKUBREW (raku) ====================================================
 export RAKUBREW_HOME="$XDG_DATA_HOME/rakubrew"
 eval "$($RAKUBREW_HOME/bin/rakubrew init Bash)"
+
+# RAKU ===============================================================
+export RAKUDO_HIST="$XDG_STATE_HOME/rakudo_history"
 
 # RUST ===============================================================
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
@@ -229,11 +316,13 @@ export STACK_ROOT="$XDG_DATA_HOME/stack"
 
 # JULIA ==============================================================
 export JULIA_DEPOT_PATH="$XDG_DATA_HOME/julia:$JULIA_DEPOT_PATH"
+export JULIA_HISTORY="$XDG_STATE_HOME/julia_history"
 export PATH="$XDG_DATA_HOME/juliaup/bin:$PATH"
 
 # NIMBLE (nim) =======================================================
 export NIMBLE_DIR="$XDG_DATA_HOME/nimble"
 export PATH="$NIMBLE_DIR/bin:$PATH"
+alias choosenim="choosenim --choosenimDir:"$XDG_DATA_HOME"/choosenim"
 
 # V ==================================================================
 export PATH="$XDG_DATA_HOME/v:$PATH"
@@ -267,7 +356,8 @@ alias pear="pear -c $XDG_CONFIG_HOME/pearrc"
 alias pecl="pecl -c $XDG_CONFIG_HOME/pearrc"
 
 # COMPOSER ===========================================================
-export COMPOSER_HOME="$XDG_CONFIG_HOME/composer"
+export COMPOSER_HOME="$XDG_DATA_HOME/composer"
+export PATH="$COMPOSER_HOME/bin:$PATH"
 export PATH="$COMPOSER_HOME/vendor/bin:$PATH"
 
 # NODENV (node) ======================================================
@@ -277,7 +367,7 @@ eval "$(nodenv init -)"
 
 # NODE ===============================================================
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
-export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
+export NODE_REPL_HISTORY="$XDG_STATE_HOME/node_repl_history"
 
 # GOENV ==============================================================
 export GOENV_ROOT="$XDG_DATA_HOME/goenv"
@@ -299,6 +389,9 @@ export PLENV_ROOT="$XDG_DATA_HOME/plenv"
 export PATH="$PLENV_ROOT/bin:$PATH"
 eval "$(plenv init -)"
 
+# COCOAPODS
+export CP_HOME_DIR="$XDG_CACHE_HOME/cocoapods"
+
 # CPANM ==============================================================
 export PERL_CPANM_HOME="$XDG_CACHE_HOME/cpanm"
 export PERL_CPANM_OPT="--prompt --notest"
@@ -310,7 +403,7 @@ eval "$(renv init -)"
 
 # R ==================================================================
 export R_PROFILE_USER="$XDG_CONFIG_HOME/Rprofile"
-export R_HISTFILE="$XDG_CACHE_HOME/Rhistory"
+export R_HISTFILE="$XDG_STATE_HOME/R_history"
 alias r="R"
 alias rscript="Rscript"
 
@@ -319,9 +412,17 @@ export SCALAENV_ROOT="$XDG_DATA_HOME/scalaenv"
 export PATH="$SCALAENV_ROOT/bin:$PATH"
 eval "$(scalaenv init -)"
 
+# SCALA ==============================================================
+export SCALA_HISTFILE="${XDG_STATE_HOME}/scala_history"
+
 # COURSIER (scala) ===================================================
 export CS_HOME="$XDG_DATA_HOME/coursier"
 export PATH="$CS_HOME/bin:$PATH"
+
+# SHENV (bash)
+export SHENV_ROOT="$XDG_DATA_HOME/shenv"
+export PATH="$SHENV_ROOT/bin:$PATH"
+eval "$(shenv init -)"
 
 # PYENV (python) =====================================================
 export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
@@ -345,6 +446,7 @@ export BUNDLE_USER_HOME="$XDG_DATA_HOME/bundle"
 export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
 export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle/plugins"
+export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
 
 # SDKMAN =============================================================
 export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
