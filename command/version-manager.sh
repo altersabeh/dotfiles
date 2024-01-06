@@ -125,9 +125,10 @@ luaxenv() {
 rxenv() {
     if [ "$1" = "install" ]; then
         shift
-        export CC='gcc' CXX='g++' \
-            CFLAGS='-llapack -lblas -g -O2' CXXFLAGS='-llapack -lblas -g -O2' \
-            OBJCFLAGS='-llapack -lblas -g -O2' FCFLAGS='-llapack -lblas -g -O2'
+        export CFLAGS="-llapack -lblas -g -O2"
+        export CXXFLAGS="-llapack -lblas -g -O2"
+        export OBJCFLAGS="-llapack -lblas -g -O2"
+        export FCFLAGS="-llapack -lblas -g -O2"
         command renv install "$@"
         unset CC CXX CFLAGS CXXFLAGS CPPFLAGS FCFLAGS
     elif [ "$1" = "set" ]; then
@@ -388,5 +389,5 @@ goxenv() {
     fi
 }
 
-set_xglobal
+# set_xglobal
 

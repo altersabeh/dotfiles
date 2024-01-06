@@ -11,5 +11,5 @@ set_xglobal() {
     rbxenv set
     rxenv set
     # scalaxenv set
-    swiftxenv set
+    # swiftxenv set
 }

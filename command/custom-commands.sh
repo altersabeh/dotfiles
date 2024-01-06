@@ -1,20 +1,5 @@
 #!/usr/bin/sh
 
-# aliases
-export SCRIPTS_DIR="$HOME/Documents/scripts"
-alias x="nano $SCRIPTS_DIR/x-custom-commands.sh"
-alias a="nano $HOME/.bashrc"
-alias vmp="nano $SCRIPTS_DIR/programming.sh"
-alias lmp="nano $SCRIPTS_DIR/language-config.sh"
-alias vpm="nano $SCRIPTS_DIR/x-version-manager.sh"
-alias erlenv=erlxenv
-alias r="R"
-alias rscript="Rscript"
-# alias gcc="ccache gcc"
-# alias g++="ccache g++"
-# alias code-insiders="'/mnt/d/Programs/Microsoft VS Code Insiders/bin/code-insiders'"
-
-
 # custom functions for updating paths
 homebrew() {
     # Set PATH, MANPATH, etc., for homebrew.
@@ -134,4 +119,6 @@ go-tools-update() {
     command go install github.com/jesseduffield/lazydocker@latest
     command go install mvdan.cc/sh/v3/cmd/shfmt@latest
     command go install winterdrache.de/goformat/goformat@latest
+    command go install github.com/bazelbuild/buildtools/buildifier@latest
+    command go install github.com/bazelbuild/buildtools/buildozer@latest
 }

@@ -1,0 +1,1 @@
+export NODE_CONFIGURE_OPTS="--no-cross-compiling --gdb --partly-static --enable-lt --openssl-is-fips --with-ossfuzz --with-dtrace --enable-asan --without-inspector --v8-enable-hugepage --shared-libuv --shared-nghttp2 --shared-nghttp3 --shared-ngtcp2 --shared-openssl --shared-zlib --shared-brotli --shared-cares"
