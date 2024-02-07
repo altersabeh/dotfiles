@@ -121,4 +121,5 @@ go-tools-update() {
     command go install winterdrache.de/goformat/goformat@latest
     command go install github.com/bazelbuild/buildtools/buildifier@latest
     command go install github.com/bazelbuild/buildtools/buildozer@latest
+    command go install github.com/magefile/mage@latest
 }

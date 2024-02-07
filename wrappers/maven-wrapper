@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+REAL_MAVEN="$MAVEN_HOME/bin/mvn"
+
+$REAL_MAVEN -Dmaven.repo.local=$XDG_CACHE_HOME/maven/repository $@

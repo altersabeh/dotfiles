@@ -23,3 +23,5 @@ if [ -d "$(dirname "$BASH_SOURCE")/aliases" ]; then
     source "$i"
   done
 fi
+
+unset i

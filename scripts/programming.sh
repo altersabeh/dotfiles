@@ -48,8 +48,8 @@ if [ ! -d "$XDG_STATE_HOME/bash" ]; then
 fi
 
 # BUN ================================================================
-# export BUN_INSTALL="$XDG_DATA_HOME/bun"
-# export PATH="$BUN_INSTALL/bin:$PATH"
+export BUN_INSTALL="$XDG_DATA_HOME/bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
 # CABAL ==============================================================
 export CABAL_CONFIG="$XDG_CONFIG_HOME/cabal/config"
@@ -67,6 +67,18 @@ fi
 export CLEAN_HOME="$XDG_DATA_HOME/clean"
 export PATH="$CLEAN_HOME/bin:$PATH"
 
+# CLING ==============================================================
+export CLING_HISTFILE="$XDG_STATE_HOME/cling/history"
+export CLING_NOHISTORY=true
+
+if [ ! -d "$XDG_STATE_HOME/cling" ]; then
+  mkdir -p "$XDG_STATE_HOME/cling"
+fi
+
+# CLOJURE ============================================================
+export GITLIBS="$XDG_CACHE_HOME/clojure-gitlibs"
+export PATH="$XDG_DATA_HOME/clojure/bin:$PATH"
+
 # COCOAPODS
 export CP_HOME_DIR="$XDG_CACHE_HOME/cocoapods"
 
@@ -77,6 +89,22 @@ export PATH="$COMPOSER_HOME/vendor/bin:$PATH"
 
 # CONAN ==============================================================
 export CONAN_USER_HOME="$XDG_CONFIG_HOME"
+
+# CONDA ==============================================================
+export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
+eval "$($XDG_DATA_HOME/conda/bin/conda shell.bash hook)"
+
+if [ ! -d "$XDG_CONFIG_HOME/conda" ]; then
+  mkdir -p "$XDG_CONFIG_HOME/conda"
+fi
+
+touch "$CONDARC"
+
+for i in $(conda env list | grep -oP '^\w+' | grep -v '^base$'); do
+   export PATH="$PATH:$(conda info --root)/envs/$i/bin"
+done
+
+unset i
 
 # COURSIER ===========================================================
 export CS_HOME="$XDG_DATA_HOME/coursier"
@@ -92,17 +120,16 @@ export PERL_CPANM_OPT="--prompt --notest"
 # eval "$(crenv init -)"
 
 # DART ===============================================================
-export ANALYZER_STATE_LOCATION_OVERIDE="$XDG_CACHE_HOME/dartServer"
-
-if [ ! -d "$ANALYZER_STATE_LOCATION_OVERIDE" ]; then
-  mkdir -p "$ANALYZER_STATE_LOCATION_OVERIDE"
-fi
+export DART_CONFIG_DIR="$XDG_CONFIG_HOME/dart"
+export ANALYZER_STATE_LOCATION_OVERRIDE="$XDG_CACHE_HOME/dartserver"
 
 # D ==================================================================
 export DUB_HOME="$XDG_DATA_HOME/dub"
 
 # DENO JS ============================================================
+export DENO_DIR="$XDG_CACHE_HOME/deno"
 export DENO_INSTALL="$XDG_DATA_HOME/deno"
+export DENO_REPL_HISTORY="$XDG_STATE_HOME/deno/history"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 # DIRENV =============================================================
@@ -119,6 +146,11 @@ EMSDK_QUIET=1 source "$XDG_DATA_HOME/emsdk/emsdk_env.sh"
 export EM_CACHE="$XDG_CACHE_HOME/emscripten/cache"
 export EM_CONFIG="$XDG_CONFIG_HOME/emscripten/config"
 export EM_PORTS="$XDG_DATA_HOME/emscripten/cache"
+
+# ERLANG =============================================================
+if [ ! -d "$XDG_CONFIG_HOME/erlang" ]; then
+  mkdir -p "$XDG_CONFIG_HOME/erlang"
+fi
 
 # EVM ================================================================
 export EVM_HOME="$XDG_DATA_HOME/evm"
@@ -227,10 +259,11 @@ export LUAENV_ROOT="$XDG_DATA_HOME/luaenv"
 export PATH="$LUAENV_ROOT/bin:$PATH"
 eval "$(luaenv init - --no-rehash)"
 
+# MAGEFILE ===========================================================
+export MAGEFILE_CACHE="$XDG_CACHE_HOME/magefile"
+
 # MAVEN ==============================================================
-# if [ ! -d "$XDG_CONFIG_HOME/maven" ]; then
-#   mkdir -p "$XDG_CONFIG_HOME/maven"
-# fi
+export MAVEN_OPTS="-Dmaven.repo.local=$XDG_CACHE_HOME/maven/repository"
 
 # MINT ===============================================================
 export MINT_PATH="$XDG_DATA_HOME/mint"
@@ -241,6 +274,13 @@ export PATH="$MINT_LINK_PATH:$PATH"
 export MIX_HOME="$XDG_DATA_HOME/mix"
 export MIX_XDG=1
 export PATH="$MIX_HOME/escripts:$PATH"
+
+# MOJO ===============================================================
+export MODULAR_HOME="$XDG_DATA_HOME/modular"
+export PATH="$MODULAR_HOME/pkg/packages.modular.com_mojo/bin:$PATH"
+
+# MONO ===============================================================
+# export MONO_REGISTRY_PATH="$XDG_CACHE_HOME/mono/registry"
 
 # NIMBLE =============================================================
 export NIMBLE_DIR="$XDG_DATA_HOME/nimble"
@@ -272,6 +312,7 @@ export NUGET_PACKAGES="$XDG_CACHE_HOME/NuGetPackages"
 # NVIDIA CUDA ========================================================
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export CUDA_PATH="/usr/local/cuda"
+export NVCC_PREPEND_FLAGS="-allow-unsupported-compiler"
 export PATH="$CUDA_PATH/bin:$PATH"
 export LD_LIBRARY_PATH="$CUDA_PATH/lib64:$LD_LIBRARY_PATH"
 
@@ -307,6 +348,9 @@ source "$OPAMROOT/opam-init/init.sh"
 # PERLBREW ===========================================================
 # export PERLBREW_ROOT="$XDG_DATA_HOME/perlbrew"
 # source "$PERLBREW_ROOT/etc/bashrc"
+
+# PEX ================================================================
+export PEX_ROOT="$XDG_CACHE_HOME/pex"
 
 # PGSQL ==============================================================
 export PSQLRC="$XDG_CONFIG_HOME/pg/psqlrc"
@@ -363,7 +407,8 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - --no-rehash bash)"
 
 # PYTHON =============================================================
-export PYTHONPYCACHEPREFIX="/tmp/pycache"
+export PYTHON_EGG_CACHE="$XDG_CACHE_HOME/python-eggs"
+export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/pycache"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 export WORKON_HOME="$XDG_DATA_HOME/virtualenvs"
 
@@ -424,6 +469,10 @@ eval "$(renv init - --no-rehash)"
 # REPLY ==============================================================
 alias reply="reply --cfg "$XDG_CONFIG_HOME/reply/replyrc""
 
+# ROSWELL ===========================================================
+export ROSWELL_HOME="$XDG_DATA_HOME/roswell"
+export PATH="$ROSWELL_HOME/bin:$PATH"
+
 # RUBY ===============================================================
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
 export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
@@ -441,6 +490,9 @@ source "$CARGO_HOME/env"
 # RVM ================================================================
 # export PATH="$PATH:$XDG_DATA_HOME/rvm/bin"
 # source "$XDG_DATA_HOME/rvm/scripts/rvm"
+
+# SBT ================================================================
+export SBT_OPTS="-ivy $XDG_DATA_HOME/ivy2 -sbt-dir $XDG_DATA_HOME/sbt"
 
 # SCALA ==============================================================
 export SCALA_HISTFILE="$XDG_STATE_HOME/scala/history"
@@ -462,6 +514,8 @@ alias scilab-cli="scilab-cli -scihome $SCIHOME"
 # SDKMAN =============================================================
 export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
 source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
+export JAVA_CALLER_JAVA_EXECUTABLE="$JAVA_HOME/bin/java.exe"
 
 # SHENV ==============================================================
 # export SHENV_ROOT="$XDG_DATA_HOME/shenv"
@@ -498,7 +552,10 @@ export TEXMFHOME="$XDG_DATA_HOME/texmf"
 export TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
 
 # V ==================================================================
+export VCACHE="$XDG_CACHE_HOME/vmodules"
+export PATH="$XDG_CONFIG_HOME/v-analyzer/:$PATH"
 export PATH="$XDG_DATA_HOME/v:$PATH"
+
 
 # VAGRANT ============================================================
 export VAGRANT_HOME="$XDG_DATA_HOME/vagrant"
@@ -553,3 +610,9 @@ export CPATH="/usr/lib/gcc/x86_64-linux-gnu/$(gcc --version | grep gcc | awk '{ 
 
 # CUSTOM JAVA CLASSPATH ==============================================
 export CLASSPATH=".:$CLASSPATH"
+
+# CUSTOM LIBRARY PATHS ===============================================
+export LIBRARY_PATH="$LD_LIBRARY_PATH"
+
+# CUSTOM LIMITS
+ulimit -n 104857
