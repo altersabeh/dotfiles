@@ -31,7 +31,7 @@ opam() {
 erlxenv() {
     if [ "$1" = "install" ]; then
         shift
-        evm install "$@" -y --with-docs "$ERLANG_CONFIGURE_OPTS"
+        evm install "$@" -y --with-docs $ERLANG_CONFIGURE_OPTS
     else
         evm "$@"
     fi
@@ -43,9 +43,9 @@ plxenv() {
         command plenv migrate-modules "$@"
     elif [ "$1" = "install" ]; then
 	    shift
-	    command plenv install "$@" --jobs 4 "${PERL_BUILD_CONFIGURE_OPTS[@]}"
+	    command plenv install "$@" --jobs 12 ${PERL_BUILD_CONFIGURE_OPTS[@]}
     elif [ "$1" = "set" ]; then
-        export PL_PATH=$(plenv root)/perls
+        export PL_PATH=$(plenv root)/versions
         if [[ -n "$2" ]]; then
             plxenv unset
             [ -d $PL_PATH/current ] && rm $PL_PATH/current
@@ -59,8 +59,8 @@ plxenv() {
         fi
         unset PL_PATH
     elif [ "$1" = unset ]; then
-        export RM_PATH=$(plenv root)/perls
-        [ -d $RM_PATH/current ] && rm $RM_PATH/current
+        export RM_PATH=$(plenv root)/versions/current
+        [ -d $RM_PATH ] && rm $RM_PATH
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -87,7 +87,7 @@ luaxenv() {
         command luaenv install "$@"
         export MAKEOPTS="-j4"
     elif [ "$1" = "set" ]; then
-        export LUA_PATH=$(luaenv root)/luas
+        export LUA_PATH=$(luaenv root)/versions
         if [[ -n "$2" ]]; then
             luaxenv unset
             [ -d $LUA_PATH/current ] && rm $LUA_PATH/current
@@ -101,8 +101,8 @@ luaxenv() {
         fi
         unset LUA_PATH
     elif [ "$1" = unset ]; then
-        export RM_PATH=$(luaenv root)/luas
-        [ -d $RM_PATH/current ] && rm $RM_PATH/current
+        export RM_PATH=$(luaenv root)/versions/current
+        [ -d $RM_PATH ] && rm $RM_PATH
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -125,14 +125,14 @@ luaxenv() {
 rxenv() {
     if [ "$1" = "install" ]; then
         shift
-        export CFLAGS="-llapack -lblas -g -O2"
-        export CXXFLAGS="-llapack -lblas -g -O2"
-        export OBJCFLAGS="-llapack -lblas -g -O2"
-        export FCFLAGS="-llapack -lblas -g -O2"
+        export CFLAGS="-g -O2"
+        export CXXFLAGS="-g -O2"
+        export OBJCFLAGS="-g -O2"
+        export FCFLAGS="-g -O2"
         command renv install "$@"
         unset CC CXX CFLAGS CXXFLAGS CPPFLAGS FCFLAGS
     elif [ "$1" = "set" ]; then
-        export R_PATH=$(renv root)/R
+        export R_PATH=$(renv root)/versions
         if [[ -n "$2" ]]; then
             rxenv unset
             [ -d $R_PATH/current ] && rm $R_PATH/current
@@ -146,8 +146,8 @@ rxenv() {
         fi
         unset R_PATH
     elif [ "$1" = unset ]; then
-        export RM_PATH=$(renv root)/R
-        [ -d $RM_PATH/current ] && rm $RM_PATH/current
+        export RM_PATH=$(renv root)/versions/current
+        [ -d $RM_PATH ] && rm $RM_PATH
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -169,7 +169,7 @@ rxenv() {
 
 pyxenv() {
     if [ "$1" = "set" ]; then
-        PY_PATH="$(pyenv root)/pythons"
+        export PY_PATH="$(pyenv root)/versions"
         if [[ -n "$2" ]]; then
             pyxenv unset
             [ -d $PY_PATH/current ] && rm $PY_PATH/current
@@ -183,8 +183,8 @@ pyxenv() {
         fi
         unset PY_PATH
     elif [ "$1" = unset ]; then
-        RM_PATH=$(pyenv root)/pythons
-        [ -d $RM_PATH/current ] && rm $RM_PATH/current
+        export RM_PATH=$(pyenv root)/versions/current
+        [ -d $RM_PATH ] && rm $RM_PATH
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -206,7 +206,7 @@ pyxenv() {
 
 rbxenv() {
     if [ "$1" = "set" ]; then
-        export RB_PATH=$(rbenv root)/rubies
+        export RB_PATH=$(rbenv root)/versions
         if [[ -n "$2" ]]; then
             rbxenv unset
             [ -d $RB_PATH/current ] && rm $RB_PATH/current
@@ -219,8 +219,8 @@ rbxenv() {
             export PATH="$RB_PATH/current/bin:$PATH"
         fi
     elif [ "$1" = unset ]; then
-        export RM_PATH=$(rbenv root)/rubies
-        [ -d $RM_PATH/current ] && rm $RM_PATH/current
+        export RM_PATH=$(rbenv root)/versions/current
+        [ -d $RM_PATH ] && rm $RM_PATH
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -242,7 +242,7 @@ rbxenv() {
 
 phpxenv() {
     if [ "$1" = "set" ]; then
-        export PHP_PATH=$(phpenv root)/php
+        export PHP_PATH=$(phpenv root)/versions
         if [[ -n "$2" ]]; then
             phpxenv unset
             # export COMPOSER_HOME="$PHP_PATH/$2/composer"
@@ -260,8 +260,8 @@ phpxenv() {
         fi
         unset PHP_PATH
     elif [ "$1" = unset ]; then
-        export RM_PATH=$(phpenv root)/php
-        [ -d $RM_PATH/current ] && rm $RM_PATH/current
+        export RM_PATH=$(phpenv root)/versions/current
+        [ -d $RM_PATH ] && rm $RM_PATH
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         # unset COMPOSER_HOME
         unset RM_PATH
@@ -284,7 +284,7 @@ phpxenv() {
 
 nodxenv() {
     if [ "$1" = "set" ]; then
-        export NOD_PATH=$(nodenv root)/nodes
+        export NOD_PATH=$(nodenv root)/versions
         if [[ -n "$2" ]]; then
             nodxenv unset
             [ -d $NOD_PATH/current ] && rm $NOD_PATH/current
@@ -298,8 +298,8 @@ nodxenv() {
         fi
         unset NOD_PATH
     elif [ "$1" = unset ]; then
-        export RM_PATH=$(nodenv root)/nodes
-        [ -d $RM_PATH/current ] && rm $RM_PATH/current
+        export RM_PATH=$(nodenv root)/versions/current
+        [ -d $RM_PATH ] && rm $RM_PATH
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else
@@ -321,7 +321,7 @@ nodxenv() {
 
 swiftxenv() {
     if [ "$1" = "set" ]; then
-        export SW_PATH=$(swiftxenv root)/swifts
+        export SW_PATH=$(swiftxenv root)/versions
         if [[ -n "$2" ]]; then
             swiftxenv unset
             [ -d $SW_PATH/current ] && rm $SW_PATH/current
@@ -335,8 +335,8 @@ swiftxenv() {
         fi
         unset SW_PATH
     elif [ "$1" = unset ]; then
-        export RM_PATH=$(swiftxenv root)/swifts
-        [ -d $RM_PATH/current ] && rm $RM_PATH/current
+        export RM_PATH=$(swiftxenv root)/versions/current
+        [ -d $RM_PATH ] && rm $RM_PATH
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     elif [ "$1" = root ]; then
@@ -354,7 +354,7 @@ goxenv() {
 	shift
 	command goenv install "$@"
     elif [ "$1" = "set" ]; then
-        export GO_PATH=$(goenv root)/gos
+        export GO_PATH=$(goenv root)/versions
         if [[ -n "$2" ]]; then
             nodxenv unset
             [ -d $GO_PATH/current ] && rm $GO_PATH/current
@@ -368,8 +368,8 @@ goxenv() {
         fi
         unset GO_PATH
     elif [ "$1" = unset ]; then
-        export RM_PATH=$(goenv root)/gos
-        [ -d $RM_PATH/current ] && rm $RM_PATH/current
+        export RM_PATH=$(goenv root)/versions/current
+        [ -d $RM_PATH ] && rm $RM_PATH
         export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
         unset RM_PATH
     else

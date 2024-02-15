@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
 
 # aliases
-alias x="nano $(dirname "$BASH_SOURCE")/../command/custom-commands.sh"
+alias x="nano $(dirname "$BASH_SOURCE")/../commands/custom-commands.sh"
 alias a="nano $HOME/.bashrc"
 
 alias vmp="nano $(dirname "$BASH_SOURCE")/../scripts/programming.sh"
-alias vpm="nano $(dirname "$BASH_SOURCE")/../command/version-manager.sh"
+alias vpm="nano $(dirname "$BASH_SOURCE")/../commands/version-manager.sh"
 
 alias lmp-ruby="nano $(dirname "$BASH_SOURCE")/../build-opts/RUBY_BUILD"
 alias lmp-python="nano $(dirname "$BASH_SOURCE")/../build-opts/PYTHON_BUILD"

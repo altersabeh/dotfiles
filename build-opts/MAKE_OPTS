@@ -1,1 +1,2 @@
-export MAKEOPTS="-j4"
+# export MAKEFLAGS="-j12"
+export MAKEOPTS="-j12"

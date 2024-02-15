@@ -18,6 +18,19 @@ fi
 # ====================================================================
 # ================ PROGRAMS ==========================================
 # ====================================================================
+# ADA ================================================================
+if [ -d "/usr/lib/x86_64-linux-gnu/ada/adalib" ]; then
+  for i in /usr/lib/x86_64-linux-gnu/ada/adalib/*; do
+    export ADA_OBJECTS_PATH="$i${ADA_OBJECTS_PATH:+:$ADA_OBJECTS_PATH}"
+  done
+fi
+
+if [ -d "/usr/share/ada/adainclude" ]; then
+  for i in /usr/share/ada/adainclude/*; do
+    export ADA_INCLUDE_PATH="$i${ADA_INCLUDE_PATH:+:$ADA_INCLUDE_PATH}"
+  done
+fi
+
 # ALIRE ==============================================================
 export PATH="$XDG_DATA_HOME/alire/bin:$PATH"
 
@@ -51,6 +64,10 @@ fi
 export BUN_INSTALL="$XDG_DATA_HOME/bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# C ==================================================================
+export GCC_MAJOR_VERSION=$(gcc --version | grep gcc | awk '{ print $3 }' | cut -d. -f1)
+export CPATH="/usr/lib/gcc/x86_64-linux-gnu/$GCC_MAJOR_VERSION/include${CPATH:+:$CPATH}"
+
 # CABAL ==============================================================
 export CABAL_CONFIG="$XDG_CONFIG_HOME/cabal/config"
 export CABAL_DIR="$XDG_DATA_HOME/cabal"
@@ -62,6 +79,9 @@ export CALCHISTFILE="$XDG_STATE_HOME/calc/history"
 if [ ! -d "$XDG_STATE_HOME/calc" ]; then
   mkdir -p "$XDG_STATE_HOME/calc"
 fi
+
+# CLASSPATH ==========================================================
+export CLASSPATH=".${CLASSPATH:+:$CLASSPATH}"
 
 # CLEAN ==============================================================
 export CLEAN_HOME="$XDG_DATA_HOME/clean"
@@ -91,6 +111,7 @@ export PATH="$COMPOSER_HOME/vendor/bin:$PATH"
 export CONAN_USER_HOME="$XDG_CONFIG_HOME"
 
 # CONDA ==============================================================
+export CONDA_AUTO_ACTIVATE_BASE=false
 export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
 eval "$($XDG_DATA_HOME/conda/bin/conda shell.bash hook)"
 
@@ -103,8 +124,6 @@ touch "$CONDARC"
 for i in $(conda env list | grep -oP '^\w+' | grep -v '^base$'); do
    export PATH="$PATH:$(conda info --root)/envs/$i/bin"
 done
-
-unset i
 
 # COURSIER ===========================================================
 export CS_HOME="$XDG_DATA_HOME/coursier"
@@ -140,6 +159,8 @@ export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 
 # DOTNET =============================================================
 export DOTNET_ROOT="/usr/share/dotnet"
+export DOTNET_CLI_HOME="$XDG_DATA_HOME/dotnet"
+export PATH="$PATH:$DOTNET_CLI_HOME/.dotnet/tools"
 
 # EMSCRIPTEN =========================================================
 EMSDK_QUIET=1 source "$XDG_DATA_HOME/emsdk/emsdk_env.sh"
@@ -170,6 +191,9 @@ export PATH="$FOUNDRY_DIR/bin:$PATH"
 # GHCUP ==============================================================
 export GHCUP_INSTALL_BASE_PREFIX="$XDG_DATA_HOME"
 source "$GHCUP_INSTALL_BASE_PREFIX/.ghcup/env"
+
+# GNUSTEP ============================================================
+export CPATH="/usr/include/GNUstep${CPATH:+:$CPATH}"
 
 # GOENV ==============================================================
 export GOENV_GOPATH_PREFIX="$XDG_DATA_HOME/go"
@@ -203,6 +227,10 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 if [ ! -d "$XDG_CONFIG_HOME/ipython" ]; then
   mkdir -p "$XDG_CONFIG_HOME/ipython"
 fi
+
+# INSTANTCLIENT
+export INSTANTCLIENT=$XDG_DATA_HOME/oracle/instantclient
+export LD_LIBRARY_PATH="$INSTANTCLIENT${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
 # INTEL ONEAPI =======================================================
 source /opt/intel/oneapi/setvars.sh > /dev/null 2> /dev/null
@@ -238,6 +266,13 @@ export PATH="$XDG_DATA_HOME/juliaup/bin:$PATH"
 
 # JUPYTER ============================================================
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
+
+# KERL ===============================================================
+export KERL_BASE_DIR="$XDG_DATA_HOME/kerl"
+export KERL_CONFIG="$XDG_CONFIG_HOME/kerl/kerlrc"
+export KERL_DEFAULT_INSTALL_DIR="$KERL_BASE_DIR/versions"
+export KERL_DOC_TARGETS="man"
+export KERL_BUILD_DOCS=yes
 
 # KIEX ===============================================================
 export KIEX_HOME="$XDG_DATA_HOME/kiex"
@@ -408,9 +443,14 @@ eval "$(pyenv init - --no-rehash bash)"
 
 # PYTHON =============================================================
 export PYTHON_EGG_CACHE="$XDG_CACHE_HOME/python-eggs"
+export PYTHON_HISTORY="$XDG_STATE_HOME/python/history"
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/pycache"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 export WORKON_HOME="$XDG_DATA_HOME/virtualenvs"
+
+if [ ! -d "$XDG_STATE_HOME/python" ]; then
+  mkdir -p "$XDG_STATE_HOME/python"
+fi
 
 # PYTHONBREW =========================================================
 # export PYTHONBREW_ROOT="$XDG_DATA_HOME/pythonbrew"
@@ -605,14 +645,10 @@ if grep -q microsoft /proc/version; then
   export BROWSER="/mnt/c/Program\ Files/Google/Chrome/Application/chrome.exe %s"
 fi
 
-# CUSTOM C HEADER PATH ===============================================
-export CPATH="/usr/lib/gcc/x86_64-linux-gnu/$(gcc --version | grep gcc | awk '{ print $3 }' | cut -d. -f1)/include:$CPATH:/usr/include/GNUstep"
-
-# CUSTOM JAVA CLASSPATH ==============================================
-export CLASSPATH=".:$CLASSPATH"
-
 # CUSTOM LIBRARY PATHS ===============================================
 export LIBRARY_PATH="$LD_LIBRARY_PATH"
 
 # CUSTOM LIMITS
 ulimit -n 104857
+
+unset i
