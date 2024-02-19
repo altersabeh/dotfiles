@@ -213,7 +213,7 @@ source "$GHCUP_INSTALL_BASE_PREFIX/.ghcup/env"
 # GIT ================================================================
 export GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
 
-if [ -f $GIT_CONFIG ]; then
+if [ ! -f $GIT_CONFIG ]; then
   mkdir -p "$XDG_CONFIG_HOME/git"
   ln -s $(dirname "$BASH_SOURCE")/../config/git/config $GIT_CONFIG
 fi
