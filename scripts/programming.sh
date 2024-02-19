@@ -486,7 +486,7 @@ eval "$(pyenv init - --no-rehash bash)"
 # PYTHON =============================================================
 export PYTHON_EGG_CACHE="$XDG_CACHE_HOME/python-eggs"
 export PYTHON_HISTORY="$XDG_STATE_HOME/python/history"
-export PYTHONPYCACHEPREFIX="/tmp/pycache"
+export PYTHONPYCACHEPREFIX="/tmp/__pycache__"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 export WORKON_HOME="$XDG_DATA_HOME/virtualenvs"
 
