@@ -64,14 +64,29 @@ fi
 export BUN_INSTALL="$XDG_DATA_HOME/bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# BUNDLER ============================================================
+export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
+export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
+export BUNDLE_USER_HOME="$XDG_DATA_HOME/bundle"
+export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle/plugins"
+
 # C ==================================================================
 export GCC_MAJOR_VERSION=$(gcc --version | grep gcc | awk '{ print $3 }' | cut -d. -f1)
 export CPATH="/usr/lib/gcc/x86_64-linux-gnu/$GCC_MAJOR_VERSION/include${CPATH:+:$CPATH}"
+# export C_INCLUDE_PATH
+
+# C++ ================================================================
+# export CPLUS_INCLUDE_PATH
 
 # CABAL ==============================================================
 export CABAL_CONFIG="$XDG_CONFIG_HOME/cabal/config"
 export CABAL_DIR="$XDG_DATA_HOME/cabal"
 export PATH="$CABAL_DIR/bin:$PATH"
+
+if [ ! -f "$CABAL_CONFIG" ]; then
+  mkdir -p "$XDG_CONFIG_HOME/cabal"
+  ln -s "$(dirname "$BASH_SOURCE")/../config/cabal/config" "$CABAL_CONFIG"
+fi
 
 # CALC ===============================================================
 export CALCHISTFILE="$XDG_STATE_HOME/calc/history"
@@ -115,11 +130,10 @@ export CONDA_AUTO_ACTIVATE_BASE=false
 export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
 eval "$($XDG_DATA_HOME/conda/bin/conda shell.bash hook)"
 
-if [ ! -d "$XDG_CONFIG_HOME/conda" ]; then
+if [ ! -f "$CONDARC" ]; then
   mkdir -p "$XDG_CONFIG_HOME/conda"
+  ln -s "$(dirname "$BASH_SOURCE")/../config/conda/condarc" "$CONDARC"
 fi
-
-touch "$CONDARC"
 
 for i in $(conda env list | grep -oP '^\w+' | grep -v '^base$'); do
    export PATH="$PATH:$(conda info --root)/envs/$i/bin"
@@ -188,22 +202,37 @@ export PATH="$FOUNDRY_DIR/bin:$PATH"
 # export FVM_HOME="$XDG_DATA_HOME/fvm"
 # export PATH="$FVM_HOME/default/bin:$PATH"
 
+# GEM ================================================================
+export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
+export GEMRC="$XDG_CONFIG_HOME/gem/gemrc"
+
 # GHCUP ==============================================================
 export GHCUP_INSTALL_BASE_PREFIX="$XDG_DATA_HOME"
 source "$GHCUP_INSTALL_BASE_PREFIX/.ghcup/env"
 
+# GIT ================================================================
+export GIT_CONFIG="$XDG_CONFIG_HOME/git/config"
+
+if [ -f $GIT_CONFIG ]; then
+  mkdir -p "$XDG_CONFIG_HOME/git"
+  ln -s $(dirname "$BASH_SOURCE")/../config/git/config $GIT_CONFIG
+fi
+
 # GNUSTEP ============================================================
 export CPATH="/usr/include/GNUstep${CPATH:+:$CPATH}"
 
+# GO =================================================================
+export CGO_ENABLED=1
+export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
+export GOPATH="$XDG_DATA_HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+
 # GOENV ==============================================================
-export GOENV_GOPATH_PREFIX="$XDG_DATA_HOME/go"
+export GOENV_GOPATH_PREFIX="$GOPATH"
+export GOENV_PREPEND_GOPATH=1
 export GOENV_ROOT="$XDG_DATA_HOME/goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
 eval "$(goenv init - --no-rehash bash)"
-
-# GOLANG ============================================================
-export CGO_ENABLED=1
-export PATH="$GOPATH/bin:$PATH"
 
 # GNUPG ==============================================================
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
@@ -234,6 +263,14 @@ export LD_LIBRARY_PATH="$INSTANTCLIENT${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
 # INTEL ONEAPI =======================================================
 source /opt/intel/oneapi/setvars.sh > /dev/null 2> /dev/null
+
+# IRB ================================================================
+export IRBRC="$XDG_CONFIG_HOME/irb/irbrc"
+
+if [ ! -f "$IRBRC" ]; then
+  mkdir -p "$XDG_CONFIG_HOME/irb"
+  ln -s "$(dirname "$BASH_SOURCE")/../config/irb/irbrc" "$IRBRC"
+fi
 
 # JAVA ===============================================================
 export  _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
@@ -266,6 +303,12 @@ export PATH="$XDG_DATA_HOME/juliaup/bin:$PATH"
 
 # JUPYTER ============================================================
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
+export JUPYTER_CONFIG_FILE="$JUPYTER_CONFIG_DIR/jupyter_notebook_config.py"
+
+if [ ! -f "$JUPYTER_CONFIG_FILE" ]; then
+  mkdir -p "$JUPYTER_CONFIG_DIR"
+  ln -s "$(dirname "$BASH_SOURCE")/../config/jupyter/config.py" "$JUPYTER_CONFIG_FILE"
+fi
 
 # KERL ===============================================================
 export KERL_BASE_DIR="$XDG_DATA_HOME/kerl"
@@ -325,15 +368,9 @@ export PATH="$NIMBLE_DIR/bin:$PATH"
 export NODE_REPL_HISTORY="$XDG_STATE_HOME/node/history"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 
-if [ ! -d "$XDG_STATE_HOME/node" ]; then
-  mkdir -p "$XDG_STATE_HOME/node"
-fi
-
-if [ ! -d "$XDG_CONFIG_HOME/npm" ]; then
+if [ ! -f "$NPM_CONFIG_USERCONFIG" ]; then
   mkdir -p "$XDG_CONFIG_HOME/npm"
-  echo cache=${XDG_CACHE_HOME}/npm >> "$NPM_CONFIG_USERCONFIG"
-  echo init-module=${XDG_CONFIG_HOME}/npm/config/npm-init.js >> "$NPM_CONFIG_USERCONFIG"
-  echo logs-dir=${XDG_STATE_HOME}/npm/logs >> "$NPM_CONFIG_USERCONFIG"
+  ln -s "$(dirname "$BASH_SOURCE")/../config/npm/npmrc" "$NPM_CONFIG_USERCONFIG"
 fi
 
 # NODENV (node) ======================================================
@@ -356,26 +393,31 @@ export LD_LIBRARY_PATH="$CUDA_PATH/lib64:$LD_LIBRARY_PATH"
 # source "$NVM_DIR/nvm.sh"
 # source "$NVM_DIR/bash_completion"
 
+# OBJECTIVE-C ========================================================
+# OBJC_INCLUDE_PATH
+# OBJCPLUS_INCLUDE_PATH
+
 # OCAML ==============================================================
-mkdir -p "$XDG_CONFIG_HOME/ocaml"
-touch "$XDG_CONFIG_HOME/ocaml/init.ml"
+export OCAML_INIT_FILE="$XDG_CONFIG_HOME/ocaml/init.ml"
+
+if [ ! -f "$OCAML_INIT_FILE" ]; then
+  mkdir -p "$XDG_CONFIG_HOME/ocaml"
+  ln -s "$(dirname "$BASH_SOURCE")/../config/ocaml/init.ml" "$OCAML_INIT_FILE"
+fi
 
 # OCTAVE =============================================================
 export OCTAVE_HISTFILE="$XDG_STATE_HOME/octave/history"
 export OCTAVE_SITE_INITFILE="$XDG_CONFIG_HOME/octave/octaverc"
 
-if [ ! -d "$XDG_CONFIG_HOME/octave" ]; then
+if [ ! -f $OCTAVE_SITE_INITFILE ]; then
   mkdir -p "$XDG_CONFIG_HOME/octave"
-fi
-
-if [ ! -d "$XDG_STATE_HOME/octave" ]; then
-  mkdir -p "$XDG_STATE_HOME/octave"
+  ln -s "$(dirname "$BASH_SOURCE")/../config/octave/octaverc" "$OCTAVE_SITE_INITFILE"
 fi
 
 # OMNISHARP ==========================================================
 export OMNISHARPHOME="$XDG_CONFIG_HOME/omnisharp"
 
-# OPAM (ocaml) =======================================================
+# OPAM ===============================================================
 export OPAMROOT="$XDG_DATA_HOME/opam"
 export OPAMSOLVERTIMEOUT=1000
 source "$OPAMROOT/opam-init/init.sh"
@@ -403,10 +445,10 @@ fi
 
 # PHP ================================================================
 export PHP_DTRACE=yes
-export PHP_INI_SCAN_DIR="$XDG_CONFIG_HOME/php:"
+export PHP_INI_SCAN_DIR="$XDG_CONFIG_HOME/php"
 
 if [ ! -d "$PHP_INI_SCAN_DIR" ]; then
-  mkdir -p "$PHP_INI_SCAN_DIR"
+  ln -s "$(dirname "$BASH_SOURCE")/../config/php" "$PHP_INI_SCAN_DIR"
 fi
 
 # PHPBREW ============================================================
@@ -444,9 +486,14 @@ eval "$(pyenv init - --no-rehash bash)"
 # PYTHON =============================================================
 export PYTHON_EGG_CACHE="$XDG_CACHE_HOME/python-eggs"
 export PYTHON_HISTORY="$XDG_STATE_HOME/python/history"
-export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/pycache"
+export PYTHONPYCACHEPREFIX="/tmp/pycache"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 export WORKON_HOME="$XDG_DATA_HOME/virtualenvs"
+
+if [ ! -f $PYTHONSTARTUP ]; then
+  mkdir -p "$XDG_CONFIG_HOME/python"
+  ln -s "$(dirname "$BASH_SOURCE")/../config/python/pythonrc" "$PYTHONSTARTUP"
+fi
 
 if [ ! -d "$XDG_STATE_HOME/python" ]; then
   mkdir -p "$XDG_STATE_HOME/python"
@@ -514,13 +561,6 @@ export ROSWELL_HOME="$XDG_DATA_HOME/roswell"
 export PATH="$ROSWELL_HOME/bin:$PATH"
 
 # RUBY ===============================================================
-export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
-export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
-export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle/plugins"
-export BUNDLE_USER_HOME="$XDG_DATA_HOME/bundle"
-export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
-export GEMRC="$XDG_CONFIG_HOME/gemrc"
-export IRBRC="$XDG_CONFIG_HOME/irb/irbrc"
 
 # RUST ===============================================================
 export CARGO_HOME="$XDG_DATA_HOME/cargo"

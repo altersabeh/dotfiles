@@ -104,22 +104,16 @@ go-tools-update() {
     command go install golang.org/x/tools/cmd/goimports@latest
     command go install github.com/go-delve/delve/cmd/dlv@latest
     command go install github.com/haya14busa/goplay/cmd/goplay@latest
-    command go install github.com/ramya-rao-a/go-outline@latest
     command go install github.com/fatih/gomodifytags@latest
     command go install github.com/josharian/impl@latest
     command go install github.com/cweill/gotests/gotests@latest
     command go install honnef.co/go/tools/cmd/staticcheck@latest
-    command go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-    command go install github.com/x-motemen/gore/cmd/gore@latest
-    command go install github.com/mdempsky/gocode@latest
-    command go install github.com/janpfeifer/gonb@latest
     command go install github.com/gopherdata/gophernotes@latest
     command go install github.com/charmbracelet/glow@latest
-    command go install ghostlang.org/x/ghost@latest
     command go install github.com/jesseduffield/lazydocker@latest
     command go install mvdan.cc/sh/v3/cmd/shfmt@latest
-    command go install winterdrache.de/goformat/goformat@latest
     command go install github.com/bazelbuild/buildtools/buildifier@latest
     command go install github.com/bazelbuild/buildtools/buildozer@latest
     command go install github.com/magefile/mage@latest
+    command go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 }
