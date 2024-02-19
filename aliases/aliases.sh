@@ -6,6 +6,7 @@ alias a="nano $HOME/.bashrc"
 
 alias vmp="nano $(dirname "$BASH_SOURCE")/../scripts/programming.sh"
 alias vpm="nano $(dirname "$BASH_SOURCE")/../commands/version-manager.sh"
+alias vmp-code="code $(dirname "$BASH_SOURCE")/../scripts/programming.sh"
 
 alias lmp-ruby="nano $(dirname "$BASH_SOURCE")/../build-opts/RUBY_BUILD"
 alias lmp-python="nano $(dirname "$BASH_SOURCE")/../build-opts/PYTHON_BUILD"

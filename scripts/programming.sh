@@ -647,9 +647,9 @@ export W3M_DIR="$XDG_STATE_HOME/w3m"
 # WGET ===============================================================
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 
-if [ ! -d "$XDG_CONFIG_HOME/wget" ]; then
+if [ ! -f "$WGETRC" ]; then
   mkdir -p "$XDG_CONFIG_HOME/wget"
-  echo hsts-file \= "$XDG_CACHE_HOME/wget-hsts" >> "$WGETRC"
+  ln -s "$(dirname "$BASH_SOURCE")/../config/wget/wgetrc" "$WGETRC"
 fi
 
 # XORG ===============================================================
@@ -681,7 +681,7 @@ export PATH="$LUAENV_ROOT/versions/$(luaenv global)/bin:$PATH"
 eval "$(oh-my-posh init bash --config ~/.cache/oh-my-posh/themes/atomic.omp.json)"
 
 # USE WINDOWS BROWSER IN WSL =========================================
-if grep -q microsoft /proc/version; then
+if grep -q WSL /proc/version; then
   export BROWSER="/mnt/c/Program\ Files/Google/Chrome/Application/chrome.exe %s"
 fi
 
