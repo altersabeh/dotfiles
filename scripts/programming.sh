@@ -21,13 +21,13 @@ fi
 # ADA ================================================================
 if [ -d "/usr/lib/x86_64-linux-gnu/ada/adalib" ]; then
   for i in /usr/lib/x86_64-linux-gnu/ada/adalib/*; do
-    ADA_OBJECTS_PATH="${i}${ADA_OBJECTS_PATH:+:$ADA_OBJECTS_PATH}"
+    ADA_OBJECTS_PATH="${i}${ADA_OBJECTS_PATH:+:${ADA_OBJECTS_PATH}}"
   done
 fi
 
 if [ -d "/usr/share/ada/adainclude" ]; then
   for i in /usr/share/ada/adainclude/*; do
-    ADA_INCLUDE_PATH="${i}${ADA_INCLUDE_PATH:+:$ADA_INCLUDE_PATH}"
+    ADA_INCLUDE_PATH="${i}${ADA_INCLUDE_PATH:+:${ADA_INCLUDE_PATH}}"
   done
 fi
 
@@ -51,7 +51,7 @@ export AZURE_CONFIG_DIR="${XDG_DATA_HOME}/azure"
 
 # BALLERINA ==========================================================
 export BALLERINA_HOME="${XDG_DATA_HOME}/ballerina"
-PATH="$BALLERINA_HOME/bin:${PATH}"
+PATH="${BALLERINA_HOME}/bin:${PATH}"
 
 # BASH (history) =====================================================
 export HISTFILE="${XDG_STATE_HOME}/bash/history"
@@ -73,7 +73,7 @@ export BUNDLE_USER_PLUGIN="${XDG_DATA_HOME}/bundle/plugins"
 # C ==================================================================
 GCC_MAJOR_VERSION="$(gcc --version | grep gcc | awk '{ print $3 }' | cut -d. -f1)"
 X86_64_LIB_PATH="/usr/lib/gcc/x86_64-linux-gnu"
-CPATH="${X86_64_LIB_PATH}/${GCC_MAJOR_VERSION}/include${CPATH:+:$CPATH}"
+CPATH="${X86_64_LIB_PATH}/${GCC_MAJOR_VERSION}/include${CPATH:+:${CPATH}}"
 # C_INCLUDE_PATH
 
 # C++ ================================================================
@@ -129,7 +129,8 @@ export CONAN_USER_HOME="${XDG_CONFIG_HOME}"
 # CONDA ==============================================================
 export CONDA_AUTO_ACTIVATE_BASE=false
 export CONDARC="${XDG_CONFIG_HOME}/conda/condarc"
-eval "$("${XDG_DATA_HOME}"/conda/bin/conda shell.bash hook)"
+PATH="${XDG_DATA_HOME}/conda/condabin:${PATH}"
+eval "$(conda shell.bash hook)"
 
 if [ ! -f "${CONDARC}" ]; then
   mkdir -p "${XDG_CONFIG_HOME}/conda"
@@ -164,7 +165,7 @@ export DUB_HOME="${XDG_DATA_HOME}/dub"
 export DENO_DIR="${XDG_CACHE_HOME}/deno"
 export DENO_INSTALL="${XDG_DATA_HOME}/deno"
 export DENO_REPL_HISTORY="${XDG_STATE_HOME}/deno/history"
-PATH="$DENO_INSTALL/bin:${PATH}"
+PATH="${DENO_INSTALL}/bin:${PATH}"
 
 # DIRENV =============================================================
 eval "$(direnv hook bash)"
@@ -175,7 +176,7 @@ export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 # DOTNET =============================================================
 export DOTNET_ROOT="/usr/share/dotnet"
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
-PATH="${PATH}:$DOTNET_CLI_HOME/.dotnet/tools"
+PATH="${PATH}:${DOTNET_CLI_HOME}/.dotnet/tools"
 
 # EMSCRIPTEN =========================================================
 EMSDK_QUIET=1 source "${XDG_DATA_HOME}/emsdk/emsdk_env.sh"
@@ -279,8 +280,8 @@ if [ ! -f "${IRBRC}" ]; then
 fi
 
 # JAVA ===============================================================
-_JAVA_OPTIONS="${_JAVA_OPTIONS+ +${_JAVA_OPTIONS}}-Djava.util.prefs.userRoot=${XDG_CONFIG_HOME}/java"
-_JAVA_OPTIONS="${_JAVA_OPTIONS+ +${_JAVA_OPTIONS}}-Djavafx.cachedir=${XDG_CACHE_HOME}/openjfx"
+_JAVA_OPTIONS="${_JAVA_OPTIONS} -Djava.util.prefs.userRoot=${XDG_CONFIG_HOME}/java"
+_JAVA_OPTIONS="${_JAVA_OPTIONS} -Djavafx.cachedir=${XDG_CACHE_HOME}/openjfx"
  
 # JETBRAINS ==========================================================
 # export VMOPTIONSDIR="${XDG_CONFIG_HOME}/vmoptions"
