@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+REAL_JAVA="${JAVA_HOME}/bin/java"
+
+"${REAL_JAVA}" "$@" 2>&1 | grep -v "^Picked up _JAVA_OPTIONS:" >&2

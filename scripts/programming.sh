@@ -18,6 +18,10 @@ fi
 # ====================================================================
 # ================ PROGRAMS ==========================================
 # ====================================================================
+# SDKMAN =============================================================
+export SDKMAN_DIR="${XDG_DATA_HOME}/sdkman"
+source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+
 # ADA ================================================================
 if [ -d "/usr/lib/x86_64-linux-gnu/ada/adalib" ]; then
   for i in /usr/lib/x86_64-linux-gnu/ada/adalib/*; do
@@ -95,9 +99,6 @@ export CALCHISTFILE="${XDG_STATE_HOME}/calc/history"
 if [ ! -d "${XDG_STATE_HOME}/calc" ]; then
   mkdir -p "${XDG_STATE_HOME}/calc"
 fi
-
-# CLASSPATH ==========================================================
-CLASSPATH=".${CLASSPATH:+:$CLASSPATH}"
 
 # CLEAN ==============================================================
 export CLEAN_HOME="${XDG_DATA_HOME}/clean"
@@ -248,6 +249,9 @@ alias gpg='gpg --homedir ${GNUPGHOME}'
 # GRADLE =============================================================
 export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"
 
+# GROOVY =============================================================
+CLASSPATH="${CLASSPATH:+${CLASSPATH}:}$GROOVY_HOME/lib/*"
+
 # GTK ================================================================
 export GTK_RC_FILES="${XDG_CONFIG_HOME}/gtk-1.0/gtkrc"
 export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
@@ -282,7 +286,9 @@ fi
 # JAVA ===============================================================
 _JAVA_OPTIONS="${_JAVA_OPTIONS} -Djava.util.prefs.userRoot=${XDG_CONFIG_HOME}/java"
 _JAVA_OPTIONS="${_JAVA_OPTIONS} -Djavafx.cachedir=${XDG_CACHE_HOME}/openjfx"
- 
+_JAVA_OPTIONS="${_JAVA_OPTIONS# }"
+CLASSPATH=".${CLASSPATH:+:${CLASSPATH}}"
+
 # JETBRAINS ==========================================================
 # export VMOPTIONSDIR="${XDG_CONFIG_HOME}/vmoptions"
 # export JETBRAINSCLIENT_VM_OPTIONS="${VMOPTIONSDIR}/jetbrainsclient.vmoptions"
@@ -328,6 +334,9 @@ export KERL_BUILD_DOCS=yes
 # KIEX ===============================================================
 export KIEX_HOME="${XDG_DATA_HOME}/kiex"
 source "${KIEX_HOME}/scripts/kiex"
+
+# KOTLIN =============================================================
+CLASSPATH="${CLASSPATH:+${CLASSPATH}:}${KOTLIN_HOME}/lib/*"
 
 # LEIN ===============================================================
 export LEIN_HOME="${XDG_DATA_HOME}/lein"
@@ -380,6 +389,9 @@ if [ ! -f "${NPM_CONFIG_USERCONFIG}" ]; then
   mkdir -p "${XDG_CONFIG_HOME}/npm"
   ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/npm/npmrc" "${NPM_CONFIG_USERCONFIG}"
 fi
+
+# NODE JAVA CALLER ===================================================
+export JAVA_CALLER_JAVA_EXECUTABLE="${JAVA_HOME}/bin/java.exe"
 
 # NODENV (node) ======================================================
 export NODENV_ROOT="${XDG_DATA_HOME}/nodenv"
@@ -590,6 +602,8 @@ if [ ! -d "${XDG_STATE_HOME}/scala" ]; then
   mkdir -p "${XDG_STATE_HOME}/scala"
 fi
 
+CLASSPATH="${CLASSPATH:+${CLASSPATH}:}${SCALA_HOME}/lib/*"
+
 # SCALAENV ===========================================================
 # export SCALAENV_ROOT="${XDG_DATA_HOME}/scalaenv"
 # PATH="${SCALAENV_ROOT}/bin:${PATH}"
@@ -599,13 +613,6 @@ fi
 export SCIHOME="${XDG_DATA_HOME}/scilab"
 alias scilab='scilab-cli -scihome ${SCIHOME}'
 alias scilab-cli='scilab-cli -scihome ${SCIHOME}'
-
-# SDKMAN =============================================================
-export SDKMAN_DIR="${XDG_DATA_HOME}/sdkman"
-source "${SDKMAN_DIR}/bin/sdkman-init.sh"
-
-# NODE JAVA CALLER ===================================================
-export JAVA_CALLER_JAVA_EXECUTABLE="${JAVA_HOME}/bin/java.exe"
 
 # SHENV ==============================================================
 # export SHENV_ROOT="${XDG_DATA_HOME}/shenv"
@@ -700,6 +707,7 @@ export ADA_OBJECTS_PATH
 export ADA_INCLUDE_PATH
 export CLASSPATH
 export CPATH
+export _JAVA_OPTIONS
 export LD_LIBRARY_PATH
 export LIBRARY_PATH="$LD_LIBRARY_PATH"
 export PATH
