@@ -1,0 +1,1 @@
+utils::setRepositories(ind = 0, addURLs = c(CRAN = "https://cloud.r-project.org/"))
