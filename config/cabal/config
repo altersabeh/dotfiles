@@ -51,8 +51,8 @@ logs-dir: /home/altersabeh/.local/state/cabal/logs
 -- library-for-ghci:
 -- split-sections: False
 -- split-objs: False
--- executable-stripping:
--- library-stripping:
+executable-stripping: True
+library-stripping: True
 -- configure-option:
 -- user-install: True
 -- package-db:

@@ -10,17 +10,16 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 
 # LOCAL BIN ==========================================================
 export LOCAL_BIN_DIR="${HOME}/.local/bin"
-if [ -d "${LOCAL_BIN_DIR}" ] ; then
+if [ -d "${LOCAL_BIN_DIR}" ]; then
   PATH="${LOCAL_BIN_DIR}:${PATH}"
 fi
-
 
 # ====================================================================
 # ================ PROGRAMS ==========================================
 # ====================================================================
 # SDKMAN =============================================================
 export SDKMAN_DIR="${XDG_DATA_HOME}/sdkman"
-source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+. "${SDKMAN_DIR}/bin/sdkman-init.sh"
 
 # ADA ================================================================
 if [ -d "/usr/lib/x86_64-linux-gnu/ada/adalib" ]; then
@@ -42,6 +41,16 @@ PATH="${XDG_DATA_HOME}/alire/bin:${PATH}"
 export ANSIBLE_HOME="${XDG_CONFIG_HOME}/ansible"
 export ANSIBLE_CONFIG="${XDG_CONFIG_HOME}/ansible.cfg"
 export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME}/ansible/galaxy_cache"
+
+# ASDF ===============================================================
+export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
+export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
+. "${ASDF_DATA_DIR}/asdf.sh"
+
+if [ ! -f "${ASDF_CONFIG_FILE}" ]; then
+  mkdir -p "${XDG_CONFIG_HOME}/asdf"
+  ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/asdf/asdfrc" "${ASDF_CONFIG_FILE}"
+fi
 
 # ATOM ===============================================================
 # export ATOM_HOME="${XDG_DATA_HOME}/atom"
@@ -70,9 +79,14 @@ PATH="${BUN_INSTALL}/bin:${PATH}"
 
 # BUNDLER ============================================================
 export BUNDLE_USER_CACHE="${XDG_CACHE_HOME}/bundle"
-export BUNDLE_USER_CONFIG="${XDG_CONFIG_HOME}/bundle"
+export BUNDLE_USER_CONFIG="${XDG_CONFIG_HOME}/bundle/config"
 export BUNDLE_USER_HOME="${XDG_DATA_HOME}/bundle"
-export BUNDLE_USER_PLUGIN="${XDG_DATA_HOME}/bundle/plugins"
+export BUNDLE_USER_PLUGIN="${BUNDLE_USER_HOME}/plugins"
+
+if [ ! -f "${BUNDLE_USER_CONFIG}" ]; then
+  mkdir -p "${XDG_CONFIG_HOME}/bundle"
+  ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/bundle/config" "${BUNDLE_USER_CONFIG}"
+fi
 
 # C ==================================================================
 GCC_MAJOR_VERSION="$(gcc --version | grep gcc | awk '{ print $3 }' | cut -d. -f1)"
@@ -180,7 +194,7 @@ export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
 PATH="${PATH}:${DOTNET_CLI_HOME}/.dotnet/tools"
 
 # EMSCRIPTEN =========================================================
-EMSDK_QUIET=1 source "${XDG_DATA_HOME}/emsdk/emsdk_env.sh"
+EMSDK_QUIET=1 . "${XDG_DATA_HOME}/emsdk/emsdk_env.sh"
 export EM_CACHE="${XDG_CACHE_HOME}/emscripten/cache"
 export EM_CONFIG="${XDG_CONFIG_HOME}/emscripten/config"
 export EM_PORTS="${XDG_DATA_HOME}/emscripten/cache"
@@ -192,7 +206,7 @@ fi
 
 # EVM ================================================================
 export EVM_HOME="${XDG_DATA_HOME}/evm"
-source "${EVM_HOME}/scripts/evm"
+. "${EVM_HOME}/scripts/evm"
 
 # FACTOR =============================================================
 PATH="${XDG_DATA_HOME}/factor:${PATH}"
@@ -216,7 +230,7 @@ fi
 
 # GHCUP ==============================================================
 export GHCUP_INSTALL_BASE_PREFIX="${XDG_DATA_HOME}"
-source "${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/env"
+. "${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/env"
 
 # GIT ================================================================
 export GIT_CONFIG="${XDG_CONFIG_HOME}/git/config"
@@ -244,7 +258,11 @@ eval "$(goenv init - --no-rehash bash)"
 
 # GNUPG ==============================================================
 export GNUPGHOME="${XDG_DATA_HOME}/gnupg"
-alias gpg='gpg --homedir ${GNUPGHOME}'
+
+if [ ! -d "${GNUPGHOME}" ]; then
+  mkdir -p "${GNUPGHOME}"
+  chmod 700 "${GNUPGHOME}"
+fi
 
 # GRADLE =============================================================
 export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"
@@ -258,7 +276,7 @@ export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
 
 # IBM ================================================================
 # export INFORMIXDIR="/opt/ibm/informix"
-# source "${HOME}/sqllib/db2profile"
+# . "${HOME}/sqllib/db2profile"
 
 # ICONS ==============================================================
 # export XCURSOR_PATH="/usr/share/icons:${XDG_DATA_HOME}/icons"
@@ -269,11 +287,11 @@ if [ ! -d "${XDG_CONFIG_HOME}/ipython" ]; then
 fi
 
 # INSTANTCLIENT
-export INSTANTCLIENT=${XDG_DATA_HOME}/oracle/instantclient
+export INSTANTCLIENT="${XDG_DATA_HOME}/oracle/instantclient"
 LD_LIBRARY_PATH="${INSTANTCLIENT}${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 
 # INTEL ONEAPI =======================================================
-source /opt/intel/oneapi/setvars.sh > /dev/null 2> /dev/null
+. /opt/intel/oneapi/setvars.sh >/dev/null 2>/dev/null
 
 # IRB ================================================================
 export IRBRC="${XDG_CONFIG_HOME}/irb/irbrc"
@@ -333,7 +351,7 @@ export KERL_BUILD_DOCS=yes
 
 # KIEX ===============================================================
 export KIEX_HOME="${XDG_DATA_HOME}/kiex"
-source "${KIEX_HOME}/scripts/kiex"
+. "${KIEX_HOME}/scripts/kiex"
 
 # KOTLIN =============================================================
 CLASSPATH="${CLASSPATH:+${CLASSPATH}:}${KOTLIN_HOME}/lib/*"
@@ -410,8 +428,8 @@ LD_LIBRARY_PATH="${CUDA_PATH}/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 
 # NVM ================================================================
 # export NVM_DIR="${XDG_DATA_HOME}/nvm"
-# source "${NVM_DIR}/nvm.sh"
-# source "${NVM_DIR}/bash_completion"
+# . "${NVM_DIR}/nvm.sh"
+# . "${NVM_DIR}/bash_completion"
 
 # OBJECTIVE-C ========================================================
 # OBJC_INCLUDE_PATH
@@ -438,13 +456,14 @@ fi
 export OMNISHARPHOME="${XDG_CONFIG_HOME}/omnisharp"
 
 # OPAM ===============================================================
+export OPAMAUTOREMOVE=1
 export OPAMROOT="${XDG_DATA_HOME}/opam"
 export OPAMSOLVERTIMEOUT=1000
-source "${OPAMROOT}/opam-init/init.sh"
+. "${OPAMROOT}/opam-init/init.sh"
 
 # PERLBREW ===========================================================
 # export PERLBREW_ROOT="${XDG_DATA_HOME}/perlbrew"
-# source "${PERLBREW_ROOT}/etc/bashrc"
+# . "${PERLBREW_ROOT}/etc/bashrc"
 
 # PEX ================================================================
 export PEX_ROOT="${XDG_CACHE_HOME}/pex"
@@ -475,7 +494,7 @@ fi
 # export BOX_REQUIREMENT_CHECKER=0
 # export PHPBREW_ROOT="${XDG_DATA_HOME}/phpbrew"
 # export PHPBREW_HOME="${XDG_DATA_HOME}/phpbrew"
-# source "${PHPBREW_HOME}/bashrc"
+# . "${PHPBREW_HOME}/bashrc"
 
 # PHPENV =============================================================
 export PHPENV_ROOT="${XDG_DATA_HOME}/phpenv"
@@ -501,7 +520,7 @@ PATH="${PATH}:${PUB_CACHE}/bin"
 # PYENV ==============================================================
 export PYENV_ROOT="${XDG_DATA_HOME}/pyenv"
 PATH="${PYENV_ROOT}/bin:${PATH}"
-eval "$(pyenv init - --no-rehash bash)"
+eval "$(pyenv init - --no-rehash)"
 
 # PYTHON =============================================================
 export PYTHON_EGG_CACHE="${XDG_CACHE_HOME}/python-eggs"
@@ -527,28 +546,37 @@ fi
 # PYTHONZ ============================================================
 # export PYTHONZ_ROOT="${XDG_DATA_HOME}/pythonz"
 # export PYTHONZ_HOME="${XDG_DATA_HOME}/pythonz"
-# source "${PYTHONZ_ROOT}/etc/bashrc"
+# . "${PYTHONZ_ROOT}/etc/bashrc"
 
 # R ==================================================================
 export R_HISTFILE="${XDG_STATE_HOME}/R/history"
-export R_HOME_USER="${XDG_CONFIG_HOME}/R"
-export R_LIBS="${XDG_DATA_HOME}/R/library"
-export R_PROFILE_USER="${R_HOME_USER}/profile"
-
-if [ ! -d "${R_HOME_USER}" ]; then
-  mkdir -p "${R_HOME_USER}"
-fi
-
-if [ ! -d "${XDG_STATE_HOME}/R" ]; then
-  mkdir -p "${XDG_STATE_HOME}/R"
-fi
-
-if [ ! -d "${R_LIBS}" ]; then
-  mkdir -p "${R_LIBS}"
-fi
-
+export R_HOME_USER="${XDG_DATA_HOME}/R"
+export R_LIBS_USER="${XDG_DATA_HOME}/R/library"
+export R_PROFILE_USER="${XDG_CONFIG_HOME}/R/profile"
 alias r="R"
 alias rscript="Rscript"
+
+if [ ! -f "${R_PROFILE_USER}" ]; then
+  mkdir -p "${XDG_CONFIG_HOME}/R/"
+  ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/R/profile" "${R_PROFILE_USER}"
+fi
+
+if [ ! -f "${R_HISTFILE}" ]; then
+  mkdir -p "${XDG_STATE_HOME}/R"
+  touch "${R_HISTFILE}"
+fi
+
+if [ ! -d "${R_LIBS_USER}" ]; then
+  mkdir -p "${R_LIBS_USER}"
+fi
+
+# RADIAN =============================================================
+export RADIAN_CONFIG_FILE="${XDG_CONFIG_HOME}/radian/profile"
+
+if [ ! -f "${RADIAN_CONFIG_FILE}" ]; then
+  mkdir -p "${XDG_CONFIG_HOME}/radian"
+  ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/radian/profile" "${RADIAN_CONFIG_FILE}"
+fi
 
 # RAKU ===============================================================
 export RAKUDO_HIST="${XDG_STATE_HOME}/rakudo/history"
@@ -586,11 +614,11 @@ PATH="${ROSWELL_HOME}/bin:${PATH}"
 # RUST ===============================================================
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
-source "${CARGO_HOME}/env"
+. "${CARGO_HOME}/env"
 
 # RVM ================================================================
 # PATH="${PATH}:${XDG_DATA_HOME}/rvm/bin"
-# source "${XDG_DATA_HOME}/rvm/scripts/rvm"
+# . "${XDG_DATA_HOME}/rvm/scripts/rvm"
 
 # SBT ================================================================
 export SBT_OPTS="-ivy ${XDG_DATA_HOME}/ivy2 -sbt-dir ${XDG_DATA_HOME}/sbt"
@@ -610,8 +638,9 @@ CLASSPATH="${CLASSPATH:+${CLASSPATH}:}${SCALA_HOME}/lib/*"
 # eval "$(scalaenv init -)"
 
 # SCILAB =============================================================
-export SCIHOME="${XDG_DATA_HOME}/scilab"
-alias scilab='scilab-cli -scihome ${SCIHOME}'
+export SCIHOME="${XDG_STATE_HOME}/scilab"
+
+alias scilab='scilab-cli -scihome "${SCIHOME}"'
 alias scilab-cli='scilab-cli -scihome ${SCIHOME}'
 
 # SHENV ==============================================================
@@ -623,7 +652,18 @@ alias scilab-cli='scilab-cli -scihome ${SCIHOME}'
 export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
 
 # STACK ==============================================================
-export STACK_ROOT="${XDG_DATA_HOME}/stack"
+export STACK_XDG=1
+export STACK_CONFIG_YAML="${XDG_CONFIG_HOME}/stack/config.yaml"
+
+if [ ! -f "${STACK_CONFIG_YAML}" ]; then
+  mkdir -p "${XDG_CONFIG_HOME}/stack"
+  ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/stack/config.yaml" "${STACK_CONFIG_YAML}"
+fi
+
+if [ ! -d "${XDG_DATA_HOME}/stack/hooks" ]; then
+  mkdir -p "${XDG_DATA_HOME}/stack"
+  ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/stack/hooks" "${XDG_DATA_HOME}/stack/hooks"
+fi
 
 # STARSHIP ===========================================================
 export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/starship.toml"
@@ -647,6 +687,14 @@ export TF_HOME_DIR="${XDG_DATA_HOME}/terraform"
 export TEXMFCONFIG="${XDG_CONFIG_HOME}/texlive/texmf-config"
 export TEXMFHOME="${XDG_DATA_HOME}/texmf"
 export TEXMFVAR="${XDG_CACHE_HOME}/texlive/texmf-var"
+
+# TEALDEER ===========================================================
+export TEALDEER_CONFIG_DIR="${XDG_CONFIG_HOME}/tldr"
+alias tldr='"${CARGO_HOME}"/bin/tldr'
+
+if [ ! -d "${TEALDEER_CONFIG_DIR}" ]; then
+  ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/tealdeer" "${TEALDEER_CONFIG_DIR}"
+fi
 
 # V ==================================================================
 export VCACHE="${XDG_CACHE_HOME}/vmodules"
@@ -681,6 +729,11 @@ PATH="/opt/zeek/bin:${PATH}"
 export ZEF_CONFIG_STOREDIR="${XDG_DATA_HOME}/zef/store"
 export ZEF_CONFIG_TEMPDIR="${XDG_CACHE_HOME}/zef/temp"
 
+# ZOXIDE =============================================================
+export _ZO_ECHO=1
+eval "$(zoxide init bash)"
+alias cd='z'
+
 # ====================================================================
 # ================ CUSTOMIZATION =====================================
 # ====================================================================
@@ -713,6 +766,8 @@ export LIBRARY_PATH="$LD_LIBRARY_PATH"
 export PATH
 
 # CUSTOM LIMITS
-ulimit -n 104857
+if [ "${SHELL}" = "bash" ]; then
+  ulimit -n 104857
+fi
 
 unset i

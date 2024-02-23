@@ -1,0 +1,1 @@
+options(radian.global_history_file = "~/.local/state/radian/history")

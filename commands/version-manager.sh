@@ -28,6 +28,10 @@ opam() {
     fi
 }
 
+sscilab() {
+    command scilab-cli -scihome "${SCIHOME}"
+}
+
 erlxenv() {
     if [ "$1" = "install" ]; then
         shift
