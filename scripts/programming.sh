@@ -417,7 +417,9 @@ PATH="${NODENV_ROOT}/bin:${PATH}"
 eval "$(nodenv init -)"
 
 # NUGET ==============================================================
-export NUGET_PACKAGES="${XDG_CACHE_HOME}/NuGetPackages"
+export NUGET_HTTP_CACHE_PATH="${XDG_CACHE_HOME}/nuget/http-cache"
+export NUGET_PACKAGES="${XDG_CACHE_HOME}/nuget/packages"
+export NUGET_PLUGINS_CACHE_PATH="${XDG_CACHE_HOME}/nuget/plugins"
 
 # NVIDIA CUDA ========================================================
 export CUDA_CACHE_PATH="${XDG_CACHE_HOME}/nv"
@@ -699,7 +701,7 @@ fi
 # V ==================================================================
 export VCACHE="${XDG_CACHE_HOME}/vmodules"
 export VMODULES="${XDG_DATA_HOME}/vmodules"
-PATH="${XDG_CONFIG_HOME}/v-analyzer/:${PATH}"
+PATH="${XDG_CONFIG_HOME}/v-analyzer/bin:${PATH}"
 PATH="${XDG_DATA_HOME}/v:${PATH}"
 
 # VAGRANT ============================================================
