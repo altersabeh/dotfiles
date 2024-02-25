@@ -503,6 +503,14 @@ export PHPENV_ROOT="${XDG_DATA_HOME}/phpenv"
 PATH="${PHPENV_ROOT}/bin:${PATH}"
 eval "$(phpenv init - --no-rehash)"
 
+# PIP ================================================================
+PIP_CONFIG_FILE="${XDG_CONFIG_HOME}/pip/pip.conf"
+
+if [ ! -f "${PIP_CONFIG_FILE}" ]; then
+  mkdir -p "${XDG_CONFIG_HOME}/pip"
+  ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/pip/pip.conf" "${PIP_CONFIG_FILE}"
+fi
+
 # PLENV ==============================================================
 export PLENV_ROOT="${XDG_DATA_HOME}/plenv"
 PATH="${PLENV_ROOT}/bin:${PATH}"
@@ -750,7 +758,7 @@ PATH="$RENV_ROOT/versions/$(renv global)/bin:${PATH}"
 PATH="$LUAENV_ROOT/versions/$(luaenv global)/bin:${PATH}"
 
 # OH MY POSH =========================================================
-eval "$(oh-my-posh init bash --config ~/.cache/oh-my-posh/themes/atomic.omp.json)"
+eval "$(oh-my-posh init bash --config ~/.cache/oh-my-posh/themes/hul10.omp.json)"
 
 # USE WINDOWS BROWSER IN WSL =========================================
 if grep -q WSL /proc/version; then
