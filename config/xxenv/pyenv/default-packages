@@ -1,0 +1,16 @@
+wheel
+pip
+autopep8
+isort
+jupyterlab
+fortls
+coconut
+hy
+kotlin-jupyter-kernel
+notebook
+jupyter-console
+findent
+radian
+octave-kernel
+scilab-kernel
+pylint
