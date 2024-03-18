@@ -395,6 +395,11 @@ export NVCC_PREPEND_FLAGS="-allow-unsupported-compiler"
 prepend_to_path "${CUDA_PATH}/bin"
 prepend_to_ld_library_path "${CUDA_PATH}/lib64"
 
+# NVM ================================================================
+# export NVM_DIR="${XDG_DATA_HOME}/nvm"
+# source_if_exists "${NVM_DIR}/nvm.sh"
+# source_if_exists "${NVM_DIR}/bash_completion"
+
 # NODENV (node) ======================================================
 export NODENV_ROOT="${XDG_DATA_HOME}/nodenv"
 prepend_to_path "${NODENV_ROOT}/bin"
@@ -429,11 +434,6 @@ fi
 export NUGET_HTTP_CACHE_PATH="${XDG_CACHE_HOME}/nuget/http-cache"
 export NUGET_PACKAGES="${XDG_CACHE_HOME}/nuget/packages"
 export NUGET_PLUGINS_CACHE_PATH="${XDG_CACHE_HOME}/nuget/plugins"
-
-# NVM ================================================================
-# export NVM_DIR="${XDG_DATA_HOME}/nvm"
-# source_if_exists "${NVM_DIR}/nvm.sh"
-# source_if_exists "${NVM_DIR}/bash_completion"
 
 # OBJECTIVE-C ========================================================
 # OBJC_INCLUDE_PATH
@@ -473,10 +473,6 @@ export OPAMROOT="${XDG_DATA_HOME}/opam"
 export OPAMSOLVERTIMEOUT=1000
 source_if_exists "${OPAMROOT}/opam-init/init.sh"
 
-# PERLBREW ===========================================================
-# export PERLBREW_ROOT="${XDG_DATA_HOME}/perlbrew"
-# source_if_exists "${PERLBREW_ROOT}/etc/bashrc"
-
 # PEX ================================================================
 export PEX_ROOT="${XDG_CACHE_HOME}/pex"
 
@@ -493,6 +489,12 @@ fi
 if [ ! -d "${XDG_STATE_HOME}/psql" ]; then
   mkdir -p "${XDG_STATE_HOME}/psql"
 fi
+
+# PHPBREW ============================================================
+# export BOX_REQUIREMENT_CHECKER=0
+# export PHPBREW_ROOT="${XDG_DATA_HOME}/phpbrew"
+# export PHPBREW_HOME="${XDG_DATA_HOME}/phpbrew"
+# source_if_exists "${PHPBREW_HOME}/bashrc"
 
 # PHPENV =============================================================
 export PHPENV_ROOT="${XDG_DATA_HOME}/phpenv"
@@ -515,11 +517,9 @@ if command_exists php; then
   fi
 fi
 
-# PHPBREW ============================================================
-# export BOX_REQUIREMENT_CHECKER=0
-# export PHPBREW_ROOT="${XDG_DATA_HOME}/phpbrew"
-# export PHPBREW_HOME="${XDG_DATA_HOME}/phpbrew"
-# source_if_exists "${PHPBREW_HOME}/bashrc"
+# PERLBREW ===========================================================
+# export PERLBREW_ROOT="${XDG_DATA_HOME}/perlbrew"
+# source_if_exists "${PERLBREW_ROOT}/etc/bashrc"
 
 # PLENV ==============================================================
 export PLENV_ROOT="${XDG_DATA_HOME}/plenv"
@@ -561,6 +561,16 @@ prepend_to_path "${XDG_DATA_HOME}/ponyup/bin"
 # PUB ================================================================
 export PUB_CACHE="${XDG_DATA_HOME}/pub"
 append_to_path "${PUB_CACHE}/bin"
+
+# PYTHONBREW =========================================================
+# export PYTHONBREW_ROOT="${XDG_DATA_HOME}/pythonbrew"
+# export PYTHONBREW_HOME="${XDG_DATA_HOME}/pythonbrew"
+# eval "$(pythonbrew init)"
+
+# PYTHONZ ============================================================
+# export PYTHONZ_ROOT="${XDG_DATA_HOME}/pythonz"
+# export PYTHONZ_HOME="${XDG_DATA_HOME}/pythonz"
+# source_if_exists "${PYTHONZ_ROOT}/etc/bashrc"
 
 # PYENV ==============================================================
 export PYENV_ROOT="${XDG_DATA_HOME}/pyenv"
@@ -641,16 +651,6 @@ export PIPX_HOME="${XDG_DATA_HOME}/pipx"
 export PIPX_BIN_DIR="${XDG_DATA_HOME}/pipx/bin"
 prepend_to_path "${PIPX_BIN_DIR}"
 
-# PYTHONBREW =========================================================
-# export PYTHONBREW_ROOT="${XDG_DATA_HOME}/pythonbrew"
-# export PYTHONBREW_HOME="${XDG_DATA_HOME}/pythonbrew"
-# eval "$(pythonbrew init)"
-
-# PYTHONZ ============================================================
-# export PYTHONZ_ROOT="${XDG_DATA_HOME}/pythonz"
-# export PYTHONZ_HOME="${XDG_DATA_HOME}/pythonz"
-# source_if_exists "${PYTHONZ_ROOT}/etc/bashrc"
-
 # RENV ===============================================================
 export RENV_ROOT="${XDG_DATA_HOME}/renv"
 prepend_to_path "${RENV_ROOT}/bin"
@@ -706,6 +706,10 @@ if command_exists raku; then
   export RAKUDO_HIST="${XDG_STATE_HOME}/rakudo/history"
   export RAKULIB="${XDG_CACHE_HOME}/raku${RAKULIB:+:${RAKULIB}}"
 fi
+
+# RVM ================================================================
+# prepend_to_path "${XDG_DATA_HOME}/rvm/bin"
+# source_if_exists "${XDG_DATA_HOME}/rvm/scripts/rvm"
 
 # RBENV ==============================================================
 export RBENV_ROOT="${XDG_DATA_HOME}/rbenv"
@@ -788,10 +792,6 @@ if command_exists rustup; then
   MANPATH="${RUSTUP_RUSTC_PATH}/share/man${MANPATH:+:${MANPATH}}"
 fi
 
-# RVM ================================================================
-# prepend_to_path "${XDG_DATA_HOME}/rvm/bin"
-# source_if_exists "${XDG_DATA_HOME}/rvm/scripts/rvm"
-
 # SBT ================================================================
 export SBT_OPTS="-ivy ${XDG_DATA_HOME}/ivy2 -sbt-dir ${XDG_DATA_HOME}/sbt"
 
@@ -843,7 +843,7 @@ export CS_HOME="${XDG_DATA_HOME}/coursier"
 prepend_to_path "${CS_HOME}/bin"
 
 # NODE JAVA CALLER ===================================================
-export JAVA_CALLER_JAVA_EXECUTABLE="${JAVA_HOME}/bin/java.exe"
+export JAVA_CALLER_JAVA_EXECUTABLE="${JAVA_HOME}/bin/java"
 
 # SHENV ==============================================================
 # export SHENV_ROOT="${XDG_DATA_HOME}/shenv"
