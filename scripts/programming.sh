@@ -135,7 +135,7 @@ fi
 # CRENV ==============================================================
 # export CRENV_ROOT="${XDG_DATA_HOME}/crenv"
 # prepend_to_path "$CRENV_ROOT/bin"
-# eval "$(crenv init -)"
+# eval_if_exists crenv "init -"
 
 # DART ===============================================================
 export DART_CONFIG_DIR="${XDG_CONFIG_HOME}/dart"
@@ -325,6 +325,13 @@ source_if_exists "${KIEX_HOME}/scripts/kiex"
 # LEIN ===============================================================
 export LEIN_HOME="${XDG_DATA_HOME}/lein"
 prepend_to_path "${LEIN_HOME}/bin"
+
+if command_exists lein; then
+  if [ ! -f "${LEIN_HOME}/profiles.clj" ]; then
+    mkdir -p "${LEIN_HOME}"
+    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/lein/profiles.clj" "${LEIN_HOME}/profiles.clj"
+  fi
+fi
 
 # LESS ===============================================================
 export LESSHISTFILE="${XDG_STATE_HOME}/less/history"
@@ -546,6 +553,26 @@ fi
 if command_exists cpanm; then
   export PERL_CPANM_HOME="${XDG_CACHE_HOME}/cpanm"
   export PERL_CPANM_OPT="--prompt --notest -l ${XDG_DATA_HOME}/perl"
+fi
+
+# PERLCRITIC =========================================================
+export PERLCRITIC="${XDG_CONFIG_HOME}/perlcritic/perlcriticrc"
+
+if command_exists perlcritic; then
+  if [ ! -f "${PERLCRITIC}" ]; then
+    mkdir -p "${XDG_CONFIG_HOME}/perlcritic"
+    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/perlcritic/perlcriticrc" "${PERLCRITIC}"
+  fi
+fi
+
+# PERLTIDY ===========================================================
+export PERLTIDY="${XDG_CONFIG_HOME}/perltidy/perltidyrc"
+
+if command_exists perltidy; then
+  if [ ! -f "${PERLTIDY}" ]; then
+    mkdir -p "${XDG_CONFIG_HOME}/perltidy"
+    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/perltidy/perltidyrc" "${PERLTIDY}"
+  fi
 fi
 
 # REPLY ==============================================================
@@ -814,24 +841,24 @@ if command_exists java; then
 fi
 
 # KOTLIN =============================================================
-if [ -n "${KOTLIN_HOME}" ]; then
-  append_to_classpath "${KOTLIN_HOME}/lib/*"
-fi
+# f [ -n "${KOTLIN_HOME}" ]; then
+#  append_to_classpath "${KOTLIN_HOME}/lib/*"
+# i
 
 # SCALA ==============================================================
 export SCALA_HISTFILE="${XDG_STATE_HOME}/scala/history"
 
 if command_exists scala; then
   mkdir -p "${XDG_STATE_HOME}/scala"
-  if [ -n "${SCALA_HOME}" ]; then
-    append_to_classpath "${SCALA_HOME}/lib/*"
-  fi
+#   if [ -n "${SCALA_HOME}" ]; then
+#     append_to_classpath "${SCALA_HOME}/lib/*"
+#   fi
 fi
 
 # GROOVY =============================================================
-if [ -n "${GROOVY_HOME}" ]; then
-  append_to_classpath "${GROOVY_HOME}/lib/*"
-fi
+# if [ -n "${GROOVY_HOME}" ]; then
+#   append_to_classpath "${GROOVY_HOME}/lib/*"
+# fi
 
 # SCALAENV ===========================================================
 # export SCALAENV_ROOT="${XDG_DATA_HOME}/scalaenv"
@@ -955,7 +982,7 @@ export MANPATH
 export PATH
 
 # CUSTOM LIMITS
-if [ "${SHELL}" = "bash" ]; then
+if [ "${SHELL}" = "/bin/bash" ]; then
   ulimit -n 104857
 fi
 
