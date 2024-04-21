@@ -20,7 +20,6 @@ if command_exists gnat; then
   for item in /usr/lib/x86_64-linux-gnu/ada/adalib/*; do
     prepend_to_ada_objects_path "${item}"
   done
-
   for item in /usr/share/ada/adainclude/*; do
     prepend_to_ada_include_path "${item}"
   done
@@ -38,7 +37,6 @@ export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME}/ansible/galaxy_cache"
 export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
 export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
 source_if_exists "${ASDF_DATA_DIR}/asdf.sh"
-
 if command_exists asdf; then
   if [ ! -f "${ASDF_CONFIG_FILE}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/asdf"
@@ -63,7 +61,7 @@ prepend_to_path "${BALLERINA_HOME}/bin"
 # BASH ===============================================================
 item="$(ps -cp "$$" -o command="")"
 export HISTFILE="${XDG_STATE_HOME}/${item}/history"
-[ ! -f "${HISTFILE}" ] && mkdir -p "${XDG_STATE_HOME}/${item}"
+mkdir -p "${XDG_STATE_HOME}/${item}"
 
 # BUN ================================================================
 export BUN_INSTALL="${XDG_DATA_HOME}/bun"
@@ -82,7 +80,6 @@ prepend_to_path "${GCC_PATH}/bin"
 
 # CALC ===============================================================
 export CALCHISTFILE="${XDG_STATE_HOME}/calc/history"
-
 if command_exists calc; then
   mkdir -p "${XDG_STATE_HOME}/calc"
 fi
@@ -93,11 +90,6 @@ prepend_to_path "${CLEAN_HOME}/bin"
 
 # CLING ==============================================================
 export CLING_HISTFILE="${XDG_STATE_HOME}/cling/history"
-export CLING_NOHISTORY=true
-
-if command_exists cling; then
-  mkdir -p "${XDG_STATE_HOME}/cling"
-fi
 
 # CLOJURE ============================================================
 export GITLIBS="${XDG_CACHE_HOME}/clojure-gitlibs"
@@ -119,13 +111,11 @@ export CONDA_AUTO_ACTIVATE_BASE=false
 export CONDARC="${XDG_CONFIG_HOME}/conda/condarc"
 prepend_to_path "${XDG_DATA_HOME}/conda/condabin"
 eval_if_exists conda "shell.bash hook"
-
 if command_exists conda; then
   if [ ! -f "${CONDARC}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/conda"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/conda/condarc" "${CONDARC}"
   fi
-
   for item in $(conda env list | awk '$1 != "#" && $1 != "base" {print $1}'); do
     CONDA_ROOT="$(conda info --root)"
     append_to_path "${CONDA_ROOT}/envs/${item}/bin"
@@ -168,16 +158,6 @@ export EM_CACHE="${XDG_CACHE_HOME}/emscripten/cache"
 export EM_CONFIG="${XDG_CONFIG_HOME}/emscripten/config"
 export EM_PORTS="${XDG_DATA_HOME}/emscripten/cache"
 
-# EVM ================================================================
-export EVM_HOME="${XDG_DATA_HOME}/evm"
-
-source_if_exists "${EVM_HOME}/scripts/evm"
-
-# ERLANG =============================================================
-if command_exists erl; then
-  mkdir -p "${XDG_CONFIG_HOME}/erlang"
-fi
-
 # FACTOR =============================================================
 prepend_to_path "${XDG_DATA_HOME}/factor"
 
@@ -197,7 +177,6 @@ source_if_exists "${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/env"
 export CABAL_CONFIG="${XDG_CONFIG_HOME}/cabal/config"
 export CABAL_DIR="${XDG_DATA_HOME}/cabal"
 prepend_to_path "${CABAL_DIR}/bin"
-
 if command_exists cabal; then
   if [ ! -f "${CABAL_CONFIG}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/cabal"
@@ -208,13 +187,11 @@ fi
 # STACK ==============================================================
 export STACK_XDG=1
 export STACK_CONFIG_YAML="${XDG_CONFIG_HOME}/stack/config.yaml"
-
 if command_exists stack; then
   if [ ! -d "${XDG_DATA_HOME}/stack/hooks" ]; then
     mkdir -p "${XDG_DATA_HOME}/stack"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/stack/hooks" "${XDG_DATA_HOME}/stack/hooks"
   fi
-
   if [ ! -f "${STACK_CONFIG_YAML}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/stack"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/stack/config.yaml" "${STACK_CONFIG_YAML}"
@@ -222,8 +199,8 @@ if command_exists stack; then
 fi
 
 # GIT ================================================================
-export GIT_CONFIG="${XDG_CONFIG_HOME}/git/config"
-
+# Note: ElixirLs does not work when exporting GIT_CONFIG
+GIT_CONFIG="${XDG_CONFIG_HOME}/git/config"
 if command_exists git; then
   if [ ! -f "${GIT_CONFIG}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/git"
@@ -240,7 +217,6 @@ export GOENV_PREPEND_GOPATH=1
 export GOENV_ROOT="${XDG_DATA_HOME}/goenv"
 prepend_to_path "${GOENV_ROOT}/bin"
 # eval_if_exists goenv "init - --no-rehash bash"
-
 if command_exists goenv; then
   GOENV_GO_PATH="$GOENV_ROOT/versions/$(goenv global)"
   prepend_to_path "${GOENV_GO_PATH}/bin"
@@ -256,7 +232,6 @@ fi
 
 # GNUPG ==============================================================
 export GNUPGHOME="${XDG_DATA_HOME}/gnupg"
-
 if [ ! -d "${GNUPGHOME}" ]; then
   mkdir -p "${GNUPGHOME}"
   chmod 700 "${GNUPGHOME}"
@@ -311,6 +286,21 @@ prepend_to_path "${XDG_DATA_HOME}/juliaup/bin"
 export JULIA_DEPOT_PATH="${XDG_DATA_HOME}/julia:${JULIA_DEPOT_PATH}"
 export JULIA_HISTORY="${XDG_STATE_HOME}/julia/history"
 
+# EVM ================================================================
+export EVM_HOME="${XDG_DATA_HOME}/evm"
+source_if_exists "${EVM_HOME}/scripts/evm"
+
+# ERLANG =============================================================
+export ERL_AFLAGS="-kernel shell_history enabled shell_history_path '\"${XDG_STATE_HOME}/erlang\"'"
+if command_exists erl; then
+  mkdir -p "${XDG_CONFIG_HOME}/erlang"
+fi
+
+# MIX ================================================================
+export MIX_HOME="${XDG_DATA_HOME}/mix"
+export MIX_XDG=1
+prepend_to_path "${MIX_HOME}/escripts"
+
 # KERL ===============================================================
 export KERL_BASE_DIR="${XDG_DATA_HOME}/kerl"
 export KERL_CONFIG="${XDG_CONFIG_HOME}/kerl/kerlrc"
@@ -322,10 +312,12 @@ export KERL_BUILD_DOCS=yes
 export KIEX_HOME="${XDG_DATA_HOME}/kiex"
 source_if_exists "${KIEX_HOME}/scripts/kiex"
 
+# ELIXIR =============================================================
+export ELIXIR_ERL_OPTIONS="-kernel shell_history enabled shell_history_path '${XDG_STATE_HOME}/elixir'"
+
 # LEIN ===============================================================
 export LEIN_HOME="${XDG_DATA_HOME}/lein"
 prepend_to_path "${LEIN_HOME}/bin"
-
 if command_exists lein; then
   if [ ! -f "${LEIN_HOME}/profiles.clj" ]; then
     mkdir -p "${LEIN_HOME}"
@@ -336,20 +328,14 @@ fi
 # LESS ===============================================================
 export LESSHISTFILE="${XDG_STATE_HOME}/less/history"
 
-if command_exists less; then
-  mkdir -p "${XDG_STATE_HOME}/less"
-fi
-
 # LUAENV =============================================================
 export LUAENV_ROOT="${XDG_DATA_HOME}/luaenv"
 prepend_to_path "${LUAENV_ROOT}/bin"
 # eval_if_exists luaenv "init - --no-rehash"
-
-if command_exists luarocks; then
+if command_exists luaenv; then
   if [ ! -f "${LUAENV_ROOT}/default-rocks" ]; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/luaenv/default-rocks" "${LUAENV_ROOT}/default-rocks"
   fi
-
   LUAENV_LUA_PATH="$LUAENV_ROOT/versions/$(luaenv global)"
   prepend_to_path "${LUAENV_LUA_PATH}/bin"
   MANPATH="${LUAENV_LUA_PATH}/share/man${MANPATH:+:${MANPATH}}"
@@ -358,31 +344,21 @@ fi
 # LUAROCKS ===========================================================
 export LUAROCKS_CONFIG="${XDG_CONFIG_HOME}/luarocks/config.lua"
 export LUAROCKS_TREE="${XDG_DATA_HOME}/luarocks"
-
 if command_exists luarocks; then
   if [ ! -f "${LUAROCKS_CONFIG}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/luarocks"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/luarocks/config.lua" "${LUAROCKS_CONFIG}"
   fi
 fi
-
 eval_if_exists luarocks "path --bin"
 
 # MAGEFILE ===========================================================
 export MAGEFILE_CACHE="${XDG_CACHE_HOME}/magefile"
 
-# MAVEN ==============================================================
-export MAVEN_OPTS="-Dmaven.repo.local=${XDG_CACHE_HOME}/maven/repository"
-
 # MINT ===============================================================
 export MINT_PATH="${XDG_DATA_HOME}/mint"
 export MINT_LINK_PATH="${XDG_DATA_HOME}/mint/bin"
 prepend_to_path "${MINT_LINK_PATH}"
-
-# MIX ================================================================
-export MIX_HOME="${XDG_DATA_HOME}/mix"
-export MIX_XDG=1
-prepend_to_path "${MIX_HOME}/escripts"
 
 # MOJO ===============================================================
 export MODULAR_HOME="${XDG_DATA_HOME}/modular"
@@ -390,6 +366,12 @@ prepend_to_path "${MODULAR_HOME}/pkg/packages.modular.com_mojo/bin"
 
 # MONO ===============================================================
 # export MONO_REGISTRY_PATH="${XDG_CACHE_HOME}/mono/registry"
+
+# MYSQL ==============================================================
+export MYSQL_HISTFILE="${XDG_STATE_HOME}/mysql/history"
+if command_exists mysql; then
+  mkdir -p "${XDG_STATE_HOME}/mysql"
+fi
 
 # NIMBLE =============================================================
 export NIMBLE_DIR="${XDG_DATA_HOME}/nimble"
@@ -410,14 +392,11 @@ prepend_to_ld_library_path "${CUDA_PATH}/lib64"
 # NODENV (node) ======================================================
 export NODENV_ROOT="${XDG_DATA_HOME}/nodenv"
 prepend_to_path "${NODENV_ROOT}/bin"
-
+# eval_if_exists nodenv "init - --no-rehash"
 if command_exists nodenv; then
-  eval "$(nodenv init -)"
-
   if [ ! -f "${NODENV_ROOT}/default-packages" ]; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/nodenv/default-packages" "${NODENV_ROOT}/default-packages"
   fi
-
   NODENV_NODE_PATH="$NODENV_ROOT/versions/$(nodenv global)"
   prepend_to_path "${NODENV_NODE_PATH}/bin"
   MANPATH="${NODENV_NODE_PATH}/share/man${MANPATH:+:${MANPATH}}"
@@ -429,8 +408,8 @@ export NODE_REPL_HISTORY="${XDG_STATE_HOME}/node/history"
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
 export NPM_CONFIG_PREFIX="${XDG_DATA_HOME}/npm"
 prepend_to_path "${NPM_CONFIG_PREFIX}/bin"
-
 if command_exists npm; then
+  mkdir -p "${XDG_DATA_HOME}/node"
   if [ ! -f "${NPM_CONFIG_USERCONFIG}" ]; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/npm/npmrc" "${NPM_CONFIG_USERCONFIG}"
     mkdir -p "${XDG_CONFIG_HOME}/npm"
@@ -449,7 +428,6 @@ export NUGET_PLUGINS_CACHE_PATH="${XDG_CACHE_HOME}/nuget/plugins"
 # OCAML ==============================================================
 if command_exists ocaml; then
   export OCAML_INIT_FILE="${XDG_CONFIG_HOME}/ocaml/init.ml"
-
   if [ ! -f "${OCAML_INIT_FILE}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/ocaml"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/ocaml/init.ml" "${OCAML_INIT_FILE}"
@@ -459,12 +437,7 @@ fi
 # OCTAVE =============================================================
 export OCTAVE_HISTFILE="${XDG_STATE_HOME}/octave/history"
 export OCTAVE_SITE_INITFILE="${XDG_CONFIG_HOME}/octave/octaverc"
-
 if command_exists octave; then
-  if [ ! -d "${XDG_DATA_HOME}/octave" ]; then
-    mkdir -p "${XDG_DATA_HOME}/octave"
-  fi
-
   if [ ! -f "${OCTAVE_SITE_INITFILE}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/octave"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/octave/octaverc" "${OCTAVE_SITE_INITFILE}"
@@ -488,13 +461,11 @@ export PSQLRC="${XDG_CONFIG_HOME}/pg/psqlrc"
 export PSQL_HISTORY="${XDG_STATE_HOME}/psql/history"
 export PGPASSFILE="${XDG_CONFIG_HOME}/pg/pgpass"
 export PGSERVICEFILE="${XDG_CONFIG_HOME}/pg/pg_service.conf"
-
-if [ ! -d "${XDG_CONFIG_HOME}/pg" ]; then
-  mkdir -p "${XDG_CONFIG_HOME}/pg"
-fi
-
-if [ ! -d "${XDG_STATE_HOME}/psql" ]; then
+if command_exists psql; then
   mkdir -p "${XDG_STATE_HOME}/psql"
+  if [ ! -d "${XDG_CONFIG_HOME}/pg" ]; then
+    mkdir -p "${XDG_CONFIG_HOME}/pg"
+  fi
 fi
 
 # PHPBREW ============================================================
@@ -507,7 +478,6 @@ fi
 export PHPENV_ROOT="${XDG_DATA_HOME}/phpenv"
 prepend_to_path "${PHPENV_ROOT}/bin"
 # eval_if_exists phpenv "init - --no-rehash"
-
 if command_exists phpenv; then
   PHPENV_PHP_PATH="${PHPENV_ROOT}/versions/$(phpenv global)"
   prepend_to_path "${PHPENV_PHP_PATH}/bin"
@@ -516,7 +486,6 @@ fi
 
 # PHP ================================================================
 export PHP_DTRACE=yes
-
 if command_exists php; then
   export PHP_INI_SCAN_DIR="${XDG_CONFIG_HOME}/php"
   if [ ! -d "${PHP_INI_SCAN_DIR}" ]; then
@@ -532,7 +501,6 @@ fi
 export PLENV_ROOT="${XDG_DATA_HOME}/plenv"
 prepend_to_path "${PLENV_ROOT}/bin"
 # eval_if_exists plenv "init -"
-
 if command_exists plenv; then
   PLENV_PERL_PATH="${PLENV_ROOT}/versions/$(plenv global)"
   prepend_to_path "${PLENV_PERL_PATH}/bin"
@@ -541,7 +509,6 @@ fi
 
 # PERL
 prepend_to_path "${XDG_DATA_HOME}/perl/bin"
-
 if command_exists perl; then
   export PERL_LOCAL_LIB_ROOT="${XDG_DATA_HOME}/perl${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
   export PERL_MB_OPT="--install_base ${XDG_DATA_HOME}/perl"
@@ -557,7 +524,6 @@ fi
 
 # PERLCRITIC =========================================================
 export PERLCRITIC="${XDG_CONFIG_HOME}/perlcritic/perlcriticrc"
-
 if command_exists perlcritic; then
   if [ ! -f "${PERLCRITIC}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/perlcritic"
@@ -567,7 +533,6 @@ fi
 
 # PERLTIDY ===========================================================
 export PERLTIDY="${XDG_CONFIG_HOME}/perltidy/perltidyrc"
-
 if command_exists perltidy; then
   if [ ! -f "${PERLTIDY}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/perltidy"
@@ -603,12 +568,10 @@ append_to_path "${PUB_CACHE}/bin"
 export PYENV_ROOT="${XDG_DATA_HOME}/pyenv"
 prepend_to_path "${PYENV_ROOT}/bin"
 # eval_if_exists pyenv "init - --no-rehash"
-
 if command_exists pyenv; then
   if [ ! -f "${PYENV_ROOT}/default-packages" ]; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/pyenv/default-packages" "${PYENV_ROOT}/default-packages"
   fi
-
   PYENV_PYTHON_PATH="${PYENV_ROOT}/versions/$(pyenv global)"
   prepend_to_path "${PYENV_PYTHON_PATH}/bin"
   MANPATH="${PYENV_PYTHON_PATH}/share/man${MANPATH:+:${MANPATH}}"
@@ -619,10 +582,8 @@ export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history"
 export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}/pycache"
 export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonrc"
 export PYTHONUSERBASE="${XDG_DATA_HOME}/pip"
-
 if command_exists python; then
   mkdir -p "${XDG_STATE_HOME}/python"
-
   if [ ! -f "${PYTHONSTARTUP}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/python"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/python/pythonrc" "${PYTHONSTARTUP}"
@@ -638,7 +599,6 @@ prepend_to_path "${POETRY_HOME}/bin"
 # PIP ================================================================
 PIP_CONFIG_FILE="${XDG_CONFIG_HOME}/pip/pip.conf"
 prepend_to_path "${PYTHONUSERBASE}/bin"
-
 if command_exists pip; then
   if [ ! -f "${PIP_CONFIG_FILE}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/pip"
@@ -649,7 +609,6 @@ fi
 # PYLINT =============================================================
 export PYLINTHOME="$XDG_CACHE_HOME/pylint"
 export PYLINTRC="$XDG_CONFIG_HOME/pylint/pylintrc"
-
 if command_exists pylint; then
   if [ ! -f "${PYLINTRC}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/pylint"
@@ -665,7 +624,6 @@ fi
 # JUPYTER ============================================================
 export JUPYTER_CONFIG_DIR="${XDG_CONFIG_HOME}/jupyter"
 export JUPYTER_CONFIG_FILE="$JUPYTER_CONFIG_DIR/jupyter_notebook_config.py"
-
 if command_exists jupyter; then
   if [ ! -f "${JUPYTER_CONFIG_FILE}" ]; then
     mkdir -p "${JUPYTER_CONFIG_DIR}"
@@ -682,7 +640,6 @@ prepend_to_path "${PIPX_BIN_DIR}"
 export RENV_ROOT="${XDG_DATA_HOME}/renv"
 prepend_to_path "${RENV_ROOT}/bin"
 # eval_if_exists renv "init - --no-rehash"
-
 if command_exists renv; then
   RENV_R_PATH="${RENV_ROOT}/versions/$(renv global)"
   prepend_to_path "${RENV_R_PATH}/bin"
@@ -694,11 +651,9 @@ export R_HISTFILE="${XDG_STATE_HOME}/R/history"
 export R_HOME_USER="${XDG_DATA_HOME}/R"
 export R_LIBS_USER="${XDG_DATA_HOME}/R/library"
 export R_PROFILE_USER="${XDG_CONFIG_HOME}/R/profile"
-
 if command_exists R; then
   mkdir -p "${XDG_STATE_HOME}/R"
   mkdir -p "${R_LIBS_USER}"
-
   if [ ! -f "${R_PROFILE_USER}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/R/"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/R/profile" "${R_PROFILE_USER}"
@@ -710,7 +665,6 @@ alias_if_exists "Rscript" "rscript"
 
 # RADIAN =============================================================
 export RADIAN_CONFIG_FILE="${XDG_CONFIG_HOME}/radian/profile"
-
 if command_exists radian; then
   if [ ! -f "${RADIAN_CONFIG_FILE}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/radian"
@@ -729,10 +683,8 @@ prepend_to_path "${RAKUENV_ROOT}/bin"
 # eval_if_exists rakuenv "init -"
 
 # RAKU ===============================================================
-if command_exists raku; then
-  export RAKUDO_HIST="${XDG_STATE_HOME}/rakudo/history"
-  export RAKULIB="${XDG_CACHE_HOME}/raku${RAKULIB:+:${RAKULIB}}"
-fi
+export RAKUDO_HIST="${XDG_STATE_HOME}/rakudo/history"
+export RAKULIB="${XDG_CACHE_HOME}/raku${RAKULIB:+:${RAKULIB}}"
 
 # RVM ================================================================
 # prepend_to_path "${XDG_DATA_HOME}/rvm/bin"
@@ -742,12 +694,10 @@ fi
 export RBENV_ROOT="${XDG_DATA_HOME}/rbenv"
 prepend_to_path "${RBENV_ROOT}/bin"
 # eval_if_exists rbenv "init - --no-rehash"
-
 if command_exists rbenv; then
   if [ ! -f "${RBENV_ROOT}/default-gems" ]; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/rbenv/default-gems" "${RBENV_ROOT}/default-gems"
   fi
-
   RBENV_RUBY_PATH="${RBENV_ROOT}/versions/$(rbenv global)"
   prepend_to_path "${RBENV_RUBY_PATH}/bin"
   MANPATH="${RBENV_RUBY_PATH}/share/man${MANPATH:+:${MANPATH}}"
@@ -758,7 +708,6 @@ export GEM_HOME="${XDG_DATA_HOME}/gem"
 export GEM_SPEC_CACHE="${XDG_CACHE_HOME}/gem"
 export GEMRC="${XDG_CONFIG_HOME}/gem/gemrc"
 prepend_to_path "${GEM_HOME}/bin"
-
 if command_exists gem; then
   if [ ! -f "${GEMRC}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/gem"
@@ -767,14 +716,13 @@ if command_exists gem; then
 fi
 
 # BUNDLER ============================================================
+export BUNDLE_HOME="${GEM_HOME}"
 export BUNDLE_USER_CACHE="${XDG_CACHE_HOME}/bundle"
 export BUNDLE_USER_CONFIG="${XDG_CONFIG_HOME}/bundle/config"
 export BUNDLE_USER_HOME="${XDG_DATA_HOME}/bundle"
 export BUNDLE_USER_PLUGIN="${BUNDLE_USER_HOME}/plugins"
-
 if command_exists bundle; then
   mkdir -p "${BUNDLE_USER_HOME}" "${BUNDLE_USER_CACHE}"
-
   if [ ! -f "${BUNDLE_USER_CONFIG}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/bundle"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/bundle/config" "${BUNDLE_USER_CONFIG}"
@@ -783,8 +731,8 @@ fi
 
 # IRB ================================================================
 export IRBRC="${XDG_CONFIG_HOME}/irb/irbrc"
-
 if command_exists irb; then
+  mkdir -p "${XDG_STATE_HOME}/irb"
   if [ ! -f "${IRBRC}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/irb"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/irb/irbrc" "${IRBRC}"
@@ -802,7 +750,14 @@ prepend_to_path "${XDG_CACHE_HOME}/rebar3/bin"
 # RED ================================================================
 prepend_to_path "${XDG_DATA_HOME}/red/bin"
 
-# ROSWELL ===========================================================
+# REDIS ==============================================================
+export REDISCLI_HISTFILE="${XDG_STATE_HOME}/redis/history"
+export REDISCLI_RCFILE="${XDG_CONFIG_HOME}/redis/redisclirc"
+if command_exists redis-cli; then
+  mkdir -p "${XDG_STATE_HOME}/redis"
+fi
+
+# ROSWELL ============================================================
 export ROSWELL_HOME="${XDG_DATA_HOME}/roswell"
 prepend_to_path "${ROSWELL_HOME}/bin"
 
@@ -812,19 +767,14 @@ source_if_exists "${CARGO_HOME}/env"
 
 # RUST ===============================================================
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
-
 if command_exists rustup; then
   RUSTC_TOOLCHAIN="$(rustup show active-toolchain | awk '{print $1}')"
   RUSTUP_RUSTC_PATH="${RUSTUP_HOME}/toolchains/${RUSTC_TOOLCHAIN}"
   MANPATH="${RUSTUP_RUSTC_PATH}/share/man${MANPATH:+:${MANPATH}}"
 fi
 
-# SBT ================================================================
-export SBT_OPTS="-ivy ${XDG_DATA_HOME}/ivy2 -sbt-dir ${XDG_DATA_HOME}/sbt"
-
 # SCILAB =============================================================
 export SCIHOME="${XDG_STATE_HOME}/scilab"
-
 alias_if_exists "scilab-cli -scihome ${SCIHOME}" "scilab"
 alias_if_exists "scilab-cli -scihome ${SCIHOME}" "scilab-cli"
 
@@ -841,19 +791,16 @@ if command_exists java; then
 fi
 
 # KOTLIN =============================================================
-# f [ -n "${KOTLIN_HOME}" ]; then
+# if [ -n "${KOTLIN_HOME}" ]; then
 #  append_to_classpath "${KOTLIN_HOME}/lib/*"
-# i
+# fi
 
 # SCALA ==============================================================
-export SCALA_HISTFILE="${XDG_STATE_HOME}/scala/history"
-
-if command_exists scala; then
-  mkdir -p "${XDG_STATE_HOME}/scala"
+# if command_exists scala; then
 #   if [ -n "${SCALA_HOME}" ]; then
 #     append_to_classpath "${SCALA_HOME}/lib/*"
 #   fi
-fi
+# fi
 
 # GROOVY =============================================================
 # if [ -n "${GROOVY_HOME}" ]; then
@@ -865,6 +812,22 @@ fi
 # prepend_to_path "${SCALAENV_ROOT}/bin"
 # eval_if_exists scalaenv "init -"
 
+# MAVEN ==============================================================
+export MAVEN_CUSTOM_REPO="${XDG_CACHE_HOME}/maven"
+export MAVEN_OPTS="-Dmaven.repo.local=${MAVEN_CUSTOM_REPO}/repository"
+if command_exists mvn; then
+  if [ -f "${MAVEN_HOME}/conf/settings.xml" ]; then
+    rm "${MAVEN_HOME}/conf/settings.xml"
+    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/maven/settings.xml" "${MAVEN_HOME}/conf/settings.xml"
+  fi
+  if [ ! -d "${MAVEN_HOME}/repository" ]; then
+    ln -s "${XDG_CACHE_HOME}/maven/repository" "${MAVEN_HOME}/repository"
+  fi
+fi
+
+# SBT ================================================================
+export SBT_OPTS="-ivy ${XDG_DATA_HOME}/ivy2 -sbt-dir ${XDG_DATA_HOME}/sbt"
+
 # COURSIER ===========================================================
 export CS_HOME="${XDG_DATA_HOME}/coursier"
 prepend_to_path "${CS_HOME}/bin"
@@ -872,10 +835,20 @@ prepend_to_path "${CS_HOME}/bin"
 # NODE JAVA CALLER ===================================================
 export JAVA_CALLER_JAVA_EXECUTABLE="${JAVA_HOME}/bin/java"
 
+# SDCV ===============================================================
+export SDCV_HISTFILE="${XDG_STATE_HOME}/sdcv/history"
+export STARDICT_DATA_DIR="${XDG_DATA_HOME}/stardict"
+
 # SHENV ==============================================================
 # export SHENV_ROOT="${XDG_DATA_HOME}/shenv"
 # prepend_to_path "${SHENV_ROOT}/bin"
 # eval_if_exists shenv "init -"
+
+# SQLITE =============================================================
+export SQLITE_HISTORY="${XDG_STATE_HOME}/sqlite/history"
+if command_exists sqlite3; then
+  mkdir -p "${XDG_STATE_HOME}/sqlite"
+fi
 
 # STARSHIP ===========================================================
 export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/starship.toml"
@@ -892,6 +865,12 @@ export LINUX_SOURCEKIT_LIB_PATH="/usr/libexec/swift/lib/libsourcekitdInProc.so"
 # prepend_to_path "${SWIFTENV_ROOT}/bin"
 # eval_if_exists swiftenv "init -"
 
+# TS-NODE ============================================================
+export TS_NODE_HISTORY="${XDG_STATE_HOME}/ts-node/history"
+if command_exists ts-node; then
+  mkdir -p "${XDG_STATE_HOME}/ts-node"
+fi
+
 # TERRAFORM ==========================================================
 export TF_HOME_DIR="${XDG_DATA_HOME}/terraform"
 
@@ -902,7 +881,6 @@ export TEXMFVAR="${XDG_CACHE_HOME}/texlive/texmf-var"
 
 # TEALDEER ===========================================================
 export TEALDEER_CONFIG_DIR="${XDG_CONFIG_HOME}/tldr"
-
 if command_exists tldr; then
   if [ ! -d "${TEALDEER_CONFIG_DIR}" ]; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/tealdeer" "${TEALDEER_CONFIG_DIR}"
@@ -924,7 +902,6 @@ export W3M_DIR="${XDG_STATE_HOME}/w3m"
 
 # WGET ===============================================================
 export WGETRC="${XDG_CONFIG_HOME}/wget/wgetrc"
-
 if command_exists wget; then
   if [ ! -f "$WGETRC" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/wget"
@@ -968,7 +945,7 @@ eval_if_exists oh-my-posh "init bash --config ~/.cache/oh-my-posh/themes/hul10.o
 
 # USE WINDOWS BROWSER IN WSL =========================================
 if grep -q WSL /proc/version; then
-  export BROWSER="/mnt/c/Program\ Files/Google/Chrome/Application/chrome.exe %s"
+  export BROWSER="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe %s"
 fi
 
 export ADA_OBJECTS_PATH
@@ -985,5 +962,7 @@ export PATH
 if [ "${SHELL}" = "/bin/bash" ]; then
   ulimit -n 104857
 fi
+
+# export no_grpc_proxy=localhost,127.0.0.0/8
 
 unset item

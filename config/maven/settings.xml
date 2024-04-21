@@ -51,7 +51,7 @@ under the License.
    |
    | Default: ${user.home}/.m2/repository
   -->
-  <localRepository>{user.home}/.cache/m2/repository</localRepository>
+  <localRepository>{user.home}/.cache/maven/repository</localRepository>
 
 
   <!-- interactiveMode

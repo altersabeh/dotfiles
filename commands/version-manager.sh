@@ -7,12 +7,6 @@
 #    rm $HOME/.choosenim
 #}
 
-lein() {
-    ln -s $XDG_DATA_HOME/m2 $HOME/.m2
-    command lein "$@"
-    rm $HOME/.m2
-}
-
 zvm() {
     ln -s $XDG_DATA_HOME/zvm $HOME/.zvm
     command zvm "$@"
