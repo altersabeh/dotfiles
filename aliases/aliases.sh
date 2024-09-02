@@ -16,4 +16,9 @@ alias lmp-node="nano $(dirname "${BASH_SOURCE[0]}")/../build-opts/NODE_BUILD"
 alias lmp-perl="nano $(dirname "${BASH_SOURCE[0]}")/../build-opts/PERL_BUILD"
 alias lmp-r="nano $(dirname "${BASH_SOURCE[0]}")/../build-opts/R_BUILD"
 
+alias csc="dotnet /usr/share/dotnet/sdk/8.0.204/Roslyn/bincore/csc.dll"
+alias fsc="dotnet /usr/share/dotnet/sdk/8.0.204/FSharp/fsc.dll"
+alias vbc="dotnet /usr/share/dotnet/sdk/8.0.204/Roslyn/bincore/vbc.dll"
+alias treeg="tree --gitignore -a --dirsfirst"
+
 alias erlenv=erlxenv
