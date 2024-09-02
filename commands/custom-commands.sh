@@ -105,14 +105,6 @@ function utop() {
     rm "${XDG_STATE_HOME}/utop-history"
 }
 
-function cling() {
-    mkdir -p "${XDG_STATE_HOME}/cling"
-    touch "${XDG_STATE_HOME}/cling/history"
-    ln -s "${XDG_STATE_HOME}/cling/history" "${HOME}/.cling_history"
-    command cling "$@"
-    rm "${HOME}/.cling_history"
-}
-
 function evcxr() {
     mkdir -p "${XDG_STATE_HOME}/evcxr"
     touch "${XDG_STATE_HOME}/evcxr/history"
