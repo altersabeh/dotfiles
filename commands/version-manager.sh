@@ -354,12 +354,12 @@ goxenv() {
     elif [ "$1" = "set" ]; then
         export GO_PATH=$(goenv root)/versions
         if [[ -n "$2" ]]; then
-            nodxenv unset
+            goxenv unset
             [ -d $GO_PATH/current ] && rm $GO_PATH/current
             ln -s $GO_PATH/$2 $GO_PATH/current
             export PATH="$GO_PATH/current/bin:$PATH"
         else
-            nodxenv unset
+            goxenv unset
             [ -d $GO_PATH/current ] && rm $GO_PATH/current
             ln -s $GO_PATH/$(goenv global) $GO_PATH/current
             export PATH="$GO_PATH/current/bin:$PATH"
