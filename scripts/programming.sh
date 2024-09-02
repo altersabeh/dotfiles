@@ -12,6 +12,9 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 export LOCAL_BIN_DIR="${HOME}/.local/bin"
 prepend_to_path "${LOCAL_BIN_DIR}"
 
+# MANPATH ============================================================
+export MANPATH="/usr/share/man${MANPATH:+:${MANPATH}}"
+
 # ====================================================================
 # ================ PROGRAMS ==========================================
 # ====================================================================
@@ -89,6 +92,8 @@ export CLEAN_HOME="${XDG_DATA_HOME}/clean"
 prepend_to_path "${CLEAN_HOME}/bin"
 
 # CLING ==============================================================
+export CLING_HOME="${XDG_DATA_HOME}/cling"
+append_to_path "${CLING_HOME}/bin"
 export CLING_HISTFILE="${XDG_STATE_HOME}/cling/history"
 
 # CLOJURE ============================================================
@@ -172,6 +177,11 @@ prepend_to_path "${FOUNDRY_DIR}/bin"
 # GHCUP ==============================================================
 export GHCUP_INSTALL_BASE_PREFIX="${XDG_DATA_HOME}"
 source_if_exists "${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/env"
+if command_exists ghc; then
+  GHC_VERSION="$(ghc --numeric-version)" 
+  GHCUP_GHC_PATH="${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/ghc/${GHC_VERSION}"
+  MANPATH="${GHCUP_GHC_PATH}/share/man${MANPATH:+:${MANPATH}}"
+fi
 
 # CABAL ==============================================================
 export CABAL_CONFIG="${XDG_CONFIG_HOME}/cabal/config"
@@ -289,10 +299,15 @@ export JULIA_HISTORY="${XDG_STATE_HOME}/julia/history"
 # EVM ================================================================
 export EVM_HOME="${XDG_DATA_HOME}/evm"
 source_if_exists "${EVM_HOME}/scripts/evm"
+if command_exists erl; then
+  ERLANG_VERSION="$(erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), "releases", erlang:system_info(otp_release), "OTP_VERSION"])), io:fwrite(Version), halt().' -noshell)"
+  EVM_ERLANG_PATH="${EVM_HOME}/erlang_versions/otp_src_${ERLANG_VERSION}"
+  MANPATH="${EVM_ERLANG_PATH}/lib/erlang/man${MANPATH:+:${MANPATH}}"
+fi
 
 # ERLANG =============================================================
 export ERL_AFLAGS="-kernel shell_history enabled shell_history_path '\"${XDG_STATE_HOME}/erlang\"'"
-if command_exists erl; then
+if command_exists erlc; then
   mkdir -p "${XDG_CONFIG_HOME}/erlang"
 fi
 
@@ -311,6 +326,11 @@ export KERL_BUILD_DOCS=yes
 # KIEX ===============================================================
 export KIEX_HOME="${XDG_DATA_HOME}/kiex"
 source_if_exists "${KIEX_HOME}/scripts/kiex"
+if command_exists iex; then
+  ELIXIR_VERSION="$(iex -v | awk '{print $2}')"
+  KIEX_ELIXIR_PATH="${KIEX_HOME}/elixirs/elixir-${ELIXIR_VERSION}"
+  MANPATH="${KIEX_ELIXIR_PATH}/share/man${MANPATH:+:${MANPATH}}"
+fi
 
 # ELIXIR =============================================================
 export ELIXIR_ERL_OPTIONS="-kernel shell_history enabled shell_history_path '${XDG_STATE_HOME}/elixir'"
@@ -333,9 +353,9 @@ export LUAENV_ROOT="${XDG_DATA_HOME}/luaenv"
 prepend_to_path "${LUAENV_ROOT}/bin"
 # eval_if_exists luaenv "init - --no-rehash"
 if command_exists luaenv; then
-  if [ ! -f "${LUAENV_ROOT}/default-rocks" ]; then
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/luaenv/default-rocks" "${LUAENV_ROOT}/default-rocks"
-  fi
+  # if [ ! -f "${LUAENV_ROOT}/default-rocks" ]; then
+  #   ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/luaenv/default-rocks" "${LUAENV_ROOT}/default-rocks"
+  # fi
   LUAENV_LUA_PATH="$LUAENV_ROOT/versions/$(luaenv global)"
   prepend_to_path "${LUAENV_LUA_PATH}/bin"
   MANPATH="${LUAENV_LUA_PATH}/share/man${MANPATH:+:${MANPATH}}"
@@ -405,6 +425,11 @@ fi
 
 # NODE ===============================================================
 export NODE_REPL_HISTORY="${XDG_STATE_HOME}/node/history"
+if command_exists node; then
+  mkdir -p "${XDG_STATE_HOME}/node"
+fi
+
+# NPM ================================================================
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
 export NPM_CONFIG_PREFIX="${XDG_DATA_HOME}/npm"
 prepend_to_path "${NPM_CONFIG_PREFIX}/bin"
@@ -830,7 +855,14 @@ export SBT_OPTS="-ivy ${XDG_DATA_HOME}/ivy2 -sbt-dir ${XDG_DATA_HOME}/sbt"
 
 # COURSIER ===========================================================
 export CS_HOME="${XDG_DATA_HOME}/coursier"
+export COURSIER_MIRRORS="${XDG_CONFIG_HOME}/coursier/mirror.properties"
 prepend_to_path "${CS_HOME}/bin"
+if command_exists cs; then
+  if [ ! -f "${COURSIER_MIRRORS}" ]; then
+    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/coursier/mirror.properties" "${COURSIER_MIRRORS}"
+  fi
+fi
+
 
 # NODE JAVA CALLER ===================================================
 export JAVA_CALLER_JAVA_EXECUTABLE="${JAVA_HOME}/bin/java"
@@ -864,6 +896,11 @@ export LINUX_SOURCEKIT_LIB_PATH="/usr/libexec/swift/lib/libsourcekitdInProc.so"
 # export SWIFTENV_ROOT="${XDG_DATA_HOME}/swiftenv"
 # prepend_to_path "${SWIFTENV_ROOT}/bin"
 # eval_if_exists swiftenv "init -"
+
+# SWIFTLY ============================================================
+export SWIFTLY_HOME_DIR="${XDG_DATA_HOME}/swiftly"
+export SWIFTLY_BIN_DIR="${SWIFTLY_HOME_DIR}/bin"
+source_if_exists "${SWIFTLY_HOME_DIR}/env.sh"
 
 # TS-NODE ============================================================
 export TS_NODE_HISTORY="${XDG_STATE_HOME}/ts-node/history"
@@ -941,7 +978,7 @@ append_to_library_path "$LD_LIBRARY_PATH"
 # ====================================================================
 
 # OH MY POSH =========================================================
-eval_if_exists oh-my-posh "init bash --config ~/.cache/oh-my-posh/themes/hul10.omp.json"
+eval_if_exists oh-my-posh "init bash --config ~/.cache/oh-my-posh/themes/night-owl.omp.json"
 
 # USE WINDOWS BROWSER IN WSL =========================================
 if grep -q WSL /proc/version; then
