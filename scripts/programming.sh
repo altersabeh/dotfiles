@@ -36,6 +36,10 @@ export ANSIBLE_HOME="${XDG_CONFIG_HOME}/ansible"
 export ANSIBLE_CONFIG="${XDG_CONFIG_HOME}/ansible.cfg"
 export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME}/ansible/galaxy_cache"
 
+# AQUA ===============================================================
+export AQUA_ROOT_DIR="${XDG_DATA_HOME}/aqua"
+prepend_to_path "${AQUA_ROOT_DIR}/bin"
+
 # ASDF ===============================================================
 export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
 export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
@@ -60,6 +64,11 @@ export AZURE_CONFIG_DIR="${XDG_DATA_HOME}/azure"
 # BALLERINA ==========================================================
 export BALLERINA_HOME="${XDG_DATA_HOME}/ballerina"
 prepend_to_path "${BALLERINA_HOME}/bin"
+
+# BASALT =============================================================
+# export BASALT_GLOBAL_DATA_DIR="${XDG_DATA_HOME}/basalt"
+# prepend_to_path "${BASALT_GLOBAL_DATA_DIR}/source/pkg/bin"
+# eval_if_exists basalt "global init bash"
 
 # BASH ===============================================================
 item="$(ps -cp "$$" -o command="")"
@@ -111,6 +120,14 @@ prepend_to_path "${COMPOSER_HOME}/vendor/bin"
 # CONAN ==============================================================
 export CONAN_USER_HOME="${XDG_CONFIG_HOME}"
 
+# NVIDIA CUDA ========================================================
+# needs to be set before CONDA
+export CUDA_CACHE_PATH="${XDG_CACHE_HOME}/nv"
+export CUDA_PATH="/usr/local/cuda"
+export NVCC_PREPEND_FLAGS="-allow-unsupported-compiler"
+prepend_to_path "${CUDA_PATH}/bin"
+prepend_to_ld_library_path "${CUDA_PATH}/lib64"
+
 # CONDA ==============================================================
 export CONDA_AUTO_ACTIVATE_BASE=false
 export CONDARC="${XDG_CONFIG_HOME}/conda/condarc"
@@ -121,6 +138,7 @@ if command_exists conda; then
     mkdir -p "${XDG_CONFIG_HOME}/conda"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/conda/condarc" "${CONDARC}"
   fi
+  # creates .nv/ComputeCache for some unknown reason
   for item in $(conda env list | awk '$1 != "#" && $1 != "base" {print $1}'); do
     CONDA_ROOT="$(conda info --root)"
     append_to_path "${CONDA_ROOT}/envs/${item}/bin"
@@ -146,7 +164,7 @@ export DENO_REPL_HISTORY="${XDG_STATE_HOME}/deno/history"
 prepend_to_path "${DENO_INSTALL}/bin"
 
 # DIRENV =============================================================
-command_exists direnv && eval "$(direnv hook bash)"
+eval_if_exists direnv "hook bash"
 
 # DOCKER =============================================================
 export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
@@ -155,6 +173,10 @@ export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 export DOTNET_ROOT="/usr/share/dotnet"
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
 prepend_to_path "${DOTNET_CLI_HOME}"/.dotnet/tools
+
+# ELAN ===============================================================
+export ELAN_HOME="${XDG_DATA_HOME}/elan"
+prepend_to_path "${ELAN_HOME}/bin"
 
 # EMSCRIPTEN =========================================================
 export EMSDK_QUIET=1
@@ -169,6 +191,11 @@ prepend_to_path "${XDG_DATA_HOME}/factor"
 # FOUNDRY ============================================================
 export FOUNDRY_DIR="${XDG_DATA_HOME}/foundry"
 prepend_to_path "${FOUNDRY_DIR}/bin"
+
+# FNM ================================================================
+export FNM_PATH="${XDG_DATA_HOME}/fnm"
+prepend_to_path "${FNM_PATH}"
+eval_if_exists fnm "env"  
 
 # FVM ================================================================
 # export FVM_HOME="${XDG_DATA_HOME}/fvm"
@@ -267,6 +294,10 @@ prepend_to_ld_library_path "${INSTANTCLIENT}"
 
 # INTEL ONEAPI =======================================================
 source_if_exists "/opt/intel/oneapi/setvars.sh"
+
+# JABBA ==============================================================
+export JABBA_HOME="${XDG_DATA_HOME}/jabba"
+source_if_exists "${JABBA_HOME}/jabba.sh"
 
 # JETBRAINS ==========================================================
 # export VMOPTIONSDIR="${XDG_CONFIG_HOME}/vmoptions"
@@ -380,6 +411,12 @@ export MINT_PATH="${XDG_DATA_HOME}/mint"
 export MINT_LINK_PATH="${XDG_DATA_HOME}/mint/bin"
 prepend_to_path "${MINT_LINK_PATH}"
 
+# MISE ===============================================================
+export MISE_DATA_DIR="${XDG_DATA_HOME}/mise"
+export MISE_INSTALL_PATH="${MISE_DATA_DIR}/bin/mise"
+prepend_to_path "${MISE_DATA_DIR}/bin"
+eval_if_exists mise "activate bash"
+
 # MOJO ===============================================================
 export MODULAR_HOME="${XDG_DATA_HOME}/modular"
 prepend_to_path "${MODULAR_HOME}/pkg/packages.modular.com_mojo/bin"
@@ -396,13 +433,6 @@ fi
 # NIMBLE =============================================================
 export NIMBLE_DIR="${XDG_DATA_HOME}/nimble"
 prepend_to_path "${NIMBLE_DIR}/bin"
-
-# NVIDIA CUDA ========================================================
-export CUDA_CACHE_PATH="${XDG_CACHE_HOME}/nv"
-export CUDA_PATH="/usr/local/cuda"
-export NVCC_PREPEND_FLAGS="-allow-unsupported-compiler"
-prepend_to_path "${CUDA_PATH}/bin"
-prepend_to_ld_library_path "${CUDA_PATH}/lib64"
 
 # NVM ================================================================
 # export NVM_DIR="${XDG_DATA_HOME}/nvm"
@@ -574,6 +604,11 @@ prepend_to_path "${XDG_DATA_HOME}/ponyup/bin"
 # PROCESSING =========================================================
 # export PROCESSING_JAVA="${XDG_DATA_HOME}/processing/processing-java"
 # prepend_to_path "${XDG_DATA_HOME}/processing"
+
+# PROTO ==============================================================
+export PROTO_HOME="${XDG_DATA_HOME}/proto"
+prepend_to_path "${PROTO_HOME}/bin"
+prepend_to_path "${PROTO_HOME}/shims"
 
 # PUB ================================================================
 export PUB_CACHE="${XDG_DATA_HOME}/pub"
@@ -933,6 +968,14 @@ prepend_to_path "${XDG_CONFIG_HOME}/v-analyzer/bin"
 # VAGRANT ============================================================
 export VAGRANT_HOME="${XDG_DATA_HOME}/vagrant"
 export VAGRANT_ALIAS_FILE="${XDG_DATA_HOME}/vagrant/aliases"
+
+# VOLTA ==============================================================
+export VOLTA_HOME="${XDG_DATA_HOME}/volta"
+prepend_to_path "${VOLTA_HOME}/bin"
+
+
+# VMR ================================================================
+source_if_exists "${XDG_DATA_HOME}/vmr/vmr.sh"
 
 # W3M ================================================================
 export W3M_DIR="${XDG_STATE_HOME}/w3m"
