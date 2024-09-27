@@ -173,6 +173,7 @@ export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 export DOTNET_ROOT="/usr/share/dotnet"
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
 prepend_to_path "${DOTNET_CLI_HOME}"/.dotnet/tools
+del_if_exists "${HOME}/.dotnet"
 
 # ELAN ===============================================================
 export ELAN_HOME="${XDG_DATA_HOME}/elan"
@@ -405,6 +406,9 @@ eval_if_exists luarocks "path --bin"
 
 # MAGEFILE ===========================================================
 export MAGEFILE_CACHE="${XDG_CACHE_HOME}/magefile"
+
+# METALS =============================================================
+del_if_exists "${HOME}/.metals"
 
 # MINT ===============================================================
 export MINT_PATH="${XDG_DATA_HOME}/mint"
@@ -707,16 +711,16 @@ if command_exists renv; then
 fi
 
 # R ==================================================================
-export R_HISTFILE="${XDG_STATE_HOME}/R/history"
-export R_HOME_USER="${XDG_DATA_HOME}/R"
-export R_LIBS_USER="${XDG_DATA_HOME}/R/library"
-export R_PROFILE_USER="${XDG_CONFIG_HOME}/R/profile"
-if command_exists R; then
-  mkdir -p "${XDG_STATE_HOME}/R"
+export R_HISTFILE="${XDG_STATE_HOME}/r/history"
+export R_HOME_USER="${XDG_DATA_HOME}/r"
+export R_LIBS_USER="${XDG_DATA_HOME}/r/library"
+export R_PROFILE_USER="${XDG_CONFIG_HOME}/r/profile"
+if command_exists r; then
+  mkdir -p "${XDG_STATE_HOME}/r"
   mkdir -p "${R_LIBS_USER}"
   if [ ! -f "${R_PROFILE_USER}" ]; then
-    mkdir -p "${XDG_CONFIG_HOME}/R/"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/R/profile" "${R_PROFILE_USER}"
+    mkdir -p "${XDG_CONFIG_HOME}/r/"
+    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/r/profile" "${R_PROFILE_USER}"
   fi
 fi
 
@@ -911,6 +915,9 @@ export STARDICT_DATA_DIR="${XDG_DATA_HOME}/stardict"
 # prepend_to_path "${SHENV_ROOT}/bin"
 # eval_if_exists shenv "init -"
 
+# SOURCEKIT LSP ======================================================
+del_if_exists "${HOME}/.sourcekit-lsp"
+
 # SQLITE =============================================================
 export SQLITE_HISTORY="${XDG_STATE_HOME}/sqlite/history"
 if command_exists sqlite3; then
@@ -973,7 +980,6 @@ export VAGRANT_ALIAS_FILE="${XDG_DATA_HOME}/vagrant/aliases"
 export VOLTA_HOME="${XDG_DATA_HOME}/volta"
 prepend_to_path "${VOLTA_HOME}/bin"
 
-
 # VMR ================================================================
 source_if_exists "${XDG_DATA_HOME}/vmr/vmr.sh"
 
@@ -1028,11 +1034,11 @@ if grep -q WSL /proc/version; then
   export BROWSER="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe %s"
 fi
 
-export ADA_OBJECTS_PATH
+export _JAVA_OPTIONS
 export ADA_INCLUDE_PATH
+export ADA_OBJECTS_PATH
 export CLASSPATH
 export CPATH
-export _JAVA_OPTIONS
 export LD_LIBRARY_PATH
 export LIBRARY_PATH
 export MANPATH
