@@ -642,7 +642,7 @@ if command_exists pyenv; then
 fi
 
 # PYTHON =============================================================
-export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history"
+export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history" # python >= 3.13
 export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}/pycache"
 export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonrc"
 export PYTHONUSERBASE="${XDG_DATA_HOME}/pip"
