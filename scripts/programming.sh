@@ -976,6 +976,11 @@ prepend_to_path "${XDG_CONFIG_HOME}/v-analyzer/bin"
 export VAGRANT_HOME="${XDG_DATA_HOME}/vagrant"
 export VAGRANT_ALIAS_FILE="${XDG_DATA_HOME}/vagrant/aliases"
 
+# VCPKG ==============================================================
+export VCPKG_ROOT="${XDG_DATA_HOME}/vcpkg"
+export VCPKG_DOWNLOADS="${XDG_CACHE_HOME}/vcpkg/downloads"
+export VCPKG_DEFAULT_BINARY_CACHE="${XDG_CACHE_HOME}/vcpkg/archives"
+
 # VOLTA ==============================================================
 export VOLTA_HOME="${XDG_DATA_HOME}/volta"
 prepend_to_path "${VOLTA_HOME}/bin"
