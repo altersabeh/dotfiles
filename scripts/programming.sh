@@ -151,8 +151,8 @@ fi
 # eval_if_exists crenv "init -"
 
 # DART ===============================================================
-export DART_CONFIG_DIR="${XDG_CONFIG_HOME}/dart"
-export ANALYZER_STATE_LOCATION_OVERRIDE="${XDG_CACHE_HOME}/dartserver"
+export ANALYZER_STATE_LOCATION_OVERRIDE="${XDG_CACHE_HOME}/dart-server"
+del_if_exists "${HOME}/.dart-tool"
 
 # D ==================================================================
 export DUB_HOME="${XDG_DATA_HOME}/dub"
