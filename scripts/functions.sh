@@ -16,6 +16,22 @@ prepend_to_classpath() {
   fi
 }
 
+# Function to appemd a path to MANPATH if it's not already included
+append_to_manpath() {
+  local path_to_add="$1"
+  if [[ ":$MANPATH:" != *":$path_to_add:"* ]]; then
+    MANPATH="${MANPATH:+${MANPATH}:}$path_to_add"
+  fi
+}
+
+# Function to prepend a path to MANPATH if it's not already included
+prepend_to_manpath() {
+  local path_to_add="$1"
+  if [[ ":$MANPATH:" != *":$path_to_add:"* ]]; then
+    MANPATH="$path_to_add${MANPATH:+:${MANPATH}}"
+  fi
+}
+
 # Function to append a path to ADA_OBJECTS_PATH if it's not already included
 append_to_ada_objects_path() {
   local path_to_add="$1"
