@@ -13,7 +13,7 @@ export LOCAL_BIN_DIR="${HOME}/.local/bin"
 prepend_to_path "${LOCAL_BIN_DIR}"
 
 # MANPATH ============================================================
-export MANPATH="/usr/share/man${MANPATH:+:${MANPATH}}"
+prepend_to_manpath "/usr/share/man"
 
 # ====================================================================
 # ================ PROGRAMS ==========================================
@@ -142,6 +142,7 @@ if command_exists conda; then
   for item in $(conda env list | awk '$1 != "#" && $1 != "base" {print $1}'); do
     CONDA_ROOT="$(conda info --root)"
     append_to_path "${CONDA_ROOT}/envs/${item}/bin"
+    prepend_to_manpath "${CONDA_ROOT}/envs/${item}/share/man"
   done
 fi
 
@@ -208,7 +209,7 @@ source_if_exists "${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/env"
 if command_exists ghc; then
   GHC_VERSION="$(ghc --numeric-version)" 
   GHCUP_GHC_PATH="${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/ghc/${GHC_VERSION}"
-  MANPATH="${GHCUP_GHC_PATH}/share/man${MANPATH:+:${MANPATH}}"
+  prepend_to_manpath "${GHCUP_GHC_PATH}/share/man"
 fi
 
 # CABAL ==============================================================
@@ -334,7 +335,7 @@ source_if_exists "${EVM_HOME}/scripts/evm"
 if command_exists erl; then
   ERLANG_VERSION="$(erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), "releases", erlang:system_info(otp_release), "OTP_VERSION"])), io:fwrite(Version), halt().' -noshell)"
   EVM_ERLANG_PATH="${EVM_HOME}/erlang_versions/otp_src_${ERLANG_VERSION}"
-  MANPATH="${EVM_ERLANG_PATH}/lib/erlang/man${MANPATH:+:${MANPATH}}"
+  prepend_to_manpath "${EVM_ERLANG_PATH}/lib/erlang/man"
 fi
 
 # ERLANG =============================================================
@@ -361,7 +362,7 @@ source_if_exists "${KIEX_HOME}/scripts/kiex"
 if command_exists iex; then
   ELIXIR_VERSION="$(iex -v | awk '{print $2}')"
   KIEX_ELIXIR_PATH="${KIEX_HOME}/elixirs/elixir-${ELIXIR_VERSION}"
-  MANPATH="${KIEX_ELIXIR_PATH}/share/man${MANPATH:+:${MANPATH}}"
+  prepend_to_manpath "${KIEX_ELIXIR_PATH}/share/man"
 fi
 
 # ELIXIR =============================================================
@@ -390,7 +391,7 @@ if command_exists luaenv; then
   # fi
   LUAENV_LUA_PATH="$LUAENV_ROOT/versions/$(luaenv global)"
   prepend_to_path "${LUAENV_LUA_PATH}/bin"
-  MANPATH="${LUAENV_LUA_PATH}/share/man${MANPATH:+:${MANPATH}}"
+  prepend_to_manpath "${LUAENV_LUA_PATH}/share/man"
 fi
 
 # LUAROCKS ===========================================================
@@ -453,8 +454,8 @@ if command_exists nodenv; then
   fi
   NODENV_NODE_PATH="$NODENV_ROOT/versions/$(nodenv global)"
   prepend_to_path "${NODENV_NODE_PATH}/bin"
-  MANPATH="${NODENV_NODE_PATH}/share/man${MANPATH:+:${MANPATH}}"
-  MANPATH="${NODENV_NODE_PATH}/lib/node_modules/npm/man${MANPATH:+:${MANPATH}}"
+  prepend_to_manpath "${NODENV_NODE_PATH}/share/man"
+  prepend_to_manpath "${NODENV_NODE_PATH}/lib/node_modules/npm/man"
 fi
 
 # NODE ===============================================================
@@ -540,7 +541,7 @@ prepend_to_path "${PHPENV_ROOT}/bin"
 if command_exists phpenv; then
   PHPENV_PHP_PATH="${PHPENV_ROOT}/versions/$(phpenv global)"
   prepend_to_path "${PHPENV_PHP_PATH}/bin"
-  MANPATH="${PHPENV_PHP_PATH}/share/man${MANPATH:+:${MANPATH}}"
+  prepend_to_manpath "${PHPENV_PHP_PATH}/share/man"
 fi
 
 # PHP ================================================================
@@ -563,7 +564,7 @@ prepend_to_path "${PLENV_ROOT}/bin"
 if command_exists plenv; then
   PLENV_PERL_PATH="${PLENV_ROOT}/versions/$(plenv global)"
   prepend_to_path "${PLENV_PERL_PATH}/bin"
-  MANPATH="${PLENV_PERL_PATH}/man${MANPATH:+:${MANPATH}}"
+  prepend_to_manpath "${PLENV_PERL_PATH}/man"
 fi
 
 # PERL
@@ -638,7 +639,7 @@ if command_exists pyenv; then
   fi
   PYENV_PYTHON_PATH="${PYENV_ROOT}/versions/$(pyenv global)"
   prepend_to_path "${PYENV_PYTHON_PATH}/bin"
-  MANPATH="${PYENV_PYTHON_PATH}/share/man${MANPATH:+:${MANPATH}}"
+  prepend_to_manpath "${PYENV_PYTHON_PATH}/share/man"
 fi
 
 # PYTHON =============================================================
@@ -707,7 +708,7 @@ prepend_to_path "${RENV_ROOT}/bin"
 if command_exists renv; then
   RENV_R_PATH="${RENV_ROOT}/versions/$(renv global)"
   prepend_to_path "${RENV_R_PATH}/bin"
-  MANPATH="${RENV_R_PATH}/share/man${MANPATH:+:${MANPATH}}"
+  prepend_to_manpath "${RENV_R_PATH}/share/man"
 fi
 
 # R ==================================================================
@@ -764,7 +765,7 @@ if command_exists rbenv; then
   fi
   RBENV_RUBY_PATH="${RBENV_ROOT}/versions/$(rbenv global)"
   prepend_to_path "${RBENV_RUBY_PATH}/bin"
-  MANPATH="${RBENV_RUBY_PATH}/share/man${MANPATH:+:${MANPATH}}"
+  prepend_to_manpath "${RBENV_RUBY_PATH}/share/man"
 fi
 
 # GEM ================================================================
@@ -834,7 +835,7 @@ export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 if command_exists rustup; then
   RUSTC_TOOLCHAIN="$(rustup show active-toolchain | awk '{print $1}')"
   RUSTUP_RUSTC_PATH="${RUSTUP_HOME}/toolchains/${RUSTC_TOOLCHAIN}"
-  MANPATH="${RUSTUP_RUSTC_PATH}/share/man${MANPATH:+:${MANPATH}}"
+  prepend_to_manpath "${RUSTUP_RUSTC_PATH}/share/man"
 fi
 
 # SCILAB =============================================================
