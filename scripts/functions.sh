@@ -157,6 +157,14 @@ source_if_exists() {
   fi
 }
 
+# Function to check if a directory exist and then delete it
+del_if_exists() {
+  local file="$1"
+  if [ -d "$file" ]; then
+    rm -rf "$file" >/dev/null 2>&1
+  fi
+}
+
 eval_if_exists() {
   local command="$1"
   local message="$2"
