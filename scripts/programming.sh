@@ -96,6 +96,10 @@ if command_exists calc; then
   mkdir -p "${XDG_STATE_HOME}/calc"
 fi
 
+# CHEAT.SH ===========================================================
+export CHTSH="${XDG_DATA_HOME}/cht.sh"
+export CHTSH_CONFIG="${XDG_CONFIG_HOME}/cht.sh/config"
+
 # CLEAN ==============================================================
 export CLEAN_HOME="${XDG_DATA_HOME}/clean"
 prepend_to_path "${CLEAN_HOME}/bin"
