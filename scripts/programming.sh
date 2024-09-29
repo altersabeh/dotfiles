@@ -138,8 +138,7 @@ if command_exists conda; then
     mkdir -p "${XDG_CONFIG_HOME}/conda"
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/conda/condarc" "${CONDARC}"
   fi
-  # creates .nv/ComputeCache for some unknown reason
-  for item in $(conda env list | awk '$1 != "#" && $1 != "base" {print $1}'); do
+  for item in $(conda env list | awk '$1 != "#" && $1 != "base" {print $1}'); do # creates .nv/ComputeCache for some unknown reason
     CONDA_ROOT="$(conda info --root)"
     append_to_path "${CONDA_ROOT}/envs/${item}/bin"
     prepend_to_manpath "${CONDA_ROOT}/envs/${item}/share/man"
