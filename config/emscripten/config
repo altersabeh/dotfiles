@@ -1,0 +1,28 @@
+import os
+import re
+
+xdg_data_home = os.getenv('XDG_DATA_HOME')
+emsdk_path = (xdg_data_home + os.sep + "emsdk") if xdg_data_home else ""
+
+# Function to find the Node.js version directory in the Emscripten directory
+
+
+def find_node_version_dir(emsdk_path):
+    node_dir = os.path.join(emsdk_path, 'node')
+    for item in os.listdir(node_dir):
+        if re.match(r'\d+\.\d+\.\d+_64bit', item):
+            return os.path.join(node_dir, item)
+    return None
+
+
+# Get the Node.js version directory
+node_version_dir = find_node_version_dir(emsdk_path)
+
+if node_version_dir:
+    NODE_JS = os.path.join(node_version_dir, 'bin', 'node')
+else:
+    NODE_JS = ''
+
+LLVM_ROOT = emsdk_path + '/upstream/bin'
+BINARYEN_ROOT = emsdk_path + '/upstream'
+EMSCRIPTEN_ROOT = emsdk_path + '/upstream/emscripten'

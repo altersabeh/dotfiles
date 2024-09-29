@@ -34,7 +34,7 @@ prepend_to_path "${XDG_DATA_HOME}/alire/bin"
 # ANSIBLE ============================================================
 export ANSIBLE_HOME="${XDG_CONFIG_HOME}/ansible"
 export ANSIBLE_CONFIG="${XDG_CONFIG_HOME}/ansible.cfg"
-export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME}/ansible/galaxy_cache"
+export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME}/ansible/galaxy-cache"
 
 # AQUA ===============================================================
 export AQUA_ROOT_DIR="${XDG_DATA_HOME}/aqua"
@@ -181,11 +181,17 @@ export ELAN_HOME="${XDG_DATA_HOME}/elan"
 prepend_to_path "${ELAN_HOME}/bin"
 
 # EMSCRIPTEN =========================================================
-export EMSDK_QUIET=1
 source_if_exists "${XDG_DATA_HOME}/emsdk/emsdk_env.sh"
+export EMSDK_QUIET=1
 export EM_CACHE="${XDG_CACHE_HOME}/emscripten/cache"
 export EM_CONFIG="${XDG_CONFIG_HOME}/emscripten/config"
 export EM_PORTS="${XDG_DATA_HOME}/emscripten/cache"
+if command_exists emcc; then
+  if [ ! -f "${EM_CONFIG}" ]; then
+    mkdir -p "${XDG_CONFIG_HOME}/emscripten"
+    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/emscripten/config" "${EM_CONFIG}"
+  fi
+fi
 
 # FACTOR =============================================================
 prepend_to_path "${XDG_DATA_HOME}/factor"
@@ -981,6 +987,7 @@ export VAGRANT_ALIAS_FILE="${XDG_DATA_HOME}/vagrant/aliases"
 export VCPKG_ROOT="${XDG_DATA_HOME}/vcpkg"
 export VCPKG_DOWNLOADS="${XDG_CACHE_HOME}/vcpkg/downloads"
 export VCPKG_DEFAULT_BINARY_CACHE="${XDG_CACHE_HOME}/vcpkg/archives"
+prepend_to_path "${VCPKG_ROOT}"
 
 # VOLTA ==============================================================
 export VOLTA_HOME="${XDG_DATA_HOME}/volta"
