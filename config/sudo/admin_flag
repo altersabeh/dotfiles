@@ -1,2 +1,9 @@
-# Disable ~/.sudo_as_admin_successful file
+# Stop the creation of the ~/.sudo_as_admin_successful file
+
+# Place this script in /etc/sudoers.d/99-sudo-no-admin-flag
+
+# Requires root priveleges
+
+# You might also need to comment out the sudo hint section in /etc/bash.bashrc
+# to remove the sudo message at startup
 Defaults !admin_flag
