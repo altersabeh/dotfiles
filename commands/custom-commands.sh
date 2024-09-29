@@ -37,6 +37,13 @@ lein() {
     rm "${HOME}/.m2"
 }
 
+function v() {
+    local OLD_CPATH="${CPATH}"
+    unset CPATH
+    command v "$@"
+    export CPATH="${OLD_CPATH}"
+}
+
 function kotlin() {
     mkdir -p "${XDG_STATE_HOME}/kotlin"
     touch "${XDG_STATE_HOME}/kotlin/history"

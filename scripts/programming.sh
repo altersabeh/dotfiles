@@ -126,7 +126,7 @@ export CONAN_USER_HOME="${XDG_CONFIG_HOME}"
 
 # NVIDIA CUDA ========================================================
 # needs to be set before CONDA
-export CUDA_CACHE_PATH="${XDG_CACHE_HOME}/nv"
+export CUDA_CACHE_PATH="${XDG_CACHE_HOME}/nvidia/cuda"
 export CUDA_PATH="/usr/local/cuda"
 export NVCC_PREPEND_FLAGS="-allow-unsupported-compiler"
 prepend_to_path "${CUDA_PATH}/bin"
@@ -976,11 +976,13 @@ if command_exists tldr; then
   fi
 fi
 
-# V ==================================================================
-export VCACHE="${XDG_CACHE_HOME}/vmodules"
-export VMODULES="${XDG_DATA_HOME}/vmodules"
-prepend_to_path "${XDG_DATA_HOME}/v"
+# V-ANALYZER =========================================================
 prepend_to_path "${XDG_CONFIG_HOME}/v-analyzer/bin"
+
+# V ==================================================================
+export VCACHE="${XDG_CACHE_HOME}/v/cache"
+export VMODULES="${XDG_DATA_HOME}/v-modules"
+prepend_to_path "${XDG_DATA_HOME}/v"
 
 # VAGRANT ============================================================
 export VAGRANT_HOME="${XDG_DATA_HOME}/vagrant"
