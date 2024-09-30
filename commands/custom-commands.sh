@@ -44,6 +44,13 @@ function v() {
     export CPATH="${OLD_CPATH}"
 }
 
+function v-analyzer() {
+    local OLD_CPATH="${CPATH}"
+    unset CPATH
+    command v-analyzer "$@"
+    export CPATH="${OLD_CPATH}"
+}
+
 function kotlin() {
     mkdir -p "${XDG_STATE_HOME}/kotlin"
     touch "${XDG_STATE_HOME}/kotlin/history"
