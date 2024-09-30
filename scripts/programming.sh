@@ -106,8 +106,8 @@ prepend_to_path "${CLEAN_HOME}/bin"
 
 # CLING ==============================================================
 export CLING_HOME="${XDG_DATA_HOME}/cling"
-append_to_path "${CLING_HOME}/bin"
 export CLING_HISTFILE="${XDG_STATE_HOME}/cling/history"
+append_to_path "${CLING_HOME}/bin"
 
 # CLOJURE ============================================================
 export GITLIBS="${XDG_CACHE_HOME}/clojure-gitlibs"
@@ -503,6 +503,10 @@ if command_exists ocaml; then
   fi
 fi
 
+# ODIN ===============================================================
+export ODIN_ROOT="${XDG_DATA_HOME}/odin"
+prepend_to_path "${ODIN_ROOT}"
+
 # OCTAVE =============================================================
 export OCTAVE_HISTFILE="${XDG_STATE_HOME}/octave/history"
 export OCTAVE_SITE_INITFILE="${XDG_CONFIG_HOME}/octave/octaverc"
@@ -519,8 +523,12 @@ export OMNISHARPHOME="${XDG_CONFIG_HOME}/omnisharp"
 # OPAM ===============================================================
 export OPAMAUTOREMOVE=1
 export OPAMROOT="${XDG_DATA_HOME}/opam"
-export OPAMSOLVERTIMEOUT=1000
+export OPAMSOLVERTIMOUT=1000
 source_if_exists "${OPAMROOT}/opam-init/init.sh"
+
+# PDM ================================================================
+export PDM_HOME="${XDG_DATA_HOME}/pdm"
+prepend_to_path "${PDM_HOME}/bin"
 
 # PEX ================================================================
 export PEX_ROOT="${XDG_CACHE_HOME}/pex"
@@ -611,6 +619,10 @@ fi
 
 # REPLY ==============================================================
 alias_if_exists "reply --cfg ${XDG_CONFIG_HOME}/reply/replyrc" "reply"
+
+# PIXI ===============================================================
+export PIXI_HOME="${XDG_DATA_HOME}/pixi"
+prepend_to_path "${PIXI_HOME}/bin"
 
 # PONYUP =============================================================
 prepend_to_path "${XDG_DATA_HOME}/ponyup/bin"
@@ -1038,7 +1050,7 @@ alias_if_exists "dust" "du"
 
 # LIBRARY PATHS ======================================================
 append_to_library_path "/usr/lib/x86_64-linux-gnu"
-append_to_library_path "$LD_LIBRARY_PATH"
+append_to_library_path "${LD_LIBRARY_PATH}"
 
 # ====================================================================
 # ================ CUSTOMIZATION =====================================
