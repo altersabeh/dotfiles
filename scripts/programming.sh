@@ -650,6 +650,10 @@ append_to_path "${PUB_CACHE}/bin"
 # export PYTHONZ_HOME="${XDG_DATA_HOME}/pythonz"
 # source_if_exists "${PYTHONZ_ROOT}/etc/bashrc"
 
+# RYE ================================================================
+export RYE_HOME="${XDG_DATA_HOME}/rye"
+source_if_exists "${RYE_HOME}/env"
+
 # PYENV ==============================================================
 export PYENV_ROOT="${XDG_DATA_HOME}/pyenv"
 prepend_to_path "${PYENV_ROOT}/bin"
@@ -987,6 +991,9 @@ if command_exists tldr; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/tealdeer" "${TEALDEER_CONFIG_DIR}"
   fi
 fi
+
+# UV =================================================================
+export UV_INSTALL_DIR="${XDG_DATA_HOME}/uv"
 
 # V-ANALYZER =========================================================
 prepend_to_path "${XDG_CONFIG_HOME}/v-analyzer/bin"
