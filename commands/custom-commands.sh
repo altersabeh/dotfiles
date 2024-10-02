@@ -138,6 +138,11 @@ function iex() {
     command iex "$@"
 }
 
+function exec() {
+    unset PROGRAMMING_SH_LAST_MODIFIED
+    command exec "$@"
+}
+
 # emscripten() {
 #     source "/home/josh/.local/share/emsdk/emsdk_env.sh"
 # }
