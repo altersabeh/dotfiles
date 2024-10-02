@@ -373,7 +373,8 @@ eval_if_exists nodenv "init - --no-rehash bash"
 if command_exists nodenv; then
   if [ ! -f "${NODENV_ROOT}/default-packages" ]; then
     CUSTOM_NODENV_DEFAULT_PACKAGES="${CUSTOM_CONFIG_DIR}/xxenv/nodenv/default-packages"
-    ln -s "${CUSTOM_NODENV_DEFAULT_PACKAGES}" "${NODENV_ROOT}/default-packages"
+    ORIG_NODENV_DEFAULT_PACKAGES="${NODENV_ROOT}/default-packages"
+    ln -s "${CUSTOM_NODENV_DEFAULT_PACKAGES}" "${ORIG_NODENV_DEFAULT_PACKAGES}"
   fi
   NODENV_NODE_PATH="$NODENV_ROOT/versions/$(nodenv global)"
   prepend_to_path "${NODENV_NODE_PATH}/bin"
@@ -552,7 +553,8 @@ eval_if_exists luaenv "init - bash"
 if command_exists luaenv; then
   if [ ! -f "${LUAENV_ROOT}/default-rocks" ]; then
     CUSTOM_LUAENV_DEFAULT_ROCKS="${CUSTOM_CONFIG_DIR}/xxenv/luaenv/default-rocks"
-    ln -s "${CUSTOM_LUAENV_DEFAULT_ROCKS}" "${LUAENV_ROOT}/default-rocks"
+    ORIG_LUAENV_DEFAULT_ROCKS="${LUAENV_ROOT}/default-rocks"
+    ln -s "${CUSTOM_LUAENV_DEFAULT_ROCKS}" "${ORIG_LUAENV_DEFAULT_ROCKS}"
   fi
   LUAENV_LUA_PATH="$LUAENV_ROOT/versions/$(luaenv global)"
   prepend_to_path "${LUAENV_LUA_PATH}/bin"
@@ -725,7 +727,8 @@ eval_if_exists pyenv "init - --no-rehash bash"
 if command_exists pyenv; then
   if [ ! -f "${PYENV_ROOT}/default-packages" ]; then
     CUSTOM_PYENV_DEFAULT_PACKAGES="${CUSTOM_CONFIG_DIR}/xxenv/pyenv/default-packages"
-    ln -s "${CUSTOM_PYENV_DEFAULT_PACKAGES}" "${PYENV_ROOT}/default-packages"
+    ORIG_PYENV_DEFAULT_PACKAGES="${PYENV_ROOT}/default-packages"
+    ln -s "${CUSTOM_PYENV_DEFAULT_PACKAGES}" "${ORIG_PYENV_DEFAULT_PACKAGES}"
   fi
   PYENV_PYTHON_PATH="${PYENV_ROOT}/versions/$(pyenv global)"
   prepend_to_path "${PYENV_PYTHON_PATH}/bin"
@@ -884,7 +887,8 @@ eval_if_exists rbenv "init - --no-rehash bash"
 if command_exists rbenv; then
   if [ ! -f "${RBENV_ROOT}/default-gems" ]; then
     CUSTOM_RBENV_DEFAULT_GEMS="${CUSTOM_CONFIG_DIR}/xxenv/rbenv/default-gems"
-    ln -s "${CUSTOM_RBENV_DEFAULT_GEMS}" "${RBENV_ROOT}/default-gems"
+    ORIG_RBENV_DEFAULT_GEMS="${RBENV_ROOT}/default-gems"
+    ln -s "${CUSTOM_RBENV_DEFAULT_GEMS}" "${ORIG_RBENV_DEFAULT_GEMS}"
   fi
   RBENV_RUBY_PATH="${RBENV_ROOT}/versions/$(rbenv global)"
   prepend_to_path "${RBENV_RUBY_PATH}/bin"
