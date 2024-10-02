@@ -143,8 +143,9 @@ export EM_CONFIG="${XDG_CONFIG_HOME}/emscripten/config"
 export EM_PORTS="${XDG_DATA_HOME}/emscripten/cache"
 if command_exists emcc; then
   if [ ! -f "${EM_CONFIG}" ]; then
+    CUSTOM_EM_CONFIG="$(dirname "${BASH_SOURCE[0]}")/../config/emscripten/config"
     mkdir -p "${XDG_CONFIG_HOME}/emscripten"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/emscripten/config" "${EM_CONFIG}"
+    ln -s "${CUSTOM_EM_CONFIG}" "${EM_CONFIG}"
   fi
 fi
 ### INTEL ONEAPI ===============================================================
