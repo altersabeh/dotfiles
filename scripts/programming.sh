@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+THIS_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+CUSTOM_CONFIG_DIR="${THIS_SCRIPT_DIR}/../config"
+
 # Define a variable to track the last modification time of this script
 PROGRAMMING_SH_LAST_MODIFIED_VAR="PROGRAMMING_SH_LAST_MODIFIED"
-PROGRAMMING_SH_PATH="$(dirname "$BASH_SOURCE")/programming.sh"
+PROGRAMMING_SH_PATH="${THIS_SCRIPT_DIR}/programming.sh"
 # Get the current modification time of this script
 current_mod_time=$(stat -c %Y "$PROGRAMMING_SH_PATH")
 # Check if the script has been sourced before and if it has been updated
@@ -44,7 +47,7 @@ export HISTFILE="${XDG_STATE_HOME}/${item}/history"
 mkdir -p "${XDG_STATE_HOME}/${item}"
 ### BASH =======================================================================
 ORIG_BASHRC_PATH="${HOME}/.bashrc"
-CUSTOM_BASHRC_PATH="$(dirname "${BASH_SOURCE[0]}")/../config/bash/bashrc"
+CUSTOM_BASHRC_PATH="${CUSTOM_CONFIG_DIR}/bash/bashrc"
 if [ "$(realpath "${ORIG_BASHRC_PATH}")" != "${CUSTOM_BASHRC_PATH}" ]; then
   [ -f ${ORIG_BASHRC_PATH} ] && rm "${ORIG_BASHRC_PATH}" # remove the existing .bashrc
   ln -s "${CUSTOM_BASHRC_PATH}" "${ORIG_BASHRC_PATH}"
@@ -62,7 +65,7 @@ export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
 source_if_exists "${ASDF_DATA_DIR}/asdf.sh"
 if command_exists asdf; then
   if [ ! -f "${ASDF_CONFIG_FILE}" ]; then
-    CUSTOM_ASDF_CONFIG_FILE="$(dirname "${BASH_SOURCE[0]}")/../config/asdf/asdfrc"
+    CUSTOM_ASDF_CONFIG_FILE="${CUSTOM_CONFIG_DIR}/asdf/asdfrc"
     mkdir -p "${XDG_CONFIG_HOME}/asdf"
     ln -s "${CUSTOM_ASDF_CONFIG_FILE}" "${ASDF_CONFIG_FILE}"
   fi
@@ -143,7 +146,7 @@ export EM_CONFIG="${XDG_CONFIG_HOME}/emscripten/config"
 export EM_PORTS="${XDG_DATA_HOME}/emscripten/cache"
 if command_exists emcc; then
   if [ ! -f "${EM_CONFIG}" ]; then
-    CUSTOM_EM_CONFIG="$(dirname "${BASH_SOURCE[0]}")/../config/emscripten/config"
+    CUSTOM_EM_CONFIG="${CUSTOM_CONFIG_DIR}/emscripten/config"
     mkdir -p "${XDG_CONFIG_HOME}/emscripten"
     ln -s "${CUSTOM_EM_CONFIG}" "${EM_CONFIG}"
   fi
@@ -331,8 +334,9 @@ export CABAL_DIR="${XDG_DATA_HOME}/cabal"
 prepend_to_path "${CABAL_DIR}/bin"
 if command_exists cabal; then
   if [ ! -f "${CABAL_CONFIG}" ]; then
+    CUSTOM_CABAL_CONFIG="${CUSTOM_CONFIG_DIR}/cabal/config"
     mkdir -p "${XDG_CONFIG_HOME}/cabal"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/cabal/config" "${CABAL_CONFIG}"
+    ln -s "${CUSTOM_CABAL_CONFIG}" "${CABAL_CONFIG}"
   fi
 fi
 ### STACK ======================================================================
@@ -340,12 +344,14 @@ export STACK_XDG=1
 export STACK_CONFIG_YAML="${XDG_CONFIG_HOME}/stack/config.yaml"
 if command_exists stack; then
   if [ ! -d "${XDG_DATA_HOME}/stack/hooks" ]; then
+    CUSTOM_STACK_HOOKS="${CUSTOM_CONFIG_DIR}/stack/hooks"
     mkdir -p "${XDG_DATA_HOME}/stack"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/stack/hooks" "${XDG_DATA_HOME}/stack/hooks"
+    ln -s "${CUSTOM_STACK_HOOKS}" "${XDG_DATA_HOME}/stack/hooks"
   fi
   if [ ! -f "${STACK_CONFIG_YAML}" ]; then
+    CUSTOM_STACK_CONFIG_YAML="${CUSTOM_CONFIG_DIR}/stack/config.yaml"
     mkdir -p "${XDG_CONFIG_HOME}/stack"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/stack/config.yaml" "${STACK_CONFIG_YAML}"
+    ln -s "${CUSTOM_STACK_CONFIG_YAML}" "${STACK_CONFIG_YAML}"
   fi
 fi
 # END HASKELL DEVEL ============================================================
@@ -366,7 +372,8 @@ prepend_to_path "${NODENV_ROOT}/bin"
 eval_if_exists nodenv "init - --no-rehash bash"
 if command_exists nodenv; then
   if [ ! -f "${NODENV_ROOT}/default-packages" ]; then
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/nodenv/default-packages" "${NODENV_ROOT}/default-packages"
+    CUSTOM_NODENV_DEFAULT_PACKAGES="${CUSTOM_CONFIG_DIR}/xxenv/nodenv/default-packages"
+    ln -s "${CUSTOM_NODENV_DEFAULT_PACKAGES}" "${NODENV_ROOT}/default-packages"
   fi
   NODENV_NODE_PATH="$NODENV_ROOT/versions/$(nodenv global)"
   prepend_to_path "${NODENV_NODE_PATH}/bin"
@@ -396,7 +403,8 @@ prepend_to_path "${NPM_CONFIG_PREFIX}/bin"
 if command_exists npm; then
   mkdir -p "${XDG_DATA_HOME}/node"
   if [ ! -f "${NPM_CONFIG_USERCONFIG}" ]; then
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/npm/npmrc" "${NPM_CONFIG_USERCONFIG}"
+    CUSTOM_NPM_CONFIG_USERCONFIG="${CUSTOM_CONFIG_DIR}/npm/npmrc"
+    ln -s "${CUSTOM_NPM_CONFIG_USERCONFIG}" "${NPM_CONFIG_USERCONFIG}"
     mkdir -p "${XDG_CONFIG_HOME}/npm"
   fi
 fi
@@ -434,7 +442,9 @@ export COURSIER_MIRRORS="${XDG_CONFIG_HOME}/coursier/mirror.properties"
 prepend_to_path "${CS_HOME}/bin"
 if command_exists cs; then
   if [ ! -f "${COURSIER_MIRRORS}" ]; then
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/coursier/mirror.properties" "${COURSIER_MIRRORS}"
+    CUSTOM_COURSIER_MIRRORS="${CUSTOM_CONFIG_DIR}/coursier/mirror.properties"
+    mkdir -p "${XDG_CONFIG_HOME}/coursier"
+    ln -s "${CUSTOM_COURSIER_MIRRORS}" "${COURSIER_MIRRORS}"
   fi
 fi
 ### JABBA ======================================================================
@@ -482,7 +492,7 @@ export MAVEN_OPTS="-Dmaven.repo.local=${MAVEN_CUSTOM_REPO}"
 if command_exists mvn; then
   # Define the paths
   ORIG_MAVEN_SETTINGS_PATH="${MAVEN_HOME}/conf/settings.xml"
-  CONFIG_MAVEN_SETTINGS_PATH="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../config/maven/settings.xml")"
+  CONFIG_MAVEN_SETTINGS_PATH="${CUSTOM_CONFIG_DIR}/maven/settings.xml"
   if [ "$(realpath "${ORIG_MAVEN_SETTINGS_PATH}")" != "${CONFIG_MAVEN_SETTINGS_PATH}" ]; then
     [ -f "${ORIG_MAVEN_SETTINGS_PATH}" ] && rm "${ORIG_MAVEN_SETTINGS_PATH}"
     ln -s "${CONFIG_MAVEN_SETTINGS_PATH}" "${ORIG_MAVEN_SETTINGS_PATH}"
@@ -521,8 +531,10 @@ export LEIN_HOME="${XDG_DATA_HOME}/lein"
 prepend_to_path "${LEIN_HOME}/bin"
 if command_exists lein; then
   if [ ! -f "${LEIN_HOME}/profiles.clj" ]; then
+    CUSTOM_LEIN_PROFILES="${CUSTOM_CONFIG_DIR}/lein/profiles.clj"
+    ORIG_LEIN_PROFILES="${LEIN_HOME}/profiles.clj"
     mkdir -p "${LEIN_HOME}"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/lein/profiles.clj" "${LEIN_HOME}/profiles.clj"
+    ln -s "${CUSTOM_LEIN_PROFILES}" "${ORIG_LEIN_PROFILES}"
   fi
 fi
 ### ROSWELL ====================================================================
@@ -539,7 +551,8 @@ prepend_to_path "${LUAENV_ROOT}/bin"
 eval_if_exists luaenv "init - bash"
 if command_exists luaenv; then
   if [ ! -f "${LUAENV_ROOT}/default-rocks" ]; then
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/luaenv/default-rocks" "${LUAENV_ROOT}/default-rocks"
+    CUSTOM_LUAENV_DEFAULT_ROCKS="${CUSTOM_CONFIG_DIR}/xxenv/luaenv/default-rocks"
+    ln -s "${CUSTOM_LUAENV_DEFAULT_ROCKS}" "${LUAENV_ROOT}/default-rocks"
   fi
   LUAENV_LUA_PATH="$LUAENV_ROOT/versions/$(luaenv global)"
   prepend_to_path "${LUAENV_LUA_PATH}/bin"
@@ -551,8 +564,9 @@ export LUAROCKS_CONFIG="${XDG_CONFIG_HOME}/luarocks/config.lua"
 export LUAROCKS_TREE="${XDG_DATA_HOME}/luarocks"
 if command_exists luarocks; then
   if [ ! -f "${LUAROCKS_CONFIG}" ]; then
+    CUSTOM_LUAROCKS_CONFIG="${CUSTOM_CONFIG_DIR}/luarocks/config.lua"
     mkdir -p "${XDG_CONFIG_HOME}/luarocks"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/luarocks/config.lua" "${LUAROCKS_CONFIG}"
+    ln -s "${CUSTOM_LUAROCKS_CONFIG}" "${LUAROCKS_CONFIG}"
   fi
 fi
 eval_if_exists luarocks "path --bin"
@@ -583,8 +597,9 @@ source_if_exists "${OPAMROOT}/opam-init/init.sh"
 if command_exists ocaml; then
   export OCAML_INIT_FILE="${XDG_CONFIG_HOME}/ocaml/init.ml"
   if [ ! -f "${OCAML_INIT_FILE}" ]; then
+    CUSTOM_OCAML_INIT_FILE="${CUSTOM_CONFIG_DIR}/ocaml/init.ml"
     mkdir -p "${XDG_CONFIG_HOME}/ocaml"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/ocaml/init.ml" "${OCAML_INIT_FILE}"
+    ln -s "${CUSTOM_OCAML_INIT_FILE}" "${OCAML_INIT_FILE}"
   fi
 fi
 # END OCAML DEVEL ==============================================================
@@ -622,16 +637,18 @@ fi
 export PERLCRITIC="${XDG_CONFIG_HOME}/perlcritic/perlcriticrc"
 if command_exists perlcritic; then
   if [ ! -f "${PERLCRITIC}" ]; then
+    CUSTOM_PERLCRITIC="${CUSTOM_CONFIG_DIR}/perlcritic/perlcriticrc"
     mkdir -p "${XDG_CONFIG_HOME}/perlcritic"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/perlcritic/perlcriticrc" "${PERLCRITIC}"
+    ln -s "${CUSTOM_PERLCRITIC}" "${PERLCRITIC}"
   fi
 fi
 ### PERLTIDY ===================================================================
 export PERLTIDY="${XDG_CONFIG_HOME}/perltidy/perltidyrc"
 if command_exists perltidy; then
   if [ ! -f "${PERLTIDY}" ]; then
+    CUSTOM_PERLTIDY="${CUSTOM_CONFIG_DIR}/perltidy/perltidyrc"
     mkdir -p "${XDG_CONFIG_HOME}/perltidy"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/perltidy/perltidyrc" "${PERLTIDY}"
+    ln -s "${CUSTOM_PERLTIDY}" "${PERLTIDY}"
   fi
 fi
 ### REPLY ======================================================================
@@ -668,7 +685,8 @@ export PHP_DTRACE=yes
 if command_exists php; then
   export PHP_INI_SCAN_DIR="${XDG_CONFIG_HOME}/php"
   if [ ! -d "${PHP_INI_SCAN_DIR}" ]; then
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/php" "$PHP_INI_SCAN_DIR"
+    CUSTOM_PHP_INI_SCAN_DIR="${CUSTOM_CONFIG_DIR}/php"
+    ln -s "${CUSTOM_PHP_INI_SCAN_DIR}" "${PHP_INI_SCAN_DIR}"
   fi
 fi
 # END PHP DEVEL ================================================================
@@ -690,8 +708,9 @@ prepend_to_path "${XDG_DATA_HOME}/conda/condabin"
 eval_if_exists conda "shell.bash hook"
 if command_exists conda; then
   if [ ! -f "${CONDARC}" ]; then
+    CUSTOM_CONDARC="${CUSTOM_CONFIG_DIR}/conda/condarc"
     mkdir -p "${XDG_CONFIG_HOME}/conda"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/conda/condarc" "${CONDARC}"
+    ln -s "${CUSTOM_CONDARC}" "${CONDARC}"
   fi
   for item in $(conda env list | awk '$1 != "#" && $1 != "base" {print $1}'); do # creates .nv/ComputeCache for some unknown reason
     CONDA_ROOT="$(conda info --root)"
@@ -705,7 +724,8 @@ prepend_to_path "${PYENV_ROOT}/bin"
 eval_if_exists pyenv "init - --no-rehash bash"
 if command_exists pyenv; then
   if [ ! -f "${PYENV_ROOT}/default-packages" ]; then
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/pyenv/default-packages" "${PYENV_ROOT}/default-packages"
+    CUSTOM_PYENV_DEFAULT_PACKAGES="${CUSTOM_CONFIG_DIR}/xxenv/pyenv/default-packages"
+    ln -s "${CUSTOM_PYENV_DEFAULT_PACKAGES}" "${PYENV_ROOT}/default-packages"
   fi
   PYENV_PYTHON_PATH="${PYENV_ROOT}/versions/$(pyenv global)"
   prepend_to_path "${PYENV_PYTHON_PATH}/bin"
@@ -731,8 +751,9 @@ PIP_CONFIG_FILE="${XDG_CONFIG_HOME}/pip/pip.conf"
 prepend_to_path "${PYTHONUSERBASE}/bin"
 if command_exists pip; then
   if [ ! -f "${PIP_CONFIG_FILE}" ]; then
+    CUSTOM_PIP_CONFIG_FILE="${CUSTOM_CONFIG_DIR}/pip/pip.conf"
     mkdir -p "${XDG_CONFIG_HOME}/pip"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/pip/pip.conf" "${PIP_CONFIG_FILE}"
+    ln -s "${CUSTOM_PIP_CONFIG_FILE}" "${PIP_CONFIG_FILE}"
   fi
 fi
 ### POETRY =====================================================================
@@ -752,11 +773,12 @@ if command_exists ipython; then
 fi
 ### JUPYTER ====================================================================
 export JUPYTER_CONFIG_DIR="${XDG_CONFIG_HOME}/jupyter"
-export JUPYTER_CONFIG_FILE="$JUPYTER_CONFIG_DIR/jupyter_notebook_config.py"
+export JUPYTER_CONFIG_FILE="$JUPYTER_CONFIG_DIR/config.py"
 if command_exists jupyter; then
   if [ ! -f "${JUPYTER_CONFIG_FILE}" ]; then
+    CUSTOM_JUPYTER_CONFIG_FILE="${CUSTOM_CONFIG_DIR}/jupyter/config.py"
     mkdir -p "${JUPYTER_CONFIG_DIR}"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/jupyter/config.py" "${JUPYTER_CONFIG_FILE}"
+    ln -s "${CUSTOM_JUPYTER_CONFIG_FILE}" "${JUPYTER_CONFIG_FILE}"
   fi
 fi
 ### PEX ========================================================================
@@ -770,8 +792,9 @@ export PYLINTHOME="$XDG_CACHE_HOME/pylint"
 export PYLINTRC="$XDG_CONFIG_HOME/pylint/pylintrc"
 if command_exists pylint; then
   if [ ! -f "${PYLINTRC}" ]; then
+    CUSTOM_PYLINTRC="${CUSTOM_CONFIG_DIR}/pylint/pylintrc"
     mkdir -p "${XDG_CONFIG_HOME}/pylint"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/pylint/pylintrc" "${PYLINTRC}"
+    ln -s "${CUSTOM_PYLINTRC}" "${PYLINTRC}"
   fi
 fi
 ### PYTHON =====================================================================
@@ -785,7 +808,7 @@ if command_exists python; then
   mkdir -p "${XDG_STATE_HOME}/python"
   if [ ! -f "${PYTHONSTARTUP}" ]; then
     mkdir -p "${XDG_CONFIG_HOME}/python"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/python/pythonrc" "${PYTHONSTARTUP}"
+    ln -s "${CUSTOM_CONFIG_DIR}/python/pythonrc" "${PYTHONSTARTUP}"
   fi
 fi
 # END PYTHON DEVEL =============================================================
@@ -812,8 +835,9 @@ if command_exists r; then
   mkdir -p "${XDG_STATE_HOME}/r"
   mkdir -p "${R_LIBS_USER}"
   if [ ! -f "${R_PROFILE_USER}" ]; then
+    CUSTOM_R_PROFILE_USER="${CUSTOM_CONFIG_DIR}/r/profile"
     mkdir -p "${XDG_CONFIG_HOME}/r/"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/r/profile" "${R_PROFILE_USER}"
+    ln -s "${CUSTOM_R_PROFILE_USER}" "${R_PROFILE_USER}"
   fi
 fi
 alias_if_exists "R" "r"
@@ -822,8 +846,9 @@ alias_if_exists "Rscript" "rscript"
 export RADIAN_CONFIG_FILE="${XDG_CONFIG_HOME}/radian/profile"
 if command_exists radian; then
   if [ ! -f "${RADIAN_CONFIG_FILE}" ]; then
+    CUSTOM_RADIAN_CONFIG_FILE="${CUSTOM_CONFIG_DIR}/radian/profile"
     mkdir -p "${XDG_CONFIG_HOME}/radian"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/radian/profile" "${RADIAN_CONFIG_FILE}"
+    ln -s "${CUSTOM_RADIAN_CONFIG_FILE}" "${RADIAN_CONFIG_FILE}"
   fi
 fi
 # END R DEVEL ==================================================================
@@ -858,7 +883,8 @@ prepend_to_path "${RBENV_ROOT}/bin"
 eval_if_exists rbenv "init - --no-rehash bash"
 if command_exists rbenv; then
   if [ ! -f "${RBENV_ROOT}/default-gems" ]; then
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/rbenv/default-gems" "${RBENV_ROOT}/default-gems"
+    CUSTOM_RBENV_DEFAULT_GEMS="${CUSTOM_CONFIG_DIR}/xxenv/rbenv/default-gems"
+    ln -s "${CUSTOM_RBENV_DEFAULT_GEMS}" "${RBENV_ROOT}/default-gems"
   fi
   RBENV_RUBY_PATH="${RBENV_ROOT}/versions/$(rbenv global)"
   prepend_to_path "${RBENV_RUBY_PATH}/bin"
@@ -877,8 +903,9 @@ export BUNDLE_USER_PLUGIN="${BUNDLE_USER_HOME}/plugins"
 if command_exists bundle; then
   mkdir -p "${BUNDLE_USER_HOME}" "${BUNDLE_USER_CACHE}"
   if [ ! -f "${BUNDLE_USER_CONFIG}" ]; then
+    CUSTOM_BUNDLE_USER_CONFIG="${CUSTOM_CONFIG_DIR}/bundle/config"
     mkdir -p "${XDG_CONFIG_HOME}/bundle"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/bundle/config" "${BUNDLE_USER_CONFIG}"
+    ln -s "${CUSTOM_BUNDLE_USER_CONFIG}" "${BUNDLE_USER_CONFIG}"
   fi
 fi
 ### GEM ========================================================================
@@ -888,8 +915,9 @@ export GEMRC="${XDG_CONFIG_HOME}/gem/gemrc"
 prepend_to_path "${GEM_HOME}/bin"
 if command_exists gem; then
   if [ ! -f "${GEMRC}" ]; then
+    CUSTOM_GEMRC="${CUSTOM_CONFIG_DIR}/gem/gemrc"
     mkdir -p "${XDG_CONFIG_HOME}/gem"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/gem/gemrc" "${GEMRC}"
+    ln -s "${CUSTOM_GEMRC}" "${GEMRC}"
   fi
 fi
 ## RUBY TOOLS ==================================================================
@@ -898,8 +926,9 @@ export IRBRC="${XDG_CONFIG_HOME}/irb/irbrc"
 if command_exists irb; then
   mkdir -p "${XDG_STATE_HOME}/irb"
   if [ ! -f "${IRBRC}" ]; then
+    CUSTOM_IRBRC="${CUSTOM_CONFIG_DIR}/irb/irbrc"
     mkdir -p "${XDG_CONFIG_HOME}/irb"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/irb/irbrc" "${IRBRC}"
+    ln -s "${CUSTOM_IRBRC}" "${IRBRC}"
   fi
 fi
 ### RUBY =======================================================================
@@ -977,8 +1006,9 @@ export OCTAVE_HISTFILE="${XDG_STATE_HOME}/octave/history"
 export OCTAVE_SITE_INITFILE="${XDG_CONFIG_HOME}/octave/octaverc"
 if command_exists octave; then
   if [ ! -f "${OCTAVE_SITE_INITFILE}" ]; then
+    CUSTOM_OCTAVE_SITE_INITFILE="${CUSTOM_CONFIG_DIR}/octave/octaverc"
     mkdir -p "${XDG_CONFIG_HOME}/octave"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/octave/octaverc" "${OCTAVE_SITE_INITFILE}"
+    ln -s "${CUSTOM_OCTAVE_SITE_INITFILE}" "${OCTAVE_SITE_INITFILE}"
   fi
 fi
 # PROCESSING ===================================================================
@@ -1034,8 +1064,9 @@ fi
 GIT_CONFIG="${XDG_CONFIG_HOME}/git/config" # ElixirLs does not work when exporting GIT_CONFIG
 if command_exists git; then
   if [ ! -f "${GIT_CONFIG}" ]; then
+    CUSTOM_GIT_CONFIG="${CUSTOM_CONFIG_DIR}/git/config"
     mkdir -p "${XDG_CONFIG_HOME}/git"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/git/config" "${GIT_CONFIG}"
+    ln -s "${CUSTOM_GIT_CONFIG}" "${GIT_CONFIG}"
   fi
 fi
 # MERCURIAL ====================================================================
@@ -1103,7 +1134,8 @@ export TEXMFVAR="${XDG_CACHE_HOME}/texlive/texmf-var"
 export TEALDEER_CONFIG_DIR="${XDG_CONFIG_HOME}/tldr"
 if command_exists tldr; then
   if [ ! -d "${TEALDEER_CONFIG_DIR}" ]; then
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/tealdeer" "${TEALDEER_CONFIG_DIR}"
+    CUSTOM_TEALDEER_CONFIG_DIR="${CUSTOM_CONFIG_DIR}/tealdeer"
+    ln -s "${CUSTOM_TEALDEER_CONFIG_DIR}" "${TEALDEER_CONFIG_DIR}"
   fi
 fi
 # VAGRANT ======================================================================
@@ -1115,8 +1147,9 @@ export W3M_DIR="${XDG_STATE_HOME}/w3m"
 export WGETRC="${XDG_CONFIG_HOME}/wget/wgetrc"
 if command_exists wget; then
   if [ ! -f "$WGETRC" ]; then
+    CUSTOM_WGETRC="${CUSTOM_CONFIG_DIR}/wget/wgetrc"
     mkdir -p "${XDG_CONFIG_HOME}/wget"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/wget/wgetrc" "$WGETRC"
+    ln -s "${CUSTOM_WGETRC}" "$WGETRC"
   fi
 fi
 # XORG =========================================================================
