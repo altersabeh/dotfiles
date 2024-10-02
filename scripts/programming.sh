@@ -475,15 +475,19 @@ fi
 ### GRADLE =====================================================================
 export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"
 ### MAVEN ======================================================================
-export MAVEN_CUSTOM_REPO="${XDG_CACHE_HOME}/maven"
-export MAVEN_OPTS="-Dmaven.repo.local=${MAVEN_CUSTOM_REPO}/repository"
+export MAVEN_CUSTOM_REPO="${XDG_CACHE_HOME}/maven/repository"
+export MAVEN_OPTS="-Dmaven.repo.local=${MAVEN_CUSTOM_REPO}"
 if command_exists mvn; then
-  if [ -f "${MAVEN_HOME}/conf/settings.xml" ]; then
-    rm "${MAVEN_HOME}/conf/settings.xml"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/maven/settings.xml" "${MAVEN_HOME}/conf/settings.xml"
+  # Define the paths
+  ORIG_MAVEN_SETTINGS_PATH="${MAVEN_HOME}/conf/settings.xml"
+  CONFIG_MAVEN_SETTINGS_PATH="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../config/maven/settings.xml")"
+  if [ "$(realpath "${ORIG_MAVEN_SETTINGS_PATH}")" != "${CONFIG_MAVEN_SETTINGS_PATH}" ]; then
+    [ -f "${ORIG_MAVEN_SETTINGS_PATH}" ] && rm "${ORIG_MAVEN_SETTINGS_PATH}"
+    ln -s "${CONFIG_MAVEN_SETTINGS_PATH}" "${ORIG_MAVEN_SETTINGS_PATH}"
   fi
   if [ ! -d "${MAVEN_HOME}/repository" ]; then
-    ln -s "${XDG_CACHE_HOME}/maven/repository" "${MAVEN_HOME}/repository"
+    mkdir -p "${XDG_CACHE_HOME}/maven"
+    ln -s "${MAVEN_CUSTOM_REPO}" "${MAVEN_HOME}/repository"
   fi
 fi
 ### SBT ========================================================================
