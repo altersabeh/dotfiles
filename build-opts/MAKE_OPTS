@@ -1,2 +1,4 @@
+#!/usr/bin/env bash
+
 # export MAKEFLAGS="-j12"
 export MAKEOPTS="-j10"

@@ -1,1 +1,32 @@
-export PYTHON_CONFIGURE_OPTS="--enable-shared --enable-optimizations --enable-loadable-sqlite-extensions --enable-ipv6 --enable-big-digits=30 --enable-test-modules --with-pkg-config=yes --without-static-libpython --with-lto=full --disable-bolt --with-hash-algorithm=siphash13 --with-decimal-contextvar --with-dbmliborder=ndbm:gdbm:bdb --with-doc-strings --with-pymalloc --with-freelists --with-c-locale-coercion --with-valgrind --with-dtrace --with-readline --with-ensurepip=upgrade --with-ssl-default-suites=python --with-builtin-hashlib-hashes=md5,sha1,sha2,sha3,blake2"
+#!/usr/bin/env bash
+
+export PYTHON_CONFIGURE_OPTS="
+  --enable-shared
+  --disable-gil
+  --enable-optimizations
+  --enable-experimental-jit
+  --disable-bolt
+  --enable-loadable-sqlite-extensions
+  --enable-ipv6
+  --enable-big-digits=30
+  --disable-test-modules
+  --with-pkg-config=yes
+  --with-static-libpython
+  --with-lto=full
+  --with-hash-algorithm=siphash13
+  --with-system-expat
+  --with-system-libmpdec
+  --with-decimal-contextvar
+  --with-dbmliborder=ndbm:gdbm:bdb
+  --with-doc-strings
+  --with-mimalloc
+  --with-pymalloc
+  --with-freelists
+  --with-c-locale-coercion
+  --with-valgrind
+  --with-dtrace
+  --with-readline
+  --with-ensurepip=upgrade
+  --with-ssl-default-suites=python
+  --with-builtin-hashlib-hashes=md5,sha1,sha2,sha3,blake2
+"
