@@ -16,9 +16,9 @@ prepend_to_manpath "/usr/share/man"
 # SHELL DEVEL ==================================================================
 ## SHELL VERSION MANAGERS ======================================================
 ### SHENV ======================================================================
-# export SHENV_ROOT="${XDG_DATA_HOME}/shenv"
-# prepend_to_path "${SHENV_ROOT}/bin"
-# eval_if_exists shenv "init -"
+export SHENV_ROOT="${XDG_DATA_HOME}/shenv"
+prepend_to_path "${SHENV_ROOT}/bin"
+eval_if_exists shenv "init -"
 ## SHELL TOOLS =================================================================
 ### BASALT =====================================================================
 # export BASALT_GLOBAL_DATA_DIR="${XDG_DATA_HOME}/basalt"
@@ -165,9 +165,9 @@ append_to_library_path "${LD_LIBRARY_PATH}"
 # CRYSTAL DEVEL ================================================================
 ## CRYSTAL VERSION MANAGERS ====================================================
 ### CRENV ======================================================================
-# export CRENV_ROOT="${XDG_DATA_HOME}/crenv"
-# prepend_to_path "$CRENV_ROOT/bin"
-# eval_if_exists crenv "init -"
+export CRENV_ROOT="${XDG_DATA_HOME}/crenv"
+prepend_to_path "$CRENV_ROOT/bin"
+eval_if_exists crenv "init -"
 # END CRYSTAL DEVEL ============================================================
 
 
@@ -181,6 +181,8 @@ export DUB_HOME="${XDG_DATA_HOME}/dub"
 # DART DEVEL ===================================================================
 ## DART VERSION MANAGERS =======================================================
 ### DVM ========================================================================
+export DVM_ROOT="${XDG_DATA_HOME}/dvm"
+source_if_exists "${XDG_DATA_HOME}/dvm/scripts/dvm"
 ### FVM ========================================================================
 export FVM_HOME="${XDG_DATA_HOME}/fvm"
 prepend_to_path "$FVM_HOME/default/bin"
@@ -270,7 +272,7 @@ export GOENV_GOPATH_PREFIX="${GOPATH}"
 export GOENV_PREPEND_GOPATH=1
 export GOENV_ROOT="${XDG_DATA_HOME}/goenv"
 prepend_to_path "${GOENV_ROOT}/bin"
-# eval_if_exists goenv "init - --no-rehash bash"
+eval_if_exists goenv "init - --no-rehash bash"
 if command_exists goenv; then
   GOENV_GO_PATH="$GOENV_ROOT/versions/$(goenv global)"
   prepend_to_path "${GOENV_GO_PATH}/bin"
@@ -295,7 +297,7 @@ fi
 export GHCUP_INSTALL_BASE_PREFIX="${XDG_DATA_HOME}"
 source_if_exists "${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/env"
 if command_exists ghc; then
-  GHC_VERSION="$(ghc --numeric-version)" 
+  GHC_VERSION="$(ghc --numeric-version)"
   GHCUP_GHC_PATH="${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/ghc/${GHC_VERSION}"
   prepend_to_manpath "${GHCUP_GHC_PATH}/share/man"
 fi
@@ -331,11 +333,14 @@ fi
 ### FNM ========================================================================
 export FNM_PATH="${XDG_DATA_HOME}/fnm"
 prepend_to_path "${FNM_PATH}"
-eval_if_exists fnm "env" 
+eval_if_exists fnm "env"
+### N ==========================================================================
+export N_PREFIX="${XDG_DATA_HOME}/n"
+prepend_to_path "${N_PREFIX}/bin"
 ### NODENV =====================================================================
 export NODENV_ROOT="${XDG_DATA_HOME}/nodenv"
 prepend_to_path "${NODENV_ROOT}/bin"
-# eval_if_exists nodenv "init - --no-rehash"
+eval_if_exists nodenv "init - --no-rehash bash"
 if command_exists nodenv; then
   if [ ! -f "${NODENV_ROOT}/default-packages" ]; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/nodenv/default-packages" "${NODENV_ROOT}/default-packages"
@@ -413,9 +418,9 @@ fi
 export JABBA_HOME="${XDG_DATA_HOME}/jabba"
 source_if_exists "${JABBA_HOME}/jabba.sh"
 ### SCALAENV ===================================================================
-# export SCALAENV_ROOT="${XDG_DATA_HOME}/scalaenv"
-# prepend_to_path "${SCALAENV_ROOT}/bin"
-# eval_if_exists scalaenv "init -"
+export SCALAENV_ROOT="${XDG_DATA_HOME}/scalaenv"
+prepend_to_path "${SCALAENV_ROOT}/bin"
+eval_if_exists scalaenv "init -"
 ### SDKMAN =====================================================================
 export SDKMAN_DIR="${XDG_DATA_HOME}/sdkman"
 source_if_exists "${SDKMAN_DIR}/bin/sdkman-init.sh"
@@ -504,7 +509,7 @@ prepend_to_path "${ROSWELL_HOME}/bin"
 ### LUAENV =====================================================================
 export LUAENV_ROOT="${XDG_DATA_HOME}/luaenv"
 prepend_to_path "${LUAENV_ROOT}/bin"
-# eval_if_exists luaenv "init - --no-rehash"
+eval_if_exists luaenv "init - bash"
 if command_exists luaenv; then
   if [ ! -f "${LUAENV_ROOT}/default-rocks" ]; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/luaenv/default-rocks" "${LUAENV_ROOT}/default-rocks"
@@ -566,7 +571,7 @@ fi
 ### PLENV ======================================================================
 export PLENV_ROOT="${XDG_DATA_HOME}/plenv"
 prepend_to_path "${PLENV_ROOT}/bin"
-# eval_if_exists plenv "init -"
+eval_if_exists plenv "init - bash"
 if command_exists plenv; then
   PLENV_PERL_PATH="${PLENV_ROOT}/versions/$(plenv global)"
   prepend_to_path "${PLENV_PERL_PATH}/bin"
@@ -617,7 +622,7 @@ alias_if_exists "reply --cfg ${XDG_CONFIG_HOME}/reply/replyrc" "reply"
 ### PHPENV =====================================================================
 export PHPENV_ROOT="${XDG_DATA_HOME}/phpenv"
 prepend_to_path "${PHPENV_ROOT}/bin"
-# eval_if_exists phpenv "init - --no-rehash"
+eval_if_exists phpenv "init - --no-rehash bash"
 if command_exists phpenv; then
   PHPENV_PHP_PATH="${PHPENV_ROOT}/versions/$(phpenv global)"
   prepend_to_path "${PHPENV_PHP_PATH}/bin"
@@ -670,7 +675,7 @@ fi
 ### PYENV ======================================================================
 export PYENV_ROOT="${XDG_DATA_HOME}/pyenv"
 prepend_to_path "${PYENV_ROOT}/bin"
-# eval_if_exists pyenv "init - --no-rehash"
+eval_if_exists pyenv "init - --no-rehash bash"
 if command_exists pyenv; then
   if [ ! -f "${PYENV_ROOT}/default-packages" ]; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/pyenv/default-packages" "${PYENV_ROOT}/default-packages"
@@ -743,7 +748,9 @@ if command_exists pylint; then
   fi
 fi
 ### PYTHON =====================================================================
+export PYTHON_COLORS=1
 export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history" # python >= 3.13
+export PYTHON_JIT=1
 export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}/pycache"
 export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonrc"
 export PYTHONUSERBASE="${XDG_DATA_HOME}/pip"
@@ -762,7 +769,7 @@ fi
 ### RENV =======================================================================
 export RENV_ROOT="${XDG_DATA_HOME}/renv"
 prepend_to_path "${RENV_ROOT}/bin"
-# eval_if_exists renv "init - --no-rehash"
+eval_if_exists renv "init - --no-rehash bash"
 if command_exists renv; then
   RENV_R_PATH="${RENV_ROOT}/versions/$(renv global)"
   prepend_to_path "${RENV_R_PATH}/bin"
@@ -821,7 +828,7 @@ export RAKULIB="${XDG_CACHE_HOME}/raku${RAKULIB:+:${RAKULIB}}"
 ### RBENV ======================================================================
 export RBENV_ROOT="${XDG_DATA_HOME}/rbenv"
 prepend_to_path "${RBENV_ROOT}/bin"
-# eval_if_exists rbenv "init - --no-rehash"
+eval_if_exists rbenv "init - --no-rehash bash"
 if command_exists rbenv; then
   if [ ! -f "${RBENV_ROOT}/default-gems" ]; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/xxenv/rbenv/default-gems" "${RBENV_ROOT}/default-gems"
@@ -893,9 +900,9 @@ source_if_exists "${CARGO_HOME}/env"
 # SWIFT DEVEL ==================================================================
 ## SWIFT VERSION MANAGERS ======================================================
 ### SWIFTENV ===================================================================
-# export SWIFTENV_ROOT="${XDG_DATA_HOME}/swiftenv"
-# prepend_to_path "${SWIFTENV_ROOT}/bin"
-# eval_if_exists swiftenv "init -"
+export SWIFTENV_ROOT="${XDG_DATA_HOME}/swiftenv"
+prepend_to_path "${SWIFTENV_ROOT}/bin"
+eval_if_exists swiftenv "init -"
 ### SWIFTLY ====================================================================
 export SWIFTLY_HOME_DIR="${XDG_DATA_HOME}/swiftly"
 export SWIFTLY_BIN_DIR="${SWIFTLY_HOME_DIR}/bin"
@@ -1004,6 +1011,8 @@ if command_exists git; then
     ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/git/config" "${GIT_CONFIG}"
   fi
 fi
+# MERCURIAL ====================================================================
+export HGRCPATH="${XDG_CONFIG_HOME}/hg/config"
 # SUBVERSION ===================================================================
 alias_if_exists "svn --config-dir ${XDG_CONFIG_HOME}/subversion" "svn"
 # END VERSION CONTROL ==========================================================
@@ -1035,7 +1044,7 @@ export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 alias_if_exists "dust" "du"
 # FOUNDRY ======================================================================
 export FOUNDRY_DIR="${XDG_DATA_HOME}/foundry"
-prepend_to_path "${FOUNDRY_DIR}/bin" 
+prepend_to_path "${FOUNDRY_DIR}/bin"
 # GNUPG ========================================================================
 export GNUPGHOME="${XDG_DATA_HOME}/gnupg"
 if [ ! -d "${GNUPGHOME}" ]; then
