@@ -42,6 +42,13 @@ eval_if_exists shenv "init -"
 item="$(ps -cp "$$" -o command="")"
 export HISTFILE="${XDG_STATE_HOME}/${item}/history"
 mkdir -p "${XDG_STATE_HOME}/${item}"
+### BASH =======================================================================
+BASHRC_PATH="${HOME}/.bashrc"
+CONFIG_BASHRC_PATH="$(dirname "${BASH_SOURCE[0]}")/../config/bash/bashrc"
+if [ "$(realpath "$BASHRC_PATH")" != "$CONFIG_BASHRC_PATH" ]; then
+  rm "$BASHRC_PATH" # remove the existing .bashrc
+  ln -s "$CONFIG_BASHRC_PATH" "$BASHRC_PATH"
+fi
 # END SHELL DEVEL ==============================================================
 
 
