@@ -1,4 +1,18 @@
 #!/usr/bin/env bash
+
+# Define a variable to track the last modification time of this script
+PROGRAMMING_SH_LAST_MODIFIED_VAR="PROGRAMMING_SH_LAST_MODIFIED"
+PROGRAMMING_SH_PATH="$(dirname "$BASH_SOURCE")/programming.sh"
+# Get the current modification time of this script
+current_mod_time=$(stat -c %Y "$PROGRAMMING_SH_PATH")
+# Check if the script has been sourced before and if it has been updated
+if [ -z "${!PROGRAMMING_SH_LAST_MODIFIED_VAR}" ] || [ "${!PROGRAMMING_SH_LAST_MODIFIED_VAR}" -lt "$current_mod_time" ]; then
+  # Update the environment variable with the current modification time
+  export $PROGRAMMING_SH_LAST_MODIFIED_VAR="$current_mod_time"
+else
+  return 0
+fi
+
 # PRELIMINARIES ================================================================
 ## XDG DIRS ====================================================================
 export XDG_CACHE_HOME="${HOME}/.cache"
