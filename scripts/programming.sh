@@ -43,11 +43,11 @@ item="$(ps -cp "$$" -o command="")"
 export HISTFILE="${XDG_STATE_HOME}/${item}/history"
 mkdir -p "${XDG_STATE_HOME}/${item}"
 ### BASH =======================================================================
-BASHRC_PATH="${HOME}/.bashrc"
+ORIG_BASHRC_PATH="${HOME}/.bashrc"
 CONFIG_BASHRC_PATH="$(dirname "${BASH_SOURCE[0]}")/../config/bash/bashrc"
-if [ "$(realpath "$BASHRC_PATH")" != "$CONFIG_BASHRC_PATH" ]; then
-  rm "$BASHRC_PATH" # remove the existing .bashrc
-  ln -s "$CONFIG_BASHRC_PATH" "$BASHRC_PATH"
+if [ "$(realpath "${ORIG_BASHRC_PATH}")" != "${CONFIG_BASHRC_PATH}" ]; then
+  [ -f ${ORIG_BASHRC_PATH} ] && rm "${ORIG_BASHRC_PATH}" # remove the existing .bashrc
+  ln -s "${CONFIG_BASHRC_PATH}" "${ORIG_BASHRC_PATH}"
 fi
 # END SHELL DEVEL ==============================================================
 
