@@ -44,10 +44,10 @@ export HISTFILE="${XDG_STATE_HOME}/${item}/history"
 mkdir -p "${XDG_STATE_HOME}/${item}"
 ### BASH =======================================================================
 ORIG_BASHRC_PATH="${HOME}/.bashrc"
-CONFIG_BASHRC_PATH="$(dirname "${BASH_SOURCE[0]}")/../config/bash/bashrc"
-if [ "$(realpath "${ORIG_BASHRC_PATH}")" != "${CONFIG_BASHRC_PATH}" ]; then
+CUSTOM_BASHRC_PATH="$(dirname "${BASH_SOURCE[0]}")/../config/bash/bashrc"
+if [ "$(realpath "${ORIG_BASHRC_PATH}")" != "${CUSTOM_BASHRC_PATH}" ]; then
   [ -f ${ORIG_BASHRC_PATH} ] && rm "${ORIG_BASHRC_PATH}" # remove the existing .bashrc
-  ln -s "${CONFIG_BASHRC_PATH}" "${ORIG_BASHRC_PATH}"
+  ln -s "${CUSTOM_BASHRC_PATH}" "${ORIG_BASHRC_PATH}"
 fi
 # END SHELL DEVEL ==============================================================
 
@@ -62,8 +62,9 @@ export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
 source_if_exists "${ASDF_DATA_DIR}/asdf.sh"
 if command_exists asdf; then
   if [ ! -f "${ASDF_CONFIG_FILE}" ]; then
+    CUSTOM_ASDF_CONFIG_FILE="$(dirname "${BASH_SOURCE[0]}")/../config/asdf/asdfrc"
     mkdir -p "${XDG_CONFIG_HOME}/asdf"
-    ln -s "$(dirname "${BASH_SOURCE[0]}")/../config/asdf/asdfrc" "${ASDF_CONFIG_FILE}"
+    ln -s "${CUSTOM_ASDF_CONFIG_FILE}" "${ASDF_CONFIG_FILE}"
   fi
 fi
 ### MISE =======================================================================
