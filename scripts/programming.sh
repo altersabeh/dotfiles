@@ -13,6 +13,7 @@ if [ -z "${!PROGRAMMING_SH_LAST_MODIFIED_VAR}" ] || [ "${!PROGRAMMING_SH_LAST_MO
   # Update the environment variable with the current modification time
   export $PROGRAMMING_SH_LAST_MODIFIED_VAR="$current_mod_time"
 else
+  export PROGRAMMING_SH_ALREADY_SOURCED=1
   return 0
 fi
 

@@ -120,5 +120,19 @@ if [ -d ~/Documents/scripts ]; then
   . ~/Documents/scripts/run.sh
 fi
 
-# always run this
-eval_if_exists oh-my-posh "init bash --config ~/.cache/oh-my-posh/themes/night-owl.omp.json"
+# always execute this commands even if the file is sourced already
+if [ -z "${PROGRAMMING_SH_ALREADY_SOURCED}"]; then
+  eval_if_exists oh-my-posh "init bash --config ~/.cache/oh-my-posh/themes/night-owl.omp.json"
+
+  alias_if_exists "reply --cfg ${XDG_CONFIG_HOME}/reply/replyrc" "reply"
+  alias_if_exists "R" "r"
+  alias_if_exists "Rscript" "rscript"
+  alias_if_exists "scilab-cli -scihome ${SCIHOME}" "scilab"
+  alias_if_exists "scilab-cli -scihome ${SCIHOME}" "scilab-cli"
+  alias_if_exists "svn --config-dir ${XDG_CONFIG_HOME}/subversion" "svn"
+  alias_if_exists "dust" "du"
+  alias_if_exists "lsd -A" "ls"
+  alias_if_exists "z" "cd"
+
+  unset PROGRAMMING_SH_ALREADY_SOURCED
+fi
