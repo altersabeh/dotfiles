@@ -1,29 +1,30 @@
 #!/usr/bin/env bash
 
 export PERL_BUILD_CONFIGURE_OPTS=(
-  -Duse64bitall
+  -Dusethreads
+  -Duseithreads
+  -Duselargefiles
   -Duse64bitint
+  -Duse64bitall
+  -Duselongdouble
+  -Dusemorebits
+  -Dusedl
+  -Duseshrplib
+  -Dusedtrace
+  -Dusemymalloc
+  -Dusevfork
   -Dusecbacktrace
   -Dusedevel
-  -Dusedl
-  -Dusedtrace
-  -Dusefaststdio=y
-  -Dd_faststdio=y
-  -Duseithreads=y
+  -Dusefaststdio
+  -Dd_faststdio
   -Duselanginfo
-  -Duselargefiles
-  -Duselongdouble
   -Dusemallocwrap
-  -Dusemorebits
   -Dusemultiplicity
-  -Dusemymalloc=y
-  -Duseperlio=y
+  -Duseperlio
   -Duseopcode
-  -Duseposix=true
+  -Duseposix
   -Dusereentrant
-  -Duseshrplib=y
   -Dusesitecustomize
-  -Dusethreads=y
   -Dusevfork
   -Doptimize=-O2
 )
