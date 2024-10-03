@@ -200,10 +200,12 @@ export CLING_HISTFILE="${XDG_STATE_HOME}/cling/history"
 append_to_path "${CLING_HOME}/bin"
 ### GNUSTEP ====================================================================
 prepend_to_cpath "/usr/include/GNUstep"
+### UNCRUSTIFY =================================================================
+export UNCRUSTIFY_CONFIG="${XDG_CONFIG_HOME}/uncrustify/uncrustify.cfg"
 ## C FAMILY INCLUDES ===========================================================
 ### C++ ========================================================================
 # CPLUS_INCLUDE_PATH
-### GOBJC ======================================================================
+### GOBJC ======================================================================w
 # OBJC_INCLUDE_PATH
 # OBJCPLUS_INCLUDE_PATH
 ## C FAMILY PATHS ==============================================================
@@ -531,6 +533,8 @@ fi
 ### SBT ========================================================================
 export SBT_OPTS="-ivy ${XDG_DATA_HOME}/ivy2 -sbt-dir ${XDG_DATA_HOME}/sbt"
 ## OTHER JVM TOOLS =============================================================
+### KSCRIPT ====================================================================
+export KSCRIPT_CACHE_DIR="${XDG_CACHE_HOME}/kscript"
 ### METALS =====================================================================
 del_if_exists "${HOME}/.metals"
 ### NODE JAVA CALLER ===========================================================
@@ -794,6 +798,20 @@ export UV_CACHE_DIR="${XDG_CACHE_HOME}/uv"
 export UV_CONFIG_FILE="${XDG_CONFIG_HOME}/uv/uv.toml"
 source_if_exists "${UV_INSTALL_DIR}/env"
 ## PYTHON TOOLS ================================================================
+### PYTHON =====================================================================
+export PYTHON_COLORS=1
+export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history" # python >= 3.13
+export PYTHON_JIT=1
+export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}/pycache"
+export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonrc"
+export PYTHONUSERBASE="${XDG_DATA_HOME}/python"
+if command_exists python; then
+  mkdir -p "${XDG_STATE_HOME}/python"
+  if [ ! -f "${PYTHONSTARTUP}" ]; then
+    mkdir -p "${XDG_CONFIG_HOME}/python"
+    ln -s "${CUSTOM_CONFIG_DIR}/python/pythonrc" "${PYTHONSTARTUP}"
+  fi
+fi
 ### IPYTHON ====================================================================
 if command_exists ipython; then
   mkdir -p "${XDG_CONFIG_HOME}/ipython"
@@ -808,6 +826,8 @@ if command_exists jupyter; then
     ln -s "${CUSTOM_JUPYTER_CONFIG_FILE}" "${JUPYTER_CONFIG_FILE}"
   fi
 fi
+### MYPY =======================================================================
+export MYPY_CACHE_DIR="${XDG_CACHE_HOME}/mypy"
 ### PEX ========================================================================
 export PEX_ROOT="${XDG_CACHE_HOME}/pex"
 ### PIPX =======================================================================
@@ -824,20 +844,8 @@ if command_exists pylint; then
     ln -s "${CUSTOM_PYLINTRC}" "${PYLINTRC}"
   fi
 fi
-### PYTHON =====================================================================
-export PYTHON_COLORS=1
-export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history" # python >= 3.13
-export PYTHON_JIT=1
-export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}/pycache"
-export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonrc"
-export PYTHONUSERBASE="${XDG_DATA_HOME}/pip"
-if command_exists python; then
-  mkdir -p "${XDG_STATE_HOME}/python"
-  if [ ! -f "${PYTHONSTARTUP}" ]; then
-    mkdir -p "${XDG_CONFIG_HOME}/python"
-    ln -s "${CUSTOM_CONFIG_DIR}/python/pythonrc" "${PYTHONSTARTUP}"
-  fi
-fi
+### RUFF =======================================================================
+export RUFF_CACHE_DIR="${XDG_CACHE_HOME}/ruff"
 # END PYTHON DEVEL =============================================================
 
 
@@ -936,6 +944,17 @@ if command_exists bundle; then
     ln -s "${CUSTOM_BUNDLE_USER_CONFIG}" "${BUNDLE_USER_CONFIG}"
   fi
 fi
+## RUBY TOOLS ==================================================================
+### IRB ========================================================================
+export IRBRC="${XDG_CONFIG_HOME}/irb/irbrc"
+if command_exists irb; then
+  mkdir -p "${XDG_STATE_HOME}/irb"
+  if [ ! -f "${IRBRC}" ]; then
+    CUSTOM_IRBRC="${CUSTOM_CONFIG_DIR}/irb/irbrc"
+    mkdir -p "${XDG_CONFIG_HOME}/irb"
+    ln -s "${CUSTOM_IRBRC}" "${IRBRC}"
+  fi
+fi
 ### GEM ========================================================================
 export GEM_HOME="${XDG_DATA_HOME}/gem"
 export GEM_SPEC_CACHE="${XDG_CACHE_HOME}/gem"
@@ -948,20 +967,11 @@ if command_exists gem; then
     ln -s "${CUSTOM_GEMRC}" "${GEMRC}"
   fi
 fi
-## RUBY TOOLS ==================================================================
-### IRB ========================================================================
-export IRBRC="${XDG_CONFIG_HOME}/irb/irbrc"
-if command_exists irb; then
-  mkdir -p "${XDG_STATE_HOME}/irb"
-  if [ ! -f "${IRBRC}" ]; then
-    CUSTOM_IRBRC="${CUSTOM_CONFIG_DIR}/irb/irbrc"
-    mkdir -p "${XDG_CONFIG_HOME}/irb"
-    ln -s "${CUSTOM_IRBRC}" "${IRBRC}"
-  fi
-fi
 ### RUBY =======================================================================
 ### SOLARGRAPH =================================================================
 export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
+### TRAVIS =====================================================================
+export TRAVIS_CONFIG_PATH="${XDG_CONFIG_HOME}/travis"
 # END RUBY DEVEL ===============================================================
 
 
@@ -1167,6 +1177,8 @@ export KUBECACHEDIR="${XDG_CACHE_HOME}/kube"
 export LESSHISTFILE="${XDG_STATE_HOME}/less/history"
 # LSD ==========================================================================
 alias_if_exists "lsd -A" "ls"
+# RIPGREP ======================================================================
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
 # SDCV =========================================================================
 export SDCV_HISTFILE="${XDG_STATE_HOME}/sdcv/history"
 export STARDICT_DATA_DIR="${XDG_DATA_HOME}/stardict"
