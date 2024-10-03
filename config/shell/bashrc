@@ -121,7 +121,7 @@ if [ -d ~/Documents/scripts ]; then
 fi
 
 # always execute this commands even if the file is sourced already
-if [ -z "${PROGRAMMING_SH_ALREADY_SOURCED}"]; then
+if [ -n "${PROGRAMMING_SH_ALREADY_SOURCED}" ]; then
   eval_if_exists oh-my-posh "init bash --config ~/.cache/oh-my-posh/themes/night-owl.omp.json"
 
   alias_if_exists "reply --cfg ${XDG_CONFIG_HOME}/reply/replyrc" "reply"

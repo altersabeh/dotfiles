@@ -31,6 +31,15 @@ prepend_to_manpath "/usr/share/man"
 # END PRELIMINARY ==============================================================
 
 
+# PROFILE ======================================================================
+ORIG_PROFILE_CONFIG="${HOME}/.profile"
+CUSTOM_PROFILE_CONFIG="${CUSTOM_CONFIG_DIR}/shell/profile"
+if [ "${ORIG_PROFILE_CONFIG}" != "${CUSTOM_PROFILE_CONFIG}" ]; then
+  [ -f "${ORIG_PROFILE_CONFIG}" ] && rm "${ORIG_PROFILE_CONFIG}" # remove the existing .profile
+  ln -s "${CUSTOM_PROFILE_CONFIG}" "${ORIG_PROFILE_CONFIG}"
+fi
+
+
 # SHELL DEVEL ==================================================================
 ## SHELL VERSION MANAGERS ======================================================
 ### SHENV ======================================================================
@@ -47,12 +56,27 @@ item="$(ps -cp "$$" -o command="")"
 export HISTFILE="${XDG_STATE_HOME}/${item}/history"
 mkdir -p "${XDG_STATE_HOME}/${item}"
 ### BASH =======================================================================
-ORIG_BASHRC_PATH="${HOME}/.bashrc"
-CUSTOM_BASHRC_PATH="${CUSTOM_CONFIG_DIR}/bash/bashrc"
-if [ "$(realpath "${ORIG_BASHRC_PATH}")" != "${CUSTOM_BASHRC_PATH}" ]; then
-  [ -f ${ORIG_BASHRC_PATH} ] && rm "${ORIG_BASHRC_PATH}" # remove the existing .bashrc
-  ln -s "${CUSTOM_BASHRC_PATH}" "${ORIG_BASHRC_PATH}"
+if [ "${SHELL}" = "/bin/bash" ]; then
+  HOME_BASHRC_PATH="${HOME}/.bashrc"
+  ORIG_BASHRC_PATH="${XDG_CONFIG_HOME}/bash/bashrc"
+  CUSTOM_BASHRC_PATH="${CUSTOM_CONFIG_DIR}/shell/bashrc"
+  if [ ! -f "${CUSTOM_BASHRC_PATH}" ]; then
+    [ -f "${HOME_BASHRC_PATH}" ] && rm "${HOME_BASHRC_PATH}" # remove the existing .bashrc
+    mkdir -p "${XDG_CONFIG_HOME}/bash"
+    ln -s "${CUSTOM_BASHRC_PATH}" "${ORIG_BASHRC_PATH}"
+  fi
 fi
+#
+# if you want to use the original location of the .bashrc file in the home
+# directory then uncomment the following block of code and comment the block
+# of code above
+#
+# ORIG_BASHRC_PATH="${HOME}/.bashrc"
+# CUSTOM_BASHRC_PATH="${CUSTOM_CONFIG_DIR}/bash/bashrc"
+# if [ "$(realpath "${ORIG_BASHRC_PATH}")" != "${CUSTOM_BASHRC_PATH}" ]; then
+#   [ -f ${ORIG_BASHRC_PATH} ] && rm "${ORIG_BASHRC_PATH}" # remove the existing .bashrc
+#   ln -s "${CUSTOM_BASHRC_PATH}" "${ORIG_BASHRC_PATH}"
+# fi
 # END SHELL DEVEL ==============================================================
 
 
@@ -611,8 +635,8 @@ fi
 # PERL DEVEL ===================================================================
 ## PERL VERSION MANAGERS =======================================================
 ### PERLBREW ===================================================================
-# export PERLBREW_ROOT="${XDG_DATA_HOME}/perlbrew"
-# source_if_exists "${PERLBREW_ROOT}/etc/bashrc"
+export PERLBREW_ROOT="${XDG_DATA_HOME}/perlbrew"
+source_if_exists "${PERLBREW_ROOT}/etc/bashrc"
 ### PLENV ======================================================================
 export PLENV_ROOT="${XDG_DATA_HOME}/plenv"
 prepend_to_path "${PLENV_ROOT}/bin"
@@ -624,12 +648,12 @@ if command_exists plenv; then
 fi
 ## PERL TOOLS ==================================================================
 ### CPANM ======================================================================
+prepend_to_path "${XDG_DATA_HOME}/perl/bin"
 if command_exists cpanm; then
   export PERL_CPANM_HOME="${XDG_CACHE_HOME}/cpanm"
   export PERL_CPANM_OPT="--prompt --notest -l ${XDG_DATA_HOME}/perl"
 fi
 ### PERL
-prepend_to_path "${XDG_DATA_HOME}/perl/bin"
 if command_exists perl; then
   export PERL_LOCAL_LIB_ROOT="${XDG_DATA_HOME}/perl${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
   export PERL_MB_OPT="--install_base ${XDG_DATA_HOME}/perl"
@@ -662,10 +686,9 @@ alias_if_exists "reply --cfg ${XDG_CONFIG_HOME}/reply/replyrc" "reply"
 # PHP DEVEL ====================================================================
 ## PHP VERSION MANAGERS ========================================================
 ### PHPBREW ====================================================================
-# export BOX_REQUIREMENT_CHECKER=0
-# export PHPBREW_ROOT="${XDG_DATA_HOME}/phpbrew"
-# export PHPBREW_HOME="${XDG_DATA_HOME}/phpbrew"
-# source_if_exists "${PHPBREW_HOME}/bashrc"
+export PHPBREW_ROOT="${XDG_DATA_HOME}/phpbrew"
+export PHPBREW_HOME="${XDG_DATA_HOME}/phpbrew"
+source_if_exists "${PHPBREW_HOME}/bashrc"
 ### PHPENV =====================================================================
 export PHPENV_ROOT="${XDG_DATA_HOME}/phpenv"
 prepend_to_path "${PHPENV_ROOT}/bin"
@@ -983,6 +1006,24 @@ export LINUX_SOURCEKIT_LIB_PATH="/usr/libexec/swift/lib/libsourcekitdInProc.so"
 # END SWIFT DEVEL ==============================================================
 
 
+# TERRAFORM DEVEL ==============================================================
+## TERRAFORM VERSION MANAGERS ==================================================
+### TENV =======================================================================
+export TENV_ROOT="${XDG_DATA_HOME}/tenv"
+### TFENV ======================================================================
+export TFENV_ROOT="${XDG_DATA_HOME}/tfenv"
+prepend_to_path "${TFENV_ROOT}/bin"
+eval_if_exists tfenv "init -"
+### TGENV ======================================================================
+export TGENV_ROOT="${XDG_DATA_HOME}/tgenv"
+prepend_to_path "${TGENV_ROOT}/bin"
+### TOFUENV ====================================================================
+export TOFUENV_ROOT="${XDG_DATA_HOME}/tofuenv"
+prepend_to_path "${TOFUENV_ROOT}/bin"
+eval_if_exists tofuenv "init -"
+# END TERRAFORM DEVEL ==========================================================
+
+
 # V DEVEL ======================================================================
 ## V-TOOLS =====================================================================
 ### V-ANALYZER =================================================================
@@ -1119,6 +1160,9 @@ export GTK_RC_FILES="${XDG_CONFIG_HOME}/gtk-1.0/gtkrc"
 export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
 # ICONS ========================================================================
 # export XCURSOR_PATH="/usr/share/icons:${XDG_DATA_HOME}/icons"
+# KUBERNETES ===================================================================
+export KUBECONFIG="${XDG_CONFIG_HOME}/kube"
+export KUBECACHEDIR="${XDG_CACHE_HOME}/kube"
 # LESS =========================================================================
 export LESSHISTFILE="${XDG_STATE_HOME}/less/history"
 # LSD ==========================================================================
