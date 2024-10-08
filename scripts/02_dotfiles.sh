@@ -4,16 +4,16 @@ THIS_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 CUSTOM_CONFIG_DIR="${THIS_SCRIPT_DIR}/../config"
 
 # Define a variable to track the last modification time of this script
-PROGRAMMING_SH_LAST_MODIFIED_VAR="PROGRAMMING_SH_LAST_MODIFIED"
-PROGRAMMING_SH_PATH="${THIS_SCRIPT_DIR}/programming.sh"
+DOTFILES_SH_LAST_MODIFIED_VAR="DOTFILES_SH_LAST_MODIFIED"
+DOTFILES_SH_PATH="${THIS_SCRIPT_DIR}/02_dotfiles.sh"
 # Get the current modification time of this script
-current_mod_time=$(stat -c %Y "$PROGRAMMING_SH_PATH")
+current_mod_time=$(stat -c %Y "$DOTFILES_SH_PATH")
 # Check if the script has been sourced before and if it has been updated
-if [ -z "${!PROGRAMMING_SH_LAST_MODIFIED_VAR}" ] || [ "${!PROGRAMMING_SH_LAST_MODIFIED_VAR}" -lt "$current_mod_time" ]; then
+if [ -z "${!DOTFILES_SH_LAST_MODIFIED_VAR}" ] || [ "${!DOTFILES_SH_LAST_MODIFIED_VAR}" -lt "$current_mod_time" ]; then
   # Update the environment variable with the current modification time
-  export $PROGRAMMING_SH_LAST_MODIFIED_VAR="$current_mod_time"
+  export $DOTFILES_SH_LAST_MODIFIED_VAR="$current_mod_time"
 else
-  export PROGRAMMING_SH_ALREADY_SOURCED=1
+  export DOTFILES_SH_ALREADY_SOURCED=1
   return 0
 fi
 
@@ -30,7 +30,6 @@ prepend_to_path "${LOCAL_BIN_DIR}"
 prepend_to_manpath "/usr/share/man"
 # END PRELIMINARY ==============================================================
 
-
 # PROFILE ======================================================================
 ORIG_PROFILE_CONFIG="${HOME}/.profile"
 CUSTOM_PROFILE_CONFIG="${CUSTOM_CONFIG_DIR}/shell/profile"
@@ -38,7 +37,6 @@ if [ "${ORIG_PROFILE_CONFIG}" != "${CUSTOM_PROFILE_CONFIG}" ]; then
   [ -f "${ORIG_PROFILE_CONFIG}" ] && rm "${ORIG_PROFILE_CONFIG}" # remove the existing .profile
   ln -s "${CUSTOM_PROFILE_CONFIG}" "${ORIG_PROFILE_CONFIG}"
 fi
-
 
 # SHELL DEVEL ==================================================================
 ## SHELL VERSION MANAGERS ======================================================
@@ -79,7 +77,6 @@ fi
 # fi
 # END SHELL DEVEL ==============================================================
 
-
 ## VERSION MANAGERS ============================================================
 ### AQUA =======================================================================
 export AQUA_ROOT_DIR="${XDG_DATA_HOME}/aqua"
@@ -111,7 +108,6 @@ prepend_to_path "${PROTO_HOME}/shims"
 source_if_exists "${XDG_DATA_HOME}/vmr/vmr.sh"
 ## END VERSION MANAGERS =========================================================
 
-
 ## TEXT EDITORS/IDE =============================================================
 ### ATOM =======================================================================
 # export ATOM_HOME="${XDG_DATA_HOME}/atom"
@@ -134,8 +130,16 @@ source_if_exists "${XDG_DATA_HOME}/vmr/vmr.sh"
 # export PYCHARM_VM_OPTIONS="${VMOPTIONSDIR}/pycharm.vmoptions"
 # export RUBYMINE_VM_OPTIONS="${VMOPTIONSDIR}/rubymine.vmoptions"
 # export DEVECOSTUDIO_VM_OPTIONS="${VMOPTIONSDIR}/devecostudio.vmoptions"
+### NEOVIM =====================================================================
+if command_exists nvim; then
+  CUSTOM_VIMINIT="${CUSTOM_CONFIG_DIR}/nvim/init.vim"
+  ORIG_VIMINIT="${XDG_CONFIG_HOME}/nvim/init.vim"
+  if [ ! -f "${ORIG_VIMINIT}" ]; then
+    mkdir -p "${XDG_CONFIG_HOME}/nvim"
+    ln -s "${CUSTOM_VIMINIT}" "${ORIG_VIMINIT}"
+  fi
+fi
 ## END TEXT EDITORS/IDE ========================================================
-
 
 # ADA DEVEL ====================================================================
 ## ADA PACKAGE MANAGERS ========================================================
@@ -152,7 +156,6 @@ if command_exists gnat; then
   done
 fi
 # END ADA DEVEL ================================================================
-
 
 # C FAMILY DEVEL ===============================================================
 ## C FAMILY COMPILERS ==========================================================
@@ -214,7 +217,6 @@ append_to_library_path "/usr/lib/x86_64-linux-gnu"
 append_to_library_path "${LD_LIBRARY_PATH}"
 # END C FAMILY DEVEL ===========================================================
 
-
 # CRYSTAL DEVEL ================================================================
 ## CRYSTAL VERSION MANAGERS ====================================================
 ### CRENV ======================================================================
@@ -223,13 +225,11 @@ prepend_to_path "$CRENV_ROOT/bin"
 eval_if_exists crenv "init -"
 # END CRYSTAL DEVEL ============================================================
 
-
 # D DEVEL ======================================================================
 ## D PACKAGE MANAGERS ==========================================================
 ### DUB ========================================================================
 export DUB_HOME="${XDG_DATA_HOME}/dub"
 # END D DEVEL ==================================================================
-
 
 # DART DEVEL ===================================================================
 ## DART VERSION MANAGERS =======================================================
@@ -249,7 +249,6 @@ export ANALYZER_STATE_LOCATION_OVERRIDE="${XDG_CACHE_HOME}/dart-server"
 del_if_exists "${HOME}/.dart-tool"
 # END DART DEVEL ===============================================================
 
-
 # DOTNET DEVEL =================================================================
 ## DOTNET PACKAGE MANAGERS =====================================================
 ### DOTNET =====================================================================
@@ -257,6 +256,7 @@ export DOTNET_ROOT="/usr/share/dotnet"
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
 prepend_to_path "${DOTNET_CLI_HOME}"/.dotnet/tools
 del_if_exists "${HOME}/.dotnet"
+del_if_exists "${HOME}/.ServiceHub"
 ### NUGET ======================================================================
 export NUGET_HTTP_CACHE_PATH="${XDG_CACHE_HOME}/nuget/http-cache"
 export NUGET_PACKAGES="${XDG_CACHE_HOME}/nuget/packages"
@@ -267,7 +267,6 @@ export NUGET_PLUGINS_CACHE_PATH="${XDG_CACHE_HOME}/nuget/plugins"
 ### OMNISHARP ==================================================================
 export OMNISHARPHOME="${XDG_CONFIG_HOME}/omnisharp"
 # END DOTNET DEVEL =============================================================
-
 
 # ERLANG DEVEL =================================================================
 ## ERLANG VERSION MANAGERS =====================================================
@@ -296,7 +295,6 @@ if command_exists erlc; then
 fi
 # END ERLANG DEVEL =============================================================
 
-
 # ELIXIR DEVEL =================================================================
 ## ELIXIR VERSION MANAGERS =====================================================
 ### KIEX =======================================================================
@@ -316,7 +314,6 @@ prepend_to_path "${MIX_HOME}/escripts"
 ### ELIXIR =====================================================================
 export ELIXIR_ERL_OPTIONS="-kernel shell_history enabled shell_history_path '${XDG_STATE_HOME}/elixir'"
 # END ELIXIR DEVEL =============================================================
-
 
 # GO DEVEL =====================================================================
 ## GO VERSION MANAGERS =========================================================
@@ -342,7 +339,6 @@ if command_exists go; then
   prepend_to_path "${GOPATH}/bin"
 fi
 # END GO DEVEL =================================================================
-
 
 # HASKELL DEVEL ================================================================
 ## HASKELL VERSION MANAGERS ====================================================
@@ -382,7 +378,6 @@ if command_exists stack; then
   fi
 fi
 # END HASKELL DEVEL ============================================================
-
 
 # JS AND TS DEVEL ==============================================================
 ## JS AND TS VERSION MANAGERS ==================================================
@@ -449,7 +444,6 @@ if command_exists ts-node; then
 fi
 # END JS AND TS DEVEL ==========================================================
 
-
 # JULIA DEVEL ==================================================================
 ## JULIA VERSION MANAGERS ======================================================
 ### JULIAUP ====================================================================
@@ -459,8 +453,8 @@ prepend_to_path "${XDG_DATA_HOME}/juliaup/bin"
 ### JULIA ======================================================================
 export JULIA_DEPOT_PATH="${XDG_DATA_HOME}/julia:${JULIA_DEPOT_PATH}"
 export JULIA_HISTORY="${XDG_STATE_HOME}/julia/history"
+del_if_exists "${HOME}/.julia"
 # END JULIA DEVEL ==============================================================
-
 
 # JVM DEVEL ====================================================================
 ## JVM VERSION MANAGERS ========================================================
@@ -533,14 +527,16 @@ fi
 ### SBT ========================================================================
 export SBT_OPTS="-ivy ${XDG_DATA_HOME}/ivy2 -sbt-dir ${XDG_DATA_HOME}/sbt"
 ## OTHER JVM TOOLS =============================================================
+### GITER8 =====================================================================
+export G8_HOME="${XDG_DATA_HOME}/g8"
 ### KSCRIPT ====================================================================
 export KSCRIPT_CACHE_DIR="${XDG_CACHE_HOME}/kscript"
 ### METALS =====================================================================
+del_if_exists "${HOME}/.bloop"
 del_if_exists "${HOME}/.metals"
 ### NODE JAVA CALLER ===========================================================
 export JAVA_CALLER_JAVA_EXECUTABLE="${JAVA_HOME}/bin/java"
 # END JVM DEVEL ================================================================
-
 
 # LEAN DEVEL ===================================================================
 ## LEAN VERSION MANAGERS =======================================================
@@ -548,7 +544,6 @@ export JAVA_CALLER_JAVA_EXECUTABLE="${JAVA_HOME}/bin/java"
 export ELAN_HOME="${XDG_DATA_HOME}/elan"
 prepend_to_path "${ELAN_HOME}/bin"
 # END LEAN DEVEL ===============================================================
-
 
 # LISP DEVEL ===================================================================
 ## LISP VERSION MANAGERS =======================================================
@@ -571,7 +566,6 @@ fi
 export ROSWELL_HOME="${XDG_DATA_HOME}/roswell"
 prepend_to_path "${ROSWELL_HOME}/bin"
 # END LISP DEVEL ===============================================================
-
 
 # LUA DEVEL ====================================================================
 ## LUA VERSION MANAGERS ========================================================
@@ -603,7 +597,6 @@ fi
 eval_if_exists luarocks "path --bin"
 # END LUA DEVEL ================================================================
 
-
 # NIM DEVEL ====================================================================
 ## NIM VERSION MANAGERS ========================================================
 ### CHOOSENIM ==================================================================
@@ -612,7 +605,6 @@ eval_if_exists luarocks "path --bin"
 export NIMBLE_DIR="${XDG_DATA_HOME}/nimble"
 prepend_to_path "${NIMBLE_DIR}/bin"
 # END NIM DEVEL ================================================================
-
 
 # OCAML DEVEL ==================================================================
 ## OCAML VERSION MANAGERS ======================================================
@@ -634,7 +626,6 @@ if command_exists ocaml; then
   fi
 fi
 # END OCAML DEVEL ==============================================================
-
 
 # PERL DEVEL ===================================================================
 ## PERL VERSION MANAGERS =======================================================
@@ -686,7 +677,6 @@ fi
 alias_if_exists "reply --cfg ${XDG_CONFIG_HOME}/reply/replyrc" "reply"
 # END PERL DEVEL ===============================================================
 
-
 # PHP DEVEL ====================================================================
 ## PHP VERSION MANAGERS ========================================================
 ### PHPBREW ====================================================================
@@ -721,13 +711,11 @@ if command_exists php; then
 fi
 # END PHP DEVEL ================================================================
 
-
 # PONY DEVEL ===================================================================
 ## PONY VERSION MANAGERS =======================================================
 ### PONYUP =====================================================================
 prepend_to_path "${XDG_DATA_HOME}/ponyup/bin"
 # END PONY DEVEL ===============================================================
-
 
 # PYTHON DEVEL =================================================================
 ## PYTHON VERSION MANAGERS =====================================================
@@ -742,7 +730,9 @@ if command_exists conda; then
     mkdir -p "${XDG_CONFIG_HOME}/conda"
     ln -s "${CUSTOM_CONDARC}" "${CONDARC}"
   fi
-  for item in $(conda env list | awk '$1 != "#" && $1 != "base" {print $1}'); do # creates .nv/ComputeCache for some unknown reason
+  for item in $( # creates .nv/ComputeCache for some unknown reason
+    get_conda_envs
+  ); do
     CONDA_ROOT="$(conda info --root)"
     append_to_path "${CONDA_ROOT}/envs/${item}/bin"
     prepend_to_manpath "${CONDA_ROOT}/envs/${item}/share/man"
@@ -773,6 +763,20 @@ fi
 ### RYE ========================================================================
 export RYE_HOME="${XDG_DATA_HOME}/rye"
 source_if_exists "${RYE_HOME}/env"
+## PYTHON SETTINGS =============================================================
+export PYTHON_COLORS=1
+export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history" # python >= 3.13
+export PYTHON_JIT=1
+export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}/pycache"
+export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonrc"
+export PYTHONUSERBASE="${XDG_DATA_HOME}/python"
+if command_exists python; then
+  mkdir -p "${XDG_STATE_HOME}/python"
+  if [ ! -f "${PYTHONSTARTUP}" ]; then
+    mkdir -p "${XDG_CONFIG_HOME}/python"
+    ln -s "${CUSTOM_CONFIG_DIR}/python/pythonrc" "${PYTHONSTARTUP}"
+  fi
+fi
 ## PYTHON PACKAGE MANAGERS =====================================================
 ### PDM ========================================================================
 export PDM_HOME="${XDG_DATA_HOME}/pdm"
@@ -788,9 +792,10 @@ if command_exists pip; then
   fi
 fi
 ### POETRY =====================================================================
-export POETRY_CONFIG_DIR="${XDG_CONFIG_HOME}/poetry"
 export POETRY_CACHE_DIR="${XDG_CACHE_HOME}/poetry"
+export POETRY_CONFIG_DIR="${XDG_CONFIG_HOME}/poetry"
 export POETRY_HOME="${XDG_DATA_HOME}/poetry"
+export POETRY_VIRTUALENVS_IN_PROJECT=1
 prepend_to_path "${POETRY_HOME}/bin"
 ### UV =========================================================================
 export UV_INSTALL_DIR="${XDG_DATA_HOME}/uv"
@@ -798,20 +803,6 @@ export UV_CACHE_DIR="${XDG_CACHE_HOME}/uv"
 export UV_CONFIG_FILE="${XDG_CONFIG_HOME}/uv/uv.toml"
 source_if_exists "${UV_INSTALL_DIR}/env"
 ## PYTHON TOOLS ================================================================
-### PYTHON =====================================================================
-export PYTHON_COLORS=1
-export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history" # python >= 3.13
-export PYTHON_JIT=1
-export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}/pycache"
-export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonrc"
-export PYTHONUSERBASE="${XDG_DATA_HOME}/python"
-if command_exists python; then
-  mkdir -p "${XDG_STATE_HOME}/python"
-  if [ ! -f "${PYTHONSTARTUP}" ]; then
-    mkdir -p "${XDG_CONFIG_HOME}/python"
-    ln -s "${CUSTOM_CONFIG_DIR}/python/pythonrc" "${PYTHONSTARTUP}"
-  fi
-fi
 ### IPYTHON ====================================================================
 if command_exists ipython; then
   mkdir -p "${XDG_CONFIG_HOME}/ipython"
@@ -847,7 +838,6 @@ fi
 ### RUFF =======================================================================
 export RUFF_CACHE_DIR="${XDG_CACHE_HOME}/ruff"
 # END PYTHON DEVEL =============================================================
-
 
 # R DEVEL ======================================================================
 ## R VERSION MANAGERS ==========================================================
@@ -886,8 +876,9 @@ if command_exists radian; then
     ln -s "${CUSTOM_RADIAN_CONFIG_FILE}" "${RADIAN_CONFIG_FILE}"
   fi
 fi
+### RLANGSERVER ================================================================
+del_if_exists "${HOME}/.vscode-R"
 # END R DEVEL ==================================================================
-
 
 # RAKU DEVEL ===================================================================
 ## RAKU VERSION MANAGERS =======================================================
@@ -908,7 +899,6 @@ export ZEF_CONFIG_TEMPDIR="${XDG_CACHE_HOME}/zef/temp"
 export RAKUDO_HIST="${XDG_STATE_HOME}/rakudo/history"
 export RAKULIB="${XDG_CACHE_HOME}/raku${RAKULIB:+:${RAKULIB}}"
 # END RAKU DEVEL ===============================================================
-
 
 # RUBY DEVEL ===================================================================
 ## RUBY VERSION MANAGERS =======================================================
@@ -974,7 +964,6 @@ export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
 export TRAVIS_CONFIG_PATH="${XDG_CONFIG_HOME}/travis"
 # END RUBY DEVEL ===============================================================
 
-
 # RUST DEVEL ===================================================================
 ## RUST VERSION MANAGERS =======================================================
 ### RUSTUP =====================================================================
@@ -989,7 +978,6 @@ fi
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 source_if_exists "${CARGO_HOME}/env"
 # END RUST DEVEL ===============================================================
-
 
 # SWIFT DEVEL ==================================================================
 ## SWIFT VERSION MANAGERS ======================================================
@@ -1015,7 +1003,6 @@ del_if_exists "${HOME}/.sourcekit-lsp"
 export LINUX_SOURCEKIT_LIB_PATH="/usr/libexec/swift/lib/libsourcekitdInProc.so"
 # END SWIFT DEVEL ==============================================================
 
-
 # TERRAFORM DEVEL ==============================================================
 ## TERRAFORM VERSION MANAGERS ==================================================
 ### TENV =======================================================================
@@ -1033,7 +1020,6 @@ prepend_to_path "${TOFUENV_ROOT}/bin"
 eval_if_exists tofuenv "init -"
 # END TERRAFORM DEVEL ==========================================================
 
-
 # V DEVEL ======================================================================
 ## V-TOOLS =====================================================================
 ### V-ANALYZER =================================================================
@@ -1044,7 +1030,6 @@ export VMODULES="${XDG_DATA_HOME}/v-modules"
 prepend_to_path "${XDG_DATA_HOME}/v"
 # END V DEVEL ==================================================================
 
-
 # PROGRAMMING LANGUAGES ========================================================
 # CLEAN ========================================================================
 export CLEAN_HOME="${XDG_DATA_HOME}/clean"
@@ -1052,8 +1037,9 @@ prepend_to_path "${CLEAN_HOME}/bin"
 # FACTOR =======================================================================
 prepend_to_path "${XDG_DATA_HOME}/factor"
 # MOJO =========================================================================
-export MODULAR_HOME="${XDG_DATA_HOME}/modular"
-prepend_to_path "${MODULAR_HOME}/pkg/packages.modular.com_mojo/bin"
+# export MODULAR_HOME="${XDG_DATA_HOME}/modular"
+# export MAGIC_VERSION="${MODULAR_HOME}"
+# prepend_to_path "${MODULAR_HOME}/bin"
 # ODIN =========================================================================
 export ODIN_ROOT="${XDG_DATA_HOME}/odin"
 prepend_to_path "${ODIN_ROOT}"
@@ -1079,7 +1065,6 @@ alias_if_exists "scilab-cli -scihome ${SCIHOME}" "scilab-cli"
 # ZEEK =========================================================================
 prepend_to_path "/opt/zeek/bin"
 # END PROGRAMMING LANGUAGES ====================================================
-
 
 # DATABASES ====================================================================
 ### INSTANTCLIENT ==============================================================
@@ -1114,7 +1099,6 @@ if command_exists sqlite3; then
 fi
 # END DATABASES ================================================================
 
-
 # VERSION CONTROL ==============================================================
 # GIT ==========================================================================
 GIT_CONFIG="${XDG_CONFIG_HOME}/git/config" # ElixirLs does not work when exporting GIT_CONFIG
@@ -1130,7 +1114,6 @@ export HGRCPATH="${XDG_CONFIG_HOME}/hg/config"
 # SUBVERSION ===================================================================
 alias_if_exists "svn --config-dir ${XDG_CONFIG_HOME}/subversion" "svn"
 # END VERSION CONTROL ==========================================================
-
 
 ## UTILITIES ===================================================================
 # ANSIBLE ======================================================================
@@ -1179,6 +1162,13 @@ export LESSHISTFILE="${XDG_STATE_HOME}/less/history"
 alias_if_exists "lsd -A" "ls"
 # RIPGREP ======================================================================
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
+if command_exists rg; then
+  if [ ! -f "${RIPGREP_CONFIG_PATH}" ]; then
+    CUSTOM_RIPGREP_CONFIG="${CUSTOM_CONFIG_DIR}/ripgrep/config"
+    mkdir -p "${XDG_CONFIG_HOME}/ripgrep"
+    ln -s "${CUSTOM_RIPGREP_CONFIG}" "${RIPGREP_CONFIG_PATH}"
+  fi
+fi
 # SDCV =========================================================================
 export SDCV_HISTFILE="${XDG_STATE_HOME}/sdcv/history"
 export STARDICT_DATA_DIR="${XDG_DATA_HOME}/stardict"
@@ -1223,21 +1213,19 @@ eval_if_exists zoxide "init bash"
 alias_if_exists "z" "cd"
 # END UTILITIES ================================================================
 
-
-
 # CUSTOMIZATION ================================================================
 # CUSTOM LIMITS
 if [ "${SHELL}" = "/bin/bash" ]; then
   ulimit -n 104857
 fi
 # OH MY POSH ===================================================================
-eval_if_exists oh-my-posh "init bash --config ~/.cache/oh-my-posh/themes/night-owl.omp.json"
+export POSHTHEMES="${XDG_CACHE_HOME}/oh-my-posh/themes"
+eval_if_exists oh-my-posh "init bash --config ${POSHTHEMES}/night-owl.omp.json"
 # USE WINDOWS BROWSER IN WSL ===================================================
 if grep -q WSL /proc/version; then
   export BROWSER="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe %s"
 fi
 # END CUSTOMIZATION ============================================================
-
 
 # ENVIRONMENT VARIABLES ========================================================
 export _JAVA_OPTIONS

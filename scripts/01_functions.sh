@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Function to get conda envs
+get_conda_envs() {
+  conda env list | awk '$1 != "#" && $1 != "base" {print $1}'
+}
+
 # Function to append a path to CLASSPATH if it's not already included
 append_to_classpath() {
   local path_to_add="$1"
@@ -189,6 +194,7 @@ eval_if_exists() {
   fi
 }
 
+# Function to check if a command exist and then create an alias
 alias_if_exists() {
   local command="$1"
   local alias_name="$2"
