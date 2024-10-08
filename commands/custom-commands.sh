@@ -31,6 +31,26 @@ homebrew() {
 #     unset ADA
 # }
 
+function code() {
+    # Check if no arguments are passed
+    if [ $# -eq 0 ]; then
+        # Find a .code-workspace file in the current directory
+        workspace_file=$(find . -maxdepth 1 -name "*.code-workspace" | head -n 1)
+
+        # Check if a .code-workspace file is found
+        if [ -n "$workspace_file" ]; then
+            # Open the .code-workspace file
+            command code "$workspace_file"
+        else
+            # Open the current directory
+            command code
+        fi
+    else
+        # Pass all arguments to the original code command
+        command code "$@"
+    fi
+}
+
 lein() {
     ln -s "${MAVEN_CUSTOM_REPO}" "${HOME}/.m2"
     command lein "$@"
@@ -122,7 +142,7 @@ function utop() {
 function evcxr() {
     mkdir -p "${XDG_STATE_HOME}/evcxr"
     touch "${XDG_STATE_HOME}/evcxr/history"
-    mkdir "${XDG_CONFIG_HOME}/evcxr/"
+    mkdir -p "${XDG_CONFIG_HOME}/evcxr/"
     ln -s "${XDG_STATE_HOME}/evcxr/history" "${XDG_CONFIG_HOME}/evcxr/history.txt"
     command evcxr "$@"
     rm "${XDG_CONFIG_HOME}/evcxr/history.txt"

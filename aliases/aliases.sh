@@ -2,7 +2,7 @@
 
 # aliases
 alias x="nano $(dirname "${BASH_SOURCE[0]}")/../commands/custom-commands.sh"
-alias a="nano $HOME/.bashrc"
+alias a="nano ${XDG_CONFIG_HOME}/bash/bashrc"
 
 alias vmp="nano $(dirname "${BASH_SOURCE[0]}")/../scripts/programming.sh"
 alias vpm="nano $(dirname "${BASH_SOURCE[0]}")/../commands/version-manager.sh"
