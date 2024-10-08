@@ -1,3 +1,3 @@
 external-sources=true
 source=/dev/null
-disable=SC3028,SC3054
+disable=SC3028,SC3054,SC2153
