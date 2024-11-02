@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "java",
+    "-jar",
+    "/home/altersabeh/.local/share/jupyter/kernels/java/ijava.jar",
+    "{connection_file}"
+  ],
+  "display_name": "IJava",
+  "env": { },
+  "interrupt_mode": "message",
+  "language": "Java"
+}

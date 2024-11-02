@@ -1,0 +1,14 @@
+{
+  "display_name": "IJulia",
+  "argv": [
+    "julia",
+    "-i",
+    "--color=yes",
+    "--project=@.",
+    "~/.local/share/julia/packages/IJulia/bHdNn/src/kernel.jl",
+    "{connection_file}"
+  ],
+  "language": "Julia",
+  "env": { },
+  "interrupt_mode": "signal"
+}

@@ -1,0 +1,19 @@
+{
+  "display_name": "Kotlin",
+  "language": "Kotlin",
+  "interrupt_mode": "message",
+  "argv": [
+    "python",
+    "-m",
+    "run_kotlin_kernel",
+    "{connection_file}"
+  ],
+  "metadata": {
+    "jar_path_detect_command": [
+      "python",
+      "-m",
+      "kotlin_kernel",
+      "detect-jars-location"
+    ]
+  }
+}

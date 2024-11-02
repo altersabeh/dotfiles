@@ -1,0 +1,8 @@
+{
+  "display_name": "Raku",
+  "language": "Raku",
+  "argv": [
+    "jupyter-kernel.raku",
+    "{connection_file}"
+  ]
+}

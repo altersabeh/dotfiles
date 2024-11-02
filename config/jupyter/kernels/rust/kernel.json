@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "evcxr_jupyter",
+    "--control_file",
+    "{connection_file}"
+  ],
+  "display_name": "EvCxR",
+  "language": "Rust",
+  "interrupt_mode": "message"
+}

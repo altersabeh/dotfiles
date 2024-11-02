@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "tslab",
+    "kernel",
+    "--config-path",
+    "{connection_file}",
+    "--js"
+  ],
+  "display_name": "JSLab",
+  "language": "JavaScript"
+}

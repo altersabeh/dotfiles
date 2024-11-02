@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "tslab",
+    "kernel",
+    "--config-path",
+    "{connection_file}"
+  ],
+  "display_name": "TSLab",
+  "language": "TypeScript"
+}

@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "iruby",
+    "kernel",
+    "-f",
+    "{connection_file}"
+  ],
+  "display_name": "IRuby",
+  "language": "Ruby",
+  "metadata": {
+    "debugger": false
+  }
+}

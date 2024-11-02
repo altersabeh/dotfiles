@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "ocaml-jupyter-kernel",
+    "--verbosity",
+    "app",
+    "--connection-file",
+    "{connection_file}"
+  ],
+  "display_name": "OCaml",
+  "language": "OCaml"
+}

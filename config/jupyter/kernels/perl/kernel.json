@@ -1,0 +1,13 @@
+{
+  "language": "Perl",
+  "display_name": "IPerl",
+  "argv": [
+    "perl",
+    "-Mutf8",
+    "-Mopen qw(:std :encoding(UTF-8))",
+    "-MDevel::IPerl",
+    "-e Devel::IPerl::main",
+    "kernel",
+    "{connection_file}"
+  ]
+}

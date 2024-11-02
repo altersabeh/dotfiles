@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "xlua",
+    "-f",
+    "{connection_file}"
+  ],
+  "display_name": "XLua",
+  "language": "Lua",
+  "metadata": {
+    "debugger": false,
+    "lua_extra_package_path": ""
+  }
+}

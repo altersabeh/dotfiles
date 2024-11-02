@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "xcpp",
+    "-f",
+    "{connection_file}",
+    "-std=c++17"
+  ],
+  "display_name": "Cling",
+  "language": "C++"
+}

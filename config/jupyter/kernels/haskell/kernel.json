@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "ihaskell",
+    "kernel",
+    "{connection_file}",
+    "+RTS",
+    "-M3g",
+    "-N2",
+    "-RTS"
+  ],
+  "display_name": "IHaskell",
+  "language": "Haskell"
+}
