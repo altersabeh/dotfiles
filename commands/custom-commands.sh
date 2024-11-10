@@ -51,8 +51,15 @@ function code() {
     fi
 }
 
+function genozip() {
+    cp -f "${GENOZIP_HOME}/private/licenses/.genozip_license.v15" "${HOME}"
+    command genozip "$@"
+    chmod +w "${HOME}/.genozip_license.v15"
+    rm "${HOME}/.genozip_license.v15"
+}
+
 lein() {
-    ln -s "${MAVEN_CUSTOM_REPO}" "${HOME}/.m2"
+    ln -sf "${MAVEN_CUSTOM_REPO}" "${HOME}/.m2"
     command lein "$@"
     rm "${HOME}/.m2"
 }
@@ -74,7 +81,7 @@ function v-analyzer() {
 function kotlin() {
     mkdir -p "${XDG_STATE_HOME}/kotlin"
     touch "${XDG_STATE_HOME}/kotlin/history"
-    ln -s "${XDG_STATE_HOME}/kotlin/history" "${HOME}/.kotlinc_history"
+    ln -sf "${XDG_STATE_HOME}/kotlin/history" "${HOME}/.kotlinc_history"
     command kotlin "$@"
     rm "${HOME}/.kotlinc_history"
 }
@@ -82,7 +89,7 @@ function kotlin() {
 function scala() {
     mkdir -p "${XDG_STATE_HOME}/dotty"
     touch "${XDG_STATE_HOME}/dotty/history"
-    ln -s "${XDG_STATE_HOME}/dotty/history" "${HOME}/.dotty_history"
+    ln -sf "${XDG_STATE_HOME}/dotty/history" "${HOME}/.dotty_history"
     command scala "$@"
     rm "${HOME}/.dotty_history"
 }
@@ -91,7 +98,7 @@ function groovysh() {
     mkdir -p "${XDG_STATE_HOME}/groovy"
     touch "${XDG_STATE_HOME}/groovy/history"
     mkdir -p "${HOME}/.groovy"
-    ln -s "${XDG_STATE_HOME}/groovy" "${HOME}/.groovy"
+    ln -sf "${XDG_STATE_HOME}/groovy" "${HOME}/.groovy"
     command groovysh "$@"
     rm "${HOME}/.groovy"
 }
@@ -100,7 +107,7 @@ function swift() {
     mkdir -p "${XDG_STATE_HOME}/swift"
     touch "${XDG_STATE_HOME}/swift/history"
     mkdir -p "${HOME}/.lldb"
-    ln -s "${XDG_STATE_HOME}/swift/history" "${HOME}/.lldb/lldb-repl-widehistory"
+    ln -sf "${XDG_STATE_HOME}/swift/history" "${HOME}/.lldb/lldb-repl-widehistory"
     command swift "$@"
     rm -rf "${HOME}/.lldb"
 }
@@ -109,7 +116,7 @@ function ghci() {
     mkdir -p "${XDG_STATE_HOME}/ghci"
     touch "${XDG_STATE_HOME}/ghci/history"
     mkdir -p "${XDG_CONFIG_HOME}/ghc"
-    ln -s "${XDG_STATE_HOME}/ghci/history" "${XDG_CONFIG_HOME}/ghc/ghci_history"
+    ln -sf "${XDG_STATE_HOME}/ghci/history" "${XDG_CONFIG_HOME}/ghc/ghci_history"
     command ghci "$@"
     rm "${XDG_CONFIG_HOME}/ghc/ghci_history"
 }
@@ -117,7 +124,7 @@ function ghci() {
 function coffee() {
     mkdir -p "${XDG_STATE_HOME}/coffee"
     touch "${XDG_STATE_HOME}/coffee/history"
-    ln -s "${XDG_STATE_HOME}/coffee/history" "${XDG_CACHE_HOME}/.coffee_history"
+    ln -sf "${XDG_STATE_HOME}/coffee/history" "${XDG_CACHE_HOME}/.coffee_history"
     command coffee "$@"
     rm "${XDG_CACHE_HOME}/.coffee_history"
 }
@@ -125,7 +132,7 @@ function coffee() {
 function amm() {
     mkdir -p "${XDG_STATE_HOME}/ammonite"
     touch "${XDG_STATE_HOME}/ammonite/history"
-    ln -s "${XDG_STATE_HOME}/ammonite" "${HOME}/.ammonite"
+    ln -sf "${XDG_STATE_HOME}/ammonite" "${HOME}/.ammonite"
     command amm "$@"
     rm "${HOME}/.ammonite"
 }
@@ -133,8 +140,7 @@ function amm() {
 function utop() {
     mkdir -p "${XDG_STATE_HOME}/utop"
     touch "${XDG_STATE_HOME}/utop/history"
-    touch "${XDG_STATE_HOME}/utop-history"
-    ln -s "${XDG_STATE_HOME}/utop/history" "${XDG_STATE_HOME}/utop-history"
+    ln -sf "${XDG_STATE_HOME}/utop/history" "${XDG_STATE_HOME}/utop-history"
     command utop "$@"
     rm "${XDG_STATE_HOME}/utop-history"
 }
@@ -143,7 +149,7 @@ function evcxr() {
     mkdir -p "${XDG_STATE_HOME}/evcxr"
     touch "${XDG_STATE_HOME}/evcxr/history"
     mkdir -p "${XDG_CONFIG_HOME}/evcxr/"
-    ln -s "${XDG_STATE_HOME}/evcxr/history" "${XDG_CONFIG_HOME}/evcxr/history.txt"
+    ln -sf "${XDG_STATE_HOME}/evcxr/history" "${XDG_CONFIG_HOME}/evcxr/history.txt"
     command evcxr "$@"
     rm "${XDG_CONFIG_HOME}/evcxr/history.txt"
 }
@@ -156,6 +162,14 @@ function elixir() {
 function iex() {
     unset ERL_AFLAGS
     command iex "$@"
+}
+
+function gore() {
+    mkdir -p "${XDG_STATE_HOME}/gore"
+    touch "${XDG_STATE_HOME}/gore/history"
+    ln -sf "${XDG_STATE_HOME}/gore" "${HOME}/.gore"
+    command gore "$@"
+    rm "${HOME}/.gore"
 }
 
 function exec() {
