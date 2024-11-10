@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export PERL_BUILD_CONFIGURE_OPTS=(
+export PERL_CONFIGURE_OPTS=(
   -Dusethreads
   -Duseithreads
   -Duselargefiles
@@ -26,5 +26,11 @@ export PERL_BUILD_CONFIGURE_OPTS=(
   -Dusereentrant
   -Dusesitecustomize
   -Dusevfork
-  -Doptimize=-O2
+  -Uversiononly
+  -Doptimize=-Os
+  -Accflags=-Os
+  -Accflags=-s
+  -Accflags=-march=native
+  -Accflags=-mtune=native
+  -Aldflags=-s
 )

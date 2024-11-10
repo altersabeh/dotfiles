@@ -1,0 +1,215 @@
+#!/usr/bin/env bash
+
+handle_wget_error() {
+  local url=$1
+  echo "Failed to download from $url."
+  echo "Possible reasons: version does not exist or no internet connection."
+  return 1
+}
+
+build_python() {
+  local version=$1
+  local install_dir="${HOME}/.local/builds/python/${version}"
+  local build_dir="/tmp/python-build/${version}"
+  local build_opts="${PYTHON_CONFIGURE_OPTS}"
+
+  mkdir -p "${build_dir}"
+
+  # Download and extract the source
+  local src_dir=$build_dir/Python-$version
+  local src_url="https://www.python.org/ftp/python/${version}/Python-${version}.tgz"
+  local src_file=$build_dir/Python-$version.tgz
+  wget "${src_url}" -O "${src_file}" || {
+    handle_wget_error "${src_url}"
+    return 1
+  }
+  tar xvzf "${src_file}" -C "${build_dir}"
+
+  # Configure and build
+  pushd "${src_dir}" || return 1
+
+  ./configure --prefix="${install_dir}" ${build_opts}
+  make -j10
+  make install
+
+  cd "${install_dir}" || return 1
+  find . -depth -name '__pycache__' -exec rm -rf {} ';'
+
+  popd || return 1
+}
+
+build_ruby() {
+  local version=$1
+  local install_dir="${HOME}/.local/builds/ruby/${version}"
+  local build_dir="/tmp/ruby-build/${version}"
+  local build_opts="${RUBY_CONFIGURE_OPTS}"
+
+  mkdir -p "${build_dir}"
+
+  # Download and extract the source
+  local src_dir=$build_dir/ruby-$version
+  local src_url="https://cache.ruby-lang.org/pub/ruby/${version%.*}/ruby-${version}.tar.gz"
+  local src_file=$build_dir/ruby-$version.tar.gz
+  wget "${src_url}" -O "${src_file}" || {
+    handle_wget_error "${src_url}"
+    return 1
+  }
+  tar xvzf "${src_file}" -C "${build_dir}"
+
+  # Configure and build
+  pushd "${src_dir}" || return 1
+
+  ./configure --prefix="${install_dir}" ${build_opts}
+  make -j10
+  make install
+
+  popd || return 1
+}
+
+build_erlang() {
+  local version=$1
+  local install_dir="${HOME}/.local/builds/erlang/${version}"
+  local build_dir="/tmp/erlang-build/${version}"
+  local build_opts="${ERLANG_CONFIGURE_OPTS}"
+
+  mkdir -p "${build_dir}"
+
+  # Download and extract the source
+  local src_dir=$build_dir/otp-OTP-$version
+  local src_url="https://github.com/erlang/otp/archive/refs/tags/OTP-${version}.tar.gz"
+  local src_file=$build_dir/OTP-$version.tar.gz
+  wget "${src_url}" -O "${src_file}" || {
+    handle_wget_error "${src_url}"
+    return 1
+  }
+  tar xvzf "${src_file}" -C "${build_dir}"
+
+  # Configure and build
+  pushd "${src_dir}" || return 1
+
+  ./configure --prefix="${install_dir}" ${build_opts}
+  make -j10
+  make install
+  make install-docs
+
+  popd || return 1
+}
+
+build_perl() {
+  local version=$1
+  local install_dir="${HOME}/.local/builds/perl/${version}"
+  local build_dir="/tmp/perl-build/${version}"
+  local build_opts="${PERL_CONFIGURE_OPTS}"
+
+  mkdir -p "${build_dir}"
+
+  # Download and extract the source
+  local src_dir=$build_dir/perl-$version
+  local src_url="https://www.cpan.org/src/${version%%.*}.0/perl-${version}.tar.gz"
+  local src_file=$build_dir/perl-$version.tar.gz
+  wget "${src_url}" -O "${src_file}" || {
+    handle_wget_error "${src_url}"
+    return 1
+  }
+  tar xvzf "${src_file}" -C "${build_dir}"
+
+  # Configure and build
+  pushd "${src_dir}" || return 1
+
+  ./Configure -des -Dprefix="${install_dir}" ${build_opts}
+  make -j10
+  make install
+
+  popd || return 1
+}
+
+build_php() {
+  local version=$1
+  local install_dir="${HOME}/.local/builds/php/${version}"
+  local build_dir="/tmp/php-build/${version}"
+  local build_opts="${PHP_CONFIGURE_OPTS}"
+
+  mkdir -p "${build_dir}"
+
+  # Download and extract the source
+  local src_dir=$build_dir/php-$version
+  local src_url="https://www.php.net/distributions/php-${version}.tar.gz"
+  local src_file=$build_dir/php-$version.tar.gz
+  wget "${src_url}" -O "${src_file}" || {
+    handle_wget_error "${src_url}"
+    return 1
+  }
+  tar xvzf "${src_file}" -C "${build_dir}"
+
+  # Configure and build
+  pushd "${src_dir}" || return 1
+
+  ./configure --prefix="${install_dir}" ${build_opts}
+  make -j10
+  make install
+
+  popd || return 1
+}
+
+build_r() {
+  local version=$1
+  local install_dir="${HOME}/.local/builds/r/${version}"
+  local build_dir="/tmp/r-build/${version}"
+  local build_opts="${R_CONFIGURE_OPTS}"
+
+  mkdir -p "${build_dir}"
+
+  # Download and extract the source
+  local src_dir=$build_dir/R-$version
+  local src_url="https://cran.r-project.org/src/base/R-${version%%.*}/R-${version}.tar.gz"
+  local src_file=$build_dir/R-$version.tar.gz
+  wget "${src_url}" -O "${src_file}" || {
+    handle_wget_error "${src_url}"
+    return 1
+  }
+  tar xvzf "${src_file}" -C "${build_dir}"
+
+  # Configure and build
+  pushd "${src_dir}" || return 1
+
+  ./configure --prefix="${install_dir}" ${build_opts}
+  make -j10
+  make install
+
+  popd || return 1
+}
+
+buildx() {
+  local old_cpath=$CPATH
+  unset CPPATH
+
+  local language=$1
+  local version=$2
+
+  case $language in
+  python)
+    build_python $version
+    ;;
+  ruby)
+    build_ruby $version
+    ;;
+  erlang)
+    build_erlang $version
+    ;;
+  perl)
+    build_perl $version
+    ;;
+  php)
+    build_php $version
+    ;;
+  r)
+    build_r $version
+    ;;
+  *)
+    echo "Unknown language: $language"
+    return 1
+    ;;
+  esac
+
+  export CPATH=$old_cpath
+}

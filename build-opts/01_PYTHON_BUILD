@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 
+# add --disable-gil someday in the future
 export PYTHON_CONFIGURE_OPTS="
   --enable-shared
-  --disable-gil
+
   --enable-optimizations
   --enable-experimental-jit
   --disable-bolt
   --enable-loadable-sqlite-extensions
   --enable-ipv6
   --enable-big-digits=30
-  --disable-test-modules
+  --enable-test-modules
   --with-pkg-config=yes
   --with-static-libpython
-  --with-lto=full
+  --with-lto=no
   --with-hash-algorithm=siphash13
   --with-system-expat
   --with-system-libmpdec

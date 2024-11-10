@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+export CFLAGS="-Os -s -march=native -mtune=native"
+export CXXFLAGS="${CFLAGS} -fvisibility-inlines-hidden"
+export FCFLAGS="${CFLAGS}"
+export OBJCFLAGS="${CFLAGS} -fvisibility-inlines-hidden"
+export LDFLAGS="-s -O -fvisibility=hidden"

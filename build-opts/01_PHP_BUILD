@@ -22,7 +22,7 @@ export PHP_BUILD_CONFIGURE_OPTS="
   --with-libxml
   --with-openssl
   --with-system-ciphers
-  
+
   --with-pcre-jit
   --with-sqlite3
   --with-zlib
@@ -114,4 +114,4 @@ export PHP_BUILD_CONFIGURE_OPTS="
   --enable-fast-install
 "
 
-export PHP_CONFIGURE_OPTS=$PHP_BUILD_CONFIGURE_OPTS
+export PHP_CONFIGURE_OPTS=${PHP_BUILD_CONFIGURE_OPTS}

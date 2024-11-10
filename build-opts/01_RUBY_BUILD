@@ -2,29 +2,33 @@
 
 export RUBY_CONFIGURE_OPTS="
   --enable-rpath
+  --enable-devel
   --disable-werror
   --enable-fortify-source
   --enable-largefile
-  --enable-setreuid
   --enable-setreuid
   --enable-multiarch
   --enable-shared
   --enable-pie
   --enable-dtrace
   --enable-ipv6
-  --disable-install-doc
+  --enable-install-doc
   --enable-install-rdoc
-  --enable-install-capi
+  --disable-install-capi
   --enable-install-static-library
   --enable-yjit
   --enable-rjit
   --enable-dln
+  --enable-debug-env
+  --enable-mkmf-verbose
   --enable-rubygems
   --with-git
   --with-gcc
+  --with-thread=pthread
   --with-jemalloc
+  --with-coroutine
   --with-valgrind
-  --with-rdoc=ri,html
+  --with-rdoc=ri
   --with-mantype=man
   --with-openssl-dir=/usr
 "
