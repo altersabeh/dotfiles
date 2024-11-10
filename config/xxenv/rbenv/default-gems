@@ -9,3 +9,5 @@ rubocop
 solargraph
 sinatra
 specific_install
+irb
+rspec
