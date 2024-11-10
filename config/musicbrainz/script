@@ -1,0 +1,143 @@
+$set(checkPadDiscNumber,
+	$if2(
+		$if($gte(%totaldiscs%,10000),$if(%discnumber%, Disc $num(%discnumber%,5)),),
+		$if($gte(%totaldiscs%,1000),$if(%discnumber%, Disc $num(%discnumber%,4)),),
+		$if($gte(%totaldiscs%,100),$if(%discnumber%, Disc $num(%discnumber%,3)),),
+		$if($gte(%totaldiscs%,10),$if(%discnumber%, Disc $num(%discnumber%,2)),),
+		$if($gt(%totaldiscs%,1),$if(%discnumber%, Disc $num(%discnumber%,1)),)
+	)
+)
+
+$set(checkPadTrackNumber,
+	$if2(
+		$if(%_paddedtracknumber%,%_paddedtracknumber%),
+		$if($gte(%totaltracks%,10000),$if(%tracknumber%,$num(%tracknumber%,5)),),
+		$if($gte(%totaltracks%,1000),$if(%tracknumber%,$num(%tracknumber%,4)),),
+		$if($gte(%totaltracks%,100),	$if(%tracknumber%,$num(%tracknumber%,3)),),
+		$if($gte(%totaltracks%,10),$if(%tracknumber%,$num(%tracknumber%,2)),),
+		$if($gte(%totaltracks%,1),$if(%tracknumber%,$num(%tracknumber%,2)),)
+	)
+)
+
+$set(mediaFormatSpec,
+	$noop(DSD is always '1bit' so only output this if greater than 1)
+	$noop($if($gt(%_bits_per_sample%,1),%_bits_per_sample%bit )
+	$noop(#TODO: Fix Opus output here:)
+	$div(%_sample_rate%,1000)$if($ne($mod(%_sample_rate%,1000),0),.$left($mod(%_sample_rate%,1000),1))kHz)
+	$if($not($eq_any(%_extension%,dsf,dff,dsd)),$upper(%_extension%))
+	$noop($if($in(%media%,Vinyl), Vinyl)
+	$noop(Output this before SACD because there are Vinyl rips recorded in DSD)
+	$if($eq_any(%_extension%,dsf,dff,dsd), DSD)
+	$if($in(%media%,SACD), SACD))
+)
+
+$set(getReleaseType,
+	$if2(
+		$if($in(%releasetype%,demo),Demos),
+		$if($in(%releasetype%,live),Lives),
+		$if($in(%releasetype%,remix),Remixes),
+		$if($in(%releasetype%,soundtrack),Soundtracks),
+		$if($in(%releasetype%,compilation),Compilation Albums),
+		$if($in(%releasetype%,ep),Extended Plays),
+		$if($in(%releasetype%,album),Studio Albums),
+		$if($in(%releasetype%,single),Singles),
+		$if($in(%releasetype%,other),Others)
+  )
+)
+
+$set(getInitial,
+  $if($rsearch($upper($left($if2(%albumartist%,%artist%),1)),^[A-Z]),$upper($left($if2(%albumartist%,%artist%),1)),!)
+)
+
+$set(getVariousArtistsRoot,
+	$if($eq(%albumartist%,Various Artists),Various Artists)
+)
+
+$set(getReleaseYear,
+	$if2(
+		$if(%originalyear%,$left(%originalyear%,4)),
+		$if(%originaldate%,$left(%originaldate%,4)),
+		$if(%date%,$left(%date%,4))
+	)
+)
+
+$noop( limit album name output to 120 characters )
+$set(getAlbumNameTruncated,
+	$left( $replace(%album%,/,), 150)
+)
+
+$set(notVariousArtists,
+	$ne(%albumartist%,Various Artists)
+)
+
+$set(checkVinylTrackNumber,
+	$if($and($in(%media%,Vinyl),%_musicbrainz_tracknumber%),%_musicbrainz_tracknumber%)
+)
+
+$set(getAlbumArtist,
+	$if2(
+		$noop(This searches for the first multiple artist separator `;' and truncates after it:)
+		$left(
+			$if2(%albumartist%,%artist%),$find($if2(%albumartist%,%artist%),;)),
+			$if2(%albumartist%,%artist%)
+	)
+)
+
+$set(getMultiChannels,
+	$if($gt(%_channels%,2), %_channels%Ch)
+)
+
+$set(getTrackNumber,
+	$if2(%checkVinylTrackNumber%,%checkPadTrackNumber%)
+))
+
+$set(getTitleTruncated,
+	$left(%title%,120)
+)
+
+$set(getDiscSubtitle
+	,$if(%discsubtitle%,- %discsubtitle%)
+)
+
+$set(generalFormat,
+	%getInitial%
+	/
+	%getAlbumArtist%
+	/
+	%getReleaseType%
+	/
+	[%mediaFormatSpec%] [%getReleaseYear%] %getAlbumNameTruncated%
+	/
+	%checkPadDiscNumber% %getDiscSubtitle% %getMultiChannels%
+	/
+	%artist% - %getTrackNumber% %getTitleTruncated%
+)
+
+$set(variousArtistsFormat,
+	V
+	/
+	%getVariousArtistsRoot%
+	/
+	%getReleaseType%
+	/
+	[%mediaFormatSpec%] [%getReleaseYear%] %getAlbumNameTruncated%
+	/
+	%checkPadDiscNumber% %getDiscSubtitle% %getMultiChannels%
+	/
+	%artist% - %getTrackNumber% - %getTitleTruncated%
+)
+
+$set(rreplacePattern,[:?"_*\\]+)
+
+$set(VASanitized,
+	$rreplace($rreplace(%variousArtistsFormat%,%rreplacePattern%,),\\s+, )
+)
+
+$set(generalSanitized,
+	$rreplace($rreplace(%generalFormat%,%rreplacePattern%,),\\s+, )
+)
+
+$if(%notVariousArtists%,
+	%generalSanitized%,
+	%VASanitized%
+)
