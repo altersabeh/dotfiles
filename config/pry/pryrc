@@ -1,0 +1,5 @@
+if ENV.include?('XDG_STATE_HOME')
+  Pry.config.history_file = "#{ENV['XDG_STATE_HOME']}/pry/history"
+else
+  Pry.config.history_file = "~/.local/state/pry/history"
+end
