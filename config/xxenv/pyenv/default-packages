@@ -11,6 +11,5 @@ notebook
 jupyter-console
 findent
 radian
-octave-kernel
-scilab-kernel
 pylint
+pytest
