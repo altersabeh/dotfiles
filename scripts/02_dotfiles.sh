@@ -8,12 +8,17 @@ DOTFILES_SH_LAST_MODIFIED_VAR="DOTFILES_SH_LAST_MODIFIED"
 DOTFILES_SH_PATH="${THIS_SCRIPT_DIR}/02_dotfiles.sh"
 # Get the current modification time of this script
 current_mod_time=$(stat -c %Y "$DOTFILES_SH_PATH")
+
 # Check if the script has been sourced before and if it has been updated
 if [ -z "${!DOTFILES_SH_LAST_MODIFIED_VAR}" ] || [ "${!DOTFILES_SH_LAST_MODIFIED_VAR}" -lt "$current_mod_time" ]; then
+  # echo "Sourcing the script"
   # Update the environment variable with the current modification time
   export $DOTFILES_SH_LAST_MODIFIED_VAR="$current_mod_time"
-else
-  export DOTFILES_SH_ALREADY_SOURCED=1
+  unset DOTFILES_SH_ALREADY_SOURCED
+fi
+
+if [ -n "${DOTFILES_SH_ALREADY_SOURCED}" ]; then
+  # echo "The script has already been sourced"
   return 0
 fi
 
@@ -161,7 +166,7 @@ fi
 ## C FAMILY COMPILERS ==========================================================
 ### GCC ========================================================================
 determine_installed_gcc
-prepend_to_cpath "${X86_64_LIB_PATH}/include"
+# prepend_to_cpath "${X86_64_LIB_PATH}/include"
 prepend_to_ld_library_path "${X86_64_LIB_PATH}"
 prepend_to_ld_library_path "${GCC_PATH}/lib64"
 prepend_to_ld_library_path "${GCC_PATH}/lib"
@@ -201,8 +206,9 @@ prepend_to_path "${VCPKG_ROOT}"
 export CLING_HOME="${XDG_DATA_HOME}/cling"
 export CLING_HISTFILE="${XDG_STATE_HOME}/cling/history"
 append_to_path "${CLING_HOME}/bin"
+# prepend_to_cpath "${CLING_HOME}/lib/clang/18/include"
 ### GNUSTEP ====================================================================
-prepend_to_cpath "/usr/include/GNUstep"
+# prepend_to_cpath "/usr/include/GNUstep"
 ### UNCRUSTIFY =================================================================
 export UNCRUSTIFY_CONFIG="${XDG_CONFIG_HOME}/uncrustify/uncrustify.cfg"
 ## C FAMILY INCLUDES ===========================================================
@@ -254,7 +260,12 @@ del_if_exists "${HOME}/.dart-tool"
 ### DOTNET =====================================================================
 export DOTNET_ROOT="/usr/share/dotnet"
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
-prepend_to_path "${DOTNET_CLI_HOME}"/.dotnet/tools
+if command_exists dotnet; then
+  if [ ! -d "${DOTNET_CLI_HOME}/tools" ]; then
+    ln -s "${DOTNET_CLI_HOME}/.dotnet/tools" "${DOTNET_CLI_HOME}/tools"
+  fi
+fi
+prepend_to_path "${DOTNET_CLI_HOME}/tools"
 del_if_exists "${HOME}/.dotnet"
 del_if_exists "${HOME}/.ServiceHub"
 ### NUGET ======================================================================
@@ -301,8 +312,8 @@ fi
 export KIEX_HOME="${XDG_DATA_HOME}/kiex"
 source_if_exists "${KIEX_HOME}/scripts/kiex"
 if command_exists iex; then
-  ELIXIR_VERSION="$(iex -v | awk '{print $2}')"
-  KIEX_ELIXIR_PATH="${KIEX_HOME}/elixirs/elixir-${ELIXIR_VERSION}"
+  KIEX_ELIXIR_VERSION="$(elixir --short-version)"
+  KIEX_ELIXIR_PATH="${KIEX_HOME}/elixirs/elixir-${KIEX_ELIXIR_VERSION}"
   prepend_to_manpath "${KIEX_ELIXIR_PATH}/share/man"
 fi
 ## ELIXIR PACKAGE MANAGERS =====================================================
@@ -494,6 +505,7 @@ if command_exists java; then
   # add_to_java_options "-proc:none"
   prepend_to_classpath "."
 fi
+del_if_exists "${HOME}/.java"
 ### KOTLIN =====================================================================
 # if [ -n "${KOTLIN_HOME}" ]; then
 #  append_to_classpath "${KOTLIN_HOME}/lib/*"
@@ -527,8 +539,10 @@ fi
 ### SBT ========================================================================
 export SBT_OPTS="-ivy ${XDG_DATA_HOME}/ivy2 -sbt-dir ${XDG_DATA_HOME}/sbt"
 ## OTHER JVM TOOLS =============================================================
+### BLOOP ======================================================================
+export SCALA_CLI_EXTRA_TIMEOUT="60.seconds"
 ### GITER8 =====================================================================
-export G8_HOME="${XDG_DATA_HOME}/g8"
+del_if_exists "${HOME}/.g8"
 ### KSCRIPT ====================================================================
 export KSCRIPT_CACHE_DIR="${XDG_CACHE_HOME}/kscript"
 ### METALS =====================================================================
@@ -646,7 +660,7 @@ fi
 prepend_to_path "${XDG_DATA_HOME}/perl/bin"
 if command_exists cpanm; then
   export PERL_CPANM_HOME="${XDG_CACHE_HOME}/cpanm"
-  export PERL_CPANM_OPT="--prompt --notest -l ${XDG_DATA_HOME}/perl"
+  export PERL_CPANM_OPT="--prompt --reinstall --notest -l ${XDG_DATA_HOME}/perl"
 fi
 ### PERL
 if command_exists perl; then
@@ -802,6 +816,13 @@ export UV_INSTALL_DIR="${XDG_DATA_HOME}/uv"
 export UV_CACHE_DIR="${XDG_CACHE_HOME}/uv"
 export UV_CONFIG_FILE="${XDG_CONFIG_HOME}/uv/uv.toml"
 source_if_exists "${UV_INSTALL_DIR}/env"
+if command_exists uv; then
+  if [ ! -f "${UV_CONFIG_FILE}" ]; then
+    CUSTOM_UV_CONFIG_FILE="${CUSTOM_CONFIG_DIR}/uv/uv.toml"
+    mkdir -p "${XDG_CONFIG_HOME}/uv"
+    ln -s "${CUSTOM_UV_CONFIG_FILE}" "${UV_CONFIG_FILE}"
+  fi
+fi
 ## PYTHON TOOLS ================================================================
 ### IPYTHON ====================================================================
 if command_exists ipython; then
@@ -810,7 +831,14 @@ fi
 ### JUPYTER ====================================================================
 export JUPYTER_CONFIG_DIR="${XDG_CONFIG_HOME}/jupyter"
 export JUPYTER_CONFIG_FILE="$JUPYTER_CONFIG_DIR/config.py"
+export JUPYTER_DATA_DIR="${XDG_DATA_HOME}/jupyter"
 if command_exists jupyter; then
+  if [ ! -d "${JUPYTER_DATA_DIR}/kernels" ]; then
+    CUSTOM_JUPYTER_KERNELS_DIR="${CUSTOM_CONFIG_DIR}/jupyter/kernels"
+    ORIG_JUPYTER_KERNELS_DIR="${JUPYTER_DATA_DIR}/kernels"
+    mkdir -p "${JUPYTER_DATA_DIR}"
+    ln -s "${CUSTOM_JUPYTER_KERNELS_DIR}" "${ORIG_JUPYTER_KERNELS_DIR}"
+  fi
   if [ ! -f "${JUPYTER_CONFIG_FILE}" ]; then
     CUSTOM_JUPYTER_CONFIG_FILE="${CUSTOM_CONFIG_DIR}/jupyter/config.py"
     mkdir -p "${JUPYTER_CONFIG_DIR}"
@@ -951,10 +979,20 @@ export GEM_SPEC_CACHE="${XDG_CACHE_HOME}/gem"
 export GEMRC="${XDG_CONFIG_HOME}/gem/gemrc"
 prepend_to_path "${GEM_HOME}/bin"
 if command_exists gem; then
+  prepend_to_path "$(gem env user_gemhome)/bin"
   if [ ! -f "${GEMRC}" ]; then
     CUSTOM_GEMRC="${CUSTOM_CONFIG_DIR}/gem/gemrc"
     mkdir -p "${XDG_CONFIG_HOME}/gem"
     ln -s "${CUSTOM_GEMRC}" "${GEMRC}"
+  fi
+fi
+### PRY ========================================================================
+export PRYRC="${XDG_CONFIG_HOME}/pry/pryrc"
+if command_exists pry; then
+  if [ ! -f "${PRYRC}" ]; then
+    CUSTOM_PRYRC="${CUSTOM_CONFIG_DIR}/pry/pryrc"
+    mkdir -p "${XDG_CONFIG_HOME}/pry"
+    ln -s "${CUSTOM_PRYRC}" "${PRYRC}"
   fi
 fi
 ### RUBY =======================================================================
@@ -1142,6 +1180,13 @@ alias_if_exists "dust" "du"
 # FOUNDRY ======================================================================
 export FOUNDRY_DIR="${XDG_DATA_HOME}/foundry"
 prepend_to_path "${FOUNDRY_DIR}/bin"
+# GENOZIP ======================================================================
+export GENOZIP_HOME="${XDG_DATA_HOME}/genozip"
+if command_exists genozip; then
+  if [ ! -d "${GENOZIP_HOME}" ]; then
+    ln -s "${CUSTOM_CONFIG_DIR}/genozip" "${GENOZIP_HOME}"
+  fi
+fi
 # GNUPG ========================================================================
 export GNUPGHOME="${XDG_DATA_HOME}/gnupg"
 if [ ! -d "${GNUPGHOME}" ]; then
@@ -1228,6 +1273,7 @@ fi
 # END CUSTOMIZATION ============================================================
 
 # ENVIRONMENT VARIABLES ========================================================
+export DOTFILES_SH_ALREADY_SOURCED=1
 export _JAVA_OPTIONS
 export ADA_INCLUDE_PATH
 export ADA_OBJECTS_PATH
