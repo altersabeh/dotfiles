@@ -29,7 +29,7 @@ sscilab() {
 erlxenv() {
     if [ "$1" = "install" ]; then
         shift
-        evm install "$@" -y --with-docs $ERLANG_CONFIGURE_OPTS
+        evm install "$@" -y --with-docs # $ERLANG_CONFIGURE_OPTS
     else
         evm "$@"
     fi
@@ -40,8 +40,8 @@ plxenv() {
         shift
         command plenv migrate-modules "$@"
     elif [ "$1" = "install" ]; then
-	    shift
-	    command plenv install "$@" --jobs 12 ${PERL_BUILD_CONFIGURE_OPTS[@]}
+        shift
+        command plenv install "$@" --jobs 12 "${PERL_CONFIGURE_OPTS[@]}"
     elif [ "$1" = "set" ]; then
         export PL_PATH=$(plenv root)/versions
         if [[ -n "$2" ]]; then
@@ -59,20 +59,20 @@ plxenv() {
     elif [ "$1" = unset ]; then
         export RM_PATH=$(plenv root)/versions/current
         [ -d $RM_PATH ] && rm $RM_PATH
-        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
+        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" | sed 's/:*$//')"
         unset RM_PATH
     else
-        local command;
-        command="$1";
+        local command
+        command="$1"
         if [ "$#" -gt 0 ]; then
-            shift;
-        fi;
+            shift
+        fi
         case "$command" in
-            rehash | shell)
-                eval "`plenv "sh-$command" "$@"`"
+        rehash | shell)
+            eval "$(plenv "sh-$command" "$@")"
             ;;
-            *)
-                command plenv "$command" "$@"
+        *)
+            command plenv "$command" "$@"
             ;;
         esac
     fi
@@ -101,20 +101,20 @@ luaxenv() {
     elif [ "$1" = unset ]; then
         export RM_PATH=$(luaenv root)/versions/current
         [ -d $RM_PATH ] && rm $RM_PATH
-        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
+        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" | sed 's/:*$//')"
         unset RM_PATH
     else
-        local command;
-        command="$1";
+        local command
+        command="$1"
         if [ "$#" -gt 0 ]; then
-            shift;
-        fi;
+            shift
+        fi
         case "$command" in
-            rehash | shell)
-                eval "`luaenv "sh-$command" "$@"`"
+        rehash | shell)
+            eval "$(luaenv "sh-$command" "$@")"
             ;;
-            *)
-                command luaenv "$command" "$@"
+        *)
+            command luaenv "$command" "$@"
             ;;
         esac
     fi
@@ -146,20 +146,20 @@ rxenv() {
     elif [ "$1" = unset ]; then
         export RM_PATH=$(renv root)/versions/current
         [ -d $RM_PATH ] && rm $RM_PATH
-        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
+        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" | sed 's/:*$//')"
         unset RM_PATH
     else
-        local command;
-        command="${1:-}";
+        local command
+        command="${1:-}"
         if [ "$#" -gt 0 ]; then
-            shift;
-        fi;
+            shift
+        fi
         case "$command" in
-            rehash | shell)
-                eval "$(renv "sh-$command" "$@")"
+        rehash | shell)
+            eval "$(renv "sh-$command" "$@")"
             ;;
-            *)
-                command renv "$command" "$@"
+        *)
+            command renv "$command" "$@"
             ;;
         esac
     fi
@@ -183,20 +183,20 @@ pyxenv() {
     elif [ "$1" = unset ]; then
         export RM_PATH=$(pyenv root)/versions/current
         [ -d $RM_PATH ] && rm $RM_PATH
-        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
+        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" | sed 's/:*$//')"
         unset RM_PATH
     else
-        local command;
-        command="${1:-}";
+        local command
+        command="${1:-}"
         if [ "$#" -gt 0 ]; then
-            shift;
-        fi;
+            shift
+        fi
         case "$command" in
-            activate | deactivate | rehash | shell)
-                eval "$(pyenv "sh-$command" "$@")"
+        activate | deactivate | rehash | shell)
+            eval "$(pyenv "sh-$command" "$@")"
             ;;
-            *)
-                command pyenv "$command" "$@"
+        *)
+            command pyenv "$command" "$@"
             ;;
         esac
     fi
@@ -219,20 +219,20 @@ rbxenv() {
     elif [ "$1" = unset ]; then
         export RM_PATH=$(rbenv root)/versions/current
         [ -d $RM_PATH ] && rm $RM_PATH
-        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
+        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" | sed 's/:*$//')"
         unset RM_PATH
     else
-        local command;
-        command="${1:-}";
+        local command
+        command="${1:-}"
         if [ "$#" -gt 0 ]; then
-            shift;
-        fi;
+            shift
+        fi
         case "$command" in
-            rehash | shell | update | use)
-                eval "$(rbenv "sh-$command" "$@")"
+        rehash | shell | update | use)
+            eval "$(rbenv "sh-$command" "$@")"
             ;;
-            *)
-                command rbenv "$command" "$@"
+        *)
+            command rbenv "$command" "$@"
             ;;
         esac
     fi
@@ -260,21 +260,21 @@ phpxenv() {
     elif [ "$1" = unset ]; then
         export RM_PATH=$(phpenv root)/versions/current
         [ -d $RM_PATH ] && rm $RM_PATH
-        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
+        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" | sed 's/:*$//')"
         # unset COMPOSER_HOME
         unset RM_PATH
     else
-    local command;
-        command="$1";
+        local command
+        command="$1"
         if [ "$#" -gt 0 ]; then
-            shift;
-        fi;
+            shift
+        fi
         case "$command" in
-            shell | update | update-all)
-                eval `phpenv "sh-$command" "$@"`
+        shell | update | update-all)
+            eval $(phpenv "sh-$command" "$@")
             ;;
-            *)
-                command phpenv "$command" "$@"
+        *)
+            command phpenv "$command" "$@"
             ;;
         esac
     fi
@@ -298,20 +298,20 @@ nodxenv() {
     elif [ "$1" = unset ]; then
         export RM_PATH=$(nodenv root)/versions/current
         [ -d $RM_PATH ] && rm $RM_PATH
-        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
+        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" | sed 's/:*$//')"
         unset RM_PATH
     else
-        local command;
-        command="${1:-}";
+        local command
+        command="${1:-}"
         if [ "$#" -gt 0 ]; then
-            shift;
-        fi;
+            shift
+        fi
         case "$command" in
-            rehash | shell | update)
-                eval "$(nodenv "sh-$command" "$@")"
+        rehash | shell | update)
+            eval "$(nodenv "sh-$command" "$@")"
             ;;
-            *)
-                command nodenv "$command" "$@"
+        *)
+            command nodenv "$command" "$@"
             ;;
         esac
     fi
@@ -335,7 +335,7 @@ swiftxenv() {
     elif [ "$1" = unset ]; then
         export RM_PATH=$(swiftxenv root)/versions/current
         [ -d $RM_PATH ] && rm $RM_PATH
-        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
+        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" | sed 's/:*$//')"
         unset RM_PATH
     elif [ "$1" = root ]; then
         echo $SWIFTENV_ROOT
@@ -349,8 +349,8 @@ goxenv() {
         shift
         go-tools-update
     elif [ "$1" = "install" ]; then
-	shift
-	command goenv install "$@"
+        shift
+        command goenv install "$@"
     elif [ "$1" = "set" ]; then
         export GO_PATH=$(goenv root)/versions
         if [[ -n "$2" ]]; then
@@ -368,24 +368,23 @@ goxenv() {
     elif [ "$1" = unset ]; then
         export RM_PATH=$(goenv root)/versions/current
         [ -d $RM_PATH ] && rm $RM_PATH
-        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" |  sed 's/:*$//')"
+        export PATH="$(echo $PATH | tr ":" "\n" | grep -v "$RM_PATH" | tr "\n" ":" | sed 's/:*$//')"
         unset RM_PATH
     else
-        local command;
-        command="$1";
+        local command
+        command="$1"
         if [ "$#" -gt 0 ]; then
-            shift;
-        fi;
+            shift
+        fi
         case "$command" in
-            rehash | shell | update)
-                eval "`goenv "sh-$command" "$@"`"
+        rehash | shell | update)
+            eval "$(goenv "sh-$command" "$@")"
             ;;
-            *)
-                command goenv "$command" "$@"
+        *)
+            command goenv "$command" "$@"
             ;;
         esac
     fi
 }
 
 # set_xglobal
-
