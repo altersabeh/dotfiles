@@ -258,7 +258,7 @@ del_if_exists "${HOME}/.dart-tool"
 # DOTNET DEVEL =================================================================
 ## DOTNET PACKAGE MANAGERS =====================================================
 ### DOTNET =====================================================================
-export DOTNET_ROOT="/usr/share/dotnet"
+# export DOTNET_ROOT="/usr/share/dotnet" # Already set by the system
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
 if command_exists dotnet; then
   if [ ! -d "${DOTNET_CLI_HOME}/tools" ]; then
