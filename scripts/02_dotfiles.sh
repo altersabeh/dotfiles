@@ -258,6 +258,7 @@ del_if_exists "${HOME}/.dart-tool"
 # DOTNET DEVEL =================================================================
 ## DOTNET PACKAGE MANAGERS =====================================================
 ### DOTNET =====================================================================
+export DOTNET_BUNDLE_EXTRACT_BASE_DIR="${XDG_CACHE_HOME}/dotnet/bundle"
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
 if command_exists dotnet; then
   if [ ! -d "${DOTNET_CLI_HOME}/tools" ]; then
