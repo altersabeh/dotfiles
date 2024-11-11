@@ -1141,6 +1141,8 @@ fi
 # END DATABASES ================================================================
 
 # VERSION CONTROL ==============================================================
+# FOSSIL =======================================================================
+export FOSSIL_HOME="${XDG_DATA_HOME}/fossil"
 # GIT ==========================================================================
 GIT_CONFIG="${XDG_CONFIG_HOME}/git/config" # ElixirLs does not work when exporting GIT_CONFIG
 if command_exists git; then
