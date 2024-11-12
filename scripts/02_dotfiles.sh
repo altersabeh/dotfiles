@@ -1173,6 +1173,16 @@ export CALCHISTFILE="${XDG_STATE_HOME}/calc/history"
 if command_exists calc; then
   mkdir -p "${XDG_STATE_HOME}/calc"
 fi
+# CCACHE =======================================================================
+export CCACHE_DIR="${XDG_CACHE_HOME}/ccache"
+export CCACHE_CONFIGPATH="${XDG_CONFIG_HOME}/ccache/ccache.conf"
+if command_exists ccache; then
+  if [ ! -f "${CCACHE_CONFIGPATH}" ]; then
+    CUSTOM_CCACHE_CONFIG="${CUSTOM_CONFIG_DIR}/ccache/ccache.conf"
+    mkdir -p "${XDG_CONFIG_HOME}/ccache"
+    ln -s "${CUSTOM_CCACHE_CONFIG}" "${CCACHE_CONFIGPATH}"
+  fi
+fi
 # CHEAT.SH =====================================================================
 export CHTSH="${XDG_DATA_HOME}/cht.sh"
 export CHTSH_CONFIG="${XDG_CONFIG_HOME}/cht.sh/config"
