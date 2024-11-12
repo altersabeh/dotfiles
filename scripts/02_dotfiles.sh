@@ -786,7 +786,7 @@ source_if_exists "${RYE_HOME}/env"
 export PYTHON_COLORS=1
 export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history" # python >= 3.13
 export PYTHON_JIT=1
-export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}/pycache"
+export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}/python"
 export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonrc"
 export PYTHONUSERBASE="${XDG_DATA_HOME}/python"
 if command_exists python; then
@@ -1240,7 +1240,7 @@ fi
 export SDCV_HISTFILE="${XDG_STATE_HOME}/sdcv/history"
 export STARDICT_DATA_DIR="${XDG_DATA_HOME}/stardict"
 # STARSHIP =====================================================================
-export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/starship.toml"
+export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/starship/starship.toml"
 export STARSHIP_CACHE="${XDG_CACHE_HOME}/starship"
 # TERRAFORM ====================================================================
 export TF_HOME_DIR="${XDG_DATA_HOME}/terraform"
