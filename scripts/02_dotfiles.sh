@@ -712,6 +712,7 @@ fi
 ## PHP PACKAGE MANAGERS ========================================================
 ### COMPOSER ===================================================================
 export COMPOSER_HOME="${XDG_DATA_HOME}/composer"
+export COMPOSER_CACHE_DIR="${XDG_CACHE_HOME}/composer"
 prepend_to_path "${COMPOSER_HOME}/bin"
 prepend_to_path "${COMPOSER_HOME}/vendor/bin"
 ## PHP TOOLS ===================================================================
