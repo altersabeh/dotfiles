@@ -953,7 +953,6 @@ fi
 # source_if_exists "${XDG_DATA_HOME}/rvm/scripts/rvm"
 ## RUBY PACKAGE MANAGERS =======================================================
 ### BUNDLER ====================================================================
-export BUNDLE_HOME="${GEM_HOME}"
 export BUNDLE_USER_CACHE="${XDG_CACHE_HOME}/bundle"
 export BUNDLE_USER_CONFIG="${XDG_CONFIG_HOME}/bundle/config"
 export BUNDLE_USER_HOME="${XDG_DATA_HOME}/bundle"
@@ -1170,8 +1169,8 @@ export ANSIBLE_HOME="${XDG_CONFIG_HOME}/ansible"
 export ANSIBLE_CONFIG="${XDG_CONFIG_HOME}/ansible/config"
 export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME}/ansible/galaxy-cache"
 # AWS ==========================================================================
-export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME}/aws/credentials"
 export AWS_CONFIG_FILE="${XDG_CONFIG_HOME}/aws/config"
+export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME}/aws/credentials"
 # AZURE ========================================================================
 export AZURE_CONFIG_DIR="${XDG_DATA_HOME}/azure"
 # CALC =========================================================================
