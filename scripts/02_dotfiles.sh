@@ -1060,6 +1060,20 @@ prepend_to_path "${TGENV_ROOT}/bin"
 export TOFUENV_ROOT="${XDG_DATA_HOME}/tofuenv"
 prepend_to_path "${TOFUENV_ROOT}/bin"
 eval_if_exists tofuenv "init -"
+## TERRAFORM TOOLS =============================================================
+### TERRAFORM ==================================================================
+export TF_CLI_CONFIG_FILE="${XDG_CONFIG_HOME}/terraform/terraformrc"
+export TF_LOG_PATH="${XDG_STATE_HOME}/terraform/terraform.log"
+export TF_PLUGIN_CACHE_DIR="${XDG_CACHE_HOME}/terraform/plugins"
+if command_exists terraform; then
+  mkdir -p "${XDG_STATE_HOME}/terraform"
+  mkdir -p "${TF_PLUGIN_CACHE_DIR}"
+  if [ ! -f "${TF_CLI_CONFIG_FILE}" ]; then
+    CUSTOM_TF_CLI_CONFIG_FILE="${CUSTOM_CONFIG_DIR}/terraform/terraformrc"
+    mkdir -p "${XDG_CONFIG_HOME}/terraform"
+    ln -s "${CUSTOM_TF_CLI_CONFIG_FILE}" "${TF_CLI_CONFIG_FILE}"
+  fi
+fi
 # END TERRAFORM DEVEL ==========================================================
 
 # V DEVEL ======================================================================
@@ -1258,7 +1272,7 @@ if command_exists tldr; then
 fi
 # VAGRANT ======================================================================
 export VAGRANT_HOME="${XDG_DATA_HOME}/vagrant"
-export VAGRANT_ALIAS_FILE="${XDG_DATA_HOME}/vagrant/aliases"
+export VAGRANT_ALIAS_FILE="${XDG_CONFIG_HOME}/vagrant/aliases"
 # W3M ==========================================================================
 export W3M_DIR="${XDG_STATE_HOME}/w3m"
 # WGET =========================================================================
