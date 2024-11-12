@@ -859,10 +859,10 @@ export PIPX_BIN_DIR="${XDG_DATA_HOME}/pipx/bin"
 prepend_to_path "${PIPX_BIN_DIR}"
 ### PYLINT =====================================================================
 export PYLINTHOME="$XDG_CACHE_HOME/pylint"
-export PYLINTRC="$XDG_CONFIG_HOME/pylint/pylintrc"
+export PYLINTRC="$XDG_CONFIG_HOME/pylint/config"
 if command_exists pylint; then
   if [ ! -f "${PYLINTRC}" ]; then
-    CUSTOM_PYLINTRC="${CUSTOM_CONFIG_DIR}/pylint/pylintrc"
+    CUSTOM_PYLINTRC="${CUSTOM_CONFIG_DIR}/pylint/config"
     mkdir -p "${XDG_CONFIG_HOME}/pylint"
     ln -s "${CUSTOM_PYLINTRC}" "${PYLINTRC}"
   fi
@@ -1167,7 +1167,7 @@ alias_if_exists "svn --config-dir ${XDG_CONFIG_HOME}/subversion" "svn"
 ## UTILITIES ===================================================================
 # ANSIBLE ======================================================================
 export ANSIBLE_HOME="${XDG_CONFIG_HOME}/ansible"
-export ANSIBLE_CONFIG="${XDG_CONFIG_HOME}/ansible.cfg"
+export ANSIBLE_CONFIG="${XDG_CONFIG_HOME}/ansible/config"
 export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME}/ansible/galaxy-cache"
 # AWS ==========================================================================
 export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME}/aws/credentials"
