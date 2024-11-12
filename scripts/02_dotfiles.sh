@@ -859,10 +859,10 @@ export PIPX_BIN_DIR="${XDG_DATA_HOME}/pipx/bin"
 prepend_to_path "${PIPX_BIN_DIR}"
 ### PYLINT =====================================================================
 export PYLINTHOME="$XDG_CACHE_HOME/pylint"
-export PYLINTRC="$XDG_CONFIG_HOME/pylint/config"
+export PYLINTRC="$XDG_CONFIG_HOME/pylint/pylintrc"
 if command_exists pylint; then
   if [ ! -f "${PYLINTRC}" ]; then
-    CUSTOM_PYLINTRC="${CUSTOM_CONFIG_DIR}/pylint/config"
+    CUSTOM_PYLINTRC="${CUSTOM_CONFIG_DIR}/pylint/pylintrc"
     mkdir -p "${XDG_CONFIG_HOME}/pylint"
     ln -s "${CUSTOM_PYLINTRC}" "${PYLINTRC}"
   fi
