@@ -1228,10 +1228,10 @@ export LESSHISTSIZE=1000
 # LSD ==========================================================================
 alias_if_exists "lsd -A" "ls"
 # RIPGREP ======================================================================
-export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/ripgreprc"
 if command_exists rg; then
   if [ ! -f "${RIPGREP_CONFIG_PATH}" ]; then
-    CUSTOM_RIPGREP_CONFIG="${CUSTOM_CONFIG_DIR}/ripgrep/config"
+    CUSTOM_RIPGREP_CONFIG="${CUSTOM_CONFIG_DIR}/ripgrep/ripgreprc"
     mkdir -p "${XDG_CONFIG_HOME}/ripgrep"
     ln -s "${CUSTOM_RIPGREP_CONFIG}" "${RIPGREP_CONFIG_PATH}"
   fi
