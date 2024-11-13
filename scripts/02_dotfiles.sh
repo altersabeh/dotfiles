@@ -547,6 +547,10 @@ export SBT_OPTS="-ivy ${XDG_DATA_HOME}/ivy2 -sbt-dir ${XDG_DATA_HOME}/sbt"
 export SCALA_CLI_EXTRA_TIMEOUT="60.seconds"
 ### GITER8 =====================================================================
 del_if_exists "${HOME}/.g8"
+### JBANG ======================================================================
+export JBANG_CACHE_DIR="${XDG_CACHE_HOME}/jbang"
+export JBANG_DIR="${XDG_DATA_HOME}/jbang"
+prepend_to_path "${JBANG_DIR}/bin"
 ### KSCRIPT ====================================================================
 export KSCRIPT_CACHE_DIR="${XDG_CACHE_HOME}/kscript"
 ### METALS =====================================================================
