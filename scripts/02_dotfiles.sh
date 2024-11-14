@@ -1187,6 +1187,9 @@ alias_if_exists "svn --config-dir ${XDG_CONFIG_HOME}/subversion" "svn"
 export ANSIBLE_HOME="${XDG_CONFIG_HOME}/ansible"
 export ANSIBLE_CONFIG="${XDG_CONFIG_HOME}/ansible/config"
 export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME}/ansible/galaxy-cache"
+# ARDUINO ======================================================================
+export ARDUINO_DIRECTORIES_DATA="${XDG_DATA_HOME}/arduino"
+export ARDUINO_CONFIG_FILE="${XDG_CONFIG_HOME}/arduino/arduino-cli.yaml"
 # AWS ==========================================================================
 export AWS_CONFIG_FILE="${XDG_CONFIG_HOME}/aws/config"
 export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME}/aws/credentials"
