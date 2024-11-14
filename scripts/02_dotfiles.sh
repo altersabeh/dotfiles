@@ -260,6 +260,7 @@ del_if_exists "${HOME}/.dart-tool"
 ### DOTNET =====================================================================
 export DOTNET_BUNDLE_EXTRACT_BASE_DIR="${XDG_CACHE_HOME}/dotnet/bundle"
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
+export DOTNET_ROLL_FORWARD="major"
 if command_exists dotnet; then
   if [ ! -d "${DOTNET_CLI_HOME}/tools" ]; then
     ln -s "${DOTNET_CLI_HOME}/.dotnet/tools" "${DOTNET_CLI_HOME}/tools"
@@ -268,6 +269,9 @@ fi
 prepend_to_path "${DOTNET_CLI_HOME}/tools"
 del_if_exists "${HOME}/.dotnet"
 del_if_exists "${HOME}/.ServiceHub"
+### DNVM =======================================================================
+export DNVM_HOME="${XDG_DATA_HOME}/dnvm"
+source_if_exists "${DNVM_HOME}/env"
 ### NUGET ======================================================================
 export NUGET_HTTP_CACHE_PATH="${XDG_CACHE_HOME}/nuget/http-cache"
 export NUGET_PACKAGES="${XDG_CACHE_HOME}/nuget/packages"
