@@ -1244,6 +1244,8 @@ export GTK_RC_FILES="${XDG_CONFIG_HOME}/gtk-1.0/gtkrc"
 export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
 # ICONS ========================================================================
 # export XCURSOR_PATH="/usr/share/icons:${XDG_DATA_HOME}/icons"
+# JFROG =======================================================================
+export JFROG_CLI_HOME_DIR="${XDG_DATA_HOME}/jfrog"
 # KUBERNETES ===================================================================
 export KUBECONFIG="${XDG_CONFIG_HOME}/kube"
 export KUBECACHEDIR="${XDG_CACHE_HOME}/kube"
