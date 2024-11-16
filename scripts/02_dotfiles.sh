@@ -1199,6 +1199,8 @@ export AWS_CONFIG_FILE="${XDG_CONFIG_HOME}/aws/config"
 export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME}/aws/credentials"
 # AZURE ========================================================================
 export AZURE_CONFIG_DIR="${XDG_DATA_HOME}/azure"
+# BITWARDEN ====================================================================
+export BITWARDENCLI_APPDATA_DIR="${XDG_DATA_HOME}/bitwarden"
 # CALC =========================================================================
 export CALCHISTFILE="${XDG_STATE_HOME}/calc/history"
 if command_exists calc; then
