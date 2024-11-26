@@ -57,15 +57,13 @@ export PHP_BUILD_CONFIGURE_OPTS="
   --enable-gd-jis-conv
   --with-gettext
   --with-gmp
-  --with-mhash
   --with-iconv
   --enable-intl
   --with-ldap
   --with-ldap-sasl
   --enable-mbstring
   --enable-mbregex
-  --with-mysqli=mysqlnd
-  --with-mysql-sock=/var/run/mysqld/mysqld.sock
+  --with-mysqli
   --with-odbcver=0
   --with-unixODBC
   --enable-opcache
@@ -77,8 +75,8 @@ export PHP_BUILD_CONFIGURE_OPTS="
   --with-pdo-dblib
   --with-pdo-firebird
   --with-pdo-mysql=mysqlnd
-  --with-pdo-odbc=unixODBC,/usr
-  --with-pdo-pgsql=/usr/bin
+  --with-pdo-odbc=unixODBC
+  --with-pdo-pgsql
   --with-pdo-sqlite
   --with-pgsql
   --enable-phar
