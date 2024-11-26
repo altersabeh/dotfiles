@@ -23,3 +23,5 @@ alias vbc="dotnet /usr/share/dotnet/sdk/8.0.204/Roslyn/bincore/vbc.dll"
 alias treeg="tree --gitignore -a --dirsfirst"
 
 alias erlenv=erlxenv
+
+alias source-dotfiles="source $(dirname "${BASH_SOURCE[0]}")/../run.sh"
