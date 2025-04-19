@@ -838,9 +838,12 @@ export POETRY_HOME="${XDG_DATA_HOME}/poetry"
 export POETRY_VIRTUALENVS_IN_PROJECT=1
 prepend_to_path "${POETRY_HOME}/bin"
 ### UV =========================================================================
-export UV_INSTALL_DIR="${XDG_DATA_HOME}/uv"
 export UV_CACHE_DIR="${XDG_CACHE_HOME}/uv"
 export UV_CONFIG_FILE="${XDG_CONFIG_HOME}/uv/uv.toml"
+export UV_INSTALL_DIR="${XDG_DATA_HOME}/uv"
+export UV_TOOL_DIR="${XDG_DATA_HOME}/uv/tools"
+export UV_TOOL_BIN_DIR="${UV_TOOL_DIR}/bin"
+prepend_to_path "${UV_TOOL_BIN_DIR}"
 source_if_exists "${UV_INSTALL_DIR}/env"
 if command_exists uv; then
   if [ ! -f "${UV_CONFIG_FILE}" ]; then
