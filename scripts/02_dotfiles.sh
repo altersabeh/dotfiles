@@ -433,7 +433,9 @@ export VOLTA_HOME="${XDG_DATA_HOME}/volta"
 prepend_to_path "${VOLTA_HOME}/bin"
 ## JS AND TS PACKAGE MANAGERS ==================================================
 ### BUN ========================================================================
+export BUN_CREATE_DIR="${XDG_CACHE_HOME}/bun/create"
 export BUN_INSTALL="${XDG_DATA_HOME}/bun"
+export BUN_INSTALL_CACHE_DIR="${XDG_CACHE_HOME}/bun/cache"
 prepend_to_path "${BUN_INSTALL}/bin"
 ### DENO =======================================================================
 export DENO_DIR="${XDG_CACHE_HOME}/deno"
