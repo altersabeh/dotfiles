@@ -462,6 +462,8 @@ prepend_to_path "${PNPM_HOME}"
 ### YARN =======================================================================
 export YARN_GLOBAL_FOLDER="${XDG_CACHE_HOME}/yarn/berry"
 ## JS AND TS TOOLS =============================================================
+### COREPACK ===================================================================
+export COREPACK_HOME="${XDG_CACHE_HOME}/corepack"
 ### NODE =======================================================================
 export NODE_REPL_HISTORY="${XDG_STATE_HOME}/node/history"
 if command_exists node; then
