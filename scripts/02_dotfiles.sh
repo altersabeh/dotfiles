@@ -355,6 +355,8 @@ export GOTELEMETRYDIR="${XDG_CACHE_HOME}/go/telemetry"
 if command_exists go; then
   prepend_to_path "${GOPATH}/bin"
 fi
+### GOLANGCI-LINT ==============================================================
+export GOLANGCI_LINT_CACHE="${XDG_CACHE_HOME}/golangci-lint"
 # END GO DEVEL =================================================================
 
 # HASKELL DEVEL ================================================================
