@@ -347,11 +347,12 @@ fi
 export MAGEFILE_CACHE="${XDG_CACHE_HOME}/magefile"
 ## GO TOOLS ====================================================================
 ### GO =========================================================================
+export GOCACHE="${XDG_CACHE_HOME}/go/build"
+export GOENV="${XDG_DATA_HOME}/go/env"
+export GOMODCACHE="${XDG_CACHE_HOME}/go/mod"
+export GOPATH="${XDG_DATA_HOME}/go"
+export GOTELEMETRYDIR="${XDG_CACHE_HOME}/go/telemetry"
 if command_exists go; then
-  export CGO_ENABLED=1
-  export GOCACHE="${XDG_CACHE_HOME}/go/build"
-  export GOMODCACHE="${XDG_CACHE_HOME}/go/mod"
-  export GOPATH="${XDG_DATA_HOME}/go"
   prepend_to_path "${GOPATH}/bin"
 fi
 # END GO DEVEL =================================================================
