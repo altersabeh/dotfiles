@@ -455,6 +455,8 @@ fi
 ### PNPM =======================================================================
 export PNPM_HOME="${XDG_DATA_HOME}/pnpm"
 prepend_to_path "${PNPM_HOME}"
+### YARN =======================================================================
+export YARN_GLOBAL_FOLDER="${XDG_CACHE_HOME}/yarn/berry"
 ## JS AND TS TOOLS =============================================================
 ### NODE =======================================================================
 export NODE_REPL_HISTORY="${XDG_STATE_HOME}/node/history"
