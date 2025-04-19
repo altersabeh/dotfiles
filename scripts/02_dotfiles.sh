@@ -825,6 +825,7 @@ export PDM_LOG_DIR="${XDG_STATE_HOME}/pdm/logs"
 prepend_to_path "${PDM_HOME}/bin"
 ### PIP ========================================================================
 PIP_CONFIG_FILE="${XDG_CONFIG_HOME}/pip/pip.conf"
+export PIP_CACHE_DIR="${XDG_CACHE_HOME}/pip"
 prepend_to_path "${PYTHONUSERBASE}/bin"
 if command_exists pip; then
   if [ ! -f "${PIP_CONFIG_FILE}" ]; then
