@@ -487,7 +487,8 @@ del_if_exists "${HOME}/.julia"
 # JVM DEVEL ====================================================================
 ## JVM VERSION MANAGERS ========================================================
 ### COURSIER ===================================================================
-export COURSIER_CACHE="${XDG_CACHE_HOME}/coursier"
+export COURSIER_ARCHIVE_CACHE="${XDG_CACHE_HOME}/coursier/archive"
+export COURSIER_CACHE="${XDG_CACHE_HOME}/coursier/cache"
 export COURSIER_CONFIG_DIR="${XDG_CONFIG_HOME}/coursier"
 export COURSIER_INSTALL_DIR="${XDG_DATA_HOME}/coursier/bin"
 export COURSIER_MIRRORS="${COURSIER_CONFIG_DIR}/mirror.properties"
