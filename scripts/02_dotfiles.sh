@@ -357,6 +357,8 @@ if command_exists go; then
 fi
 ### GOLANGCI-LINT ==============================================================
 export GOLANGCI_LINT_CACHE="${XDG_CACHE_HOME}/golangci-lint"
+### GOPLS ======================================================================
+export GOPLSCACHE="${XDG_CACHE_HOME}/gopls"
 # END GO DEVEL =================================================================
 
 # HASKELL DEVEL ================================================================
