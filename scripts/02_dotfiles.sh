@@ -850,6 +850,8 @@ if command_exists uv; then
   fi
 fi
 ## PYTHON TOOLS ================================================================
+### BLACK ======================================================================
+export BLACK_CACHE_DIR="${XDG_CACHE_HOME}/black"
 ### IPYTHON ====================================================================
 if command_exists ipython; then
   mkdir -p "${XDG_CONFIG_HOME}/ipython"
