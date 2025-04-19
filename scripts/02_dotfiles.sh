@@ -273,7 +273,7 @@ del_if_exists "${HOME}/.ServiceHub"
 export DNVM_HOME="${XDG_DATA_HOME}/dnvm"
 source_if_exists "${DNVM_HOME}/env"
 ### NUGET ======================================================================
-export NUGET_HTTP_CACHE_PATH="${XDG_CACHE_HOME}/nuget/http-cache"
+export NUGET_HTTP_CACHE_PATH="${XDG_CACHE_HOME}/nuget/http"
 export NUGET_PACKAGES="${XDG_CACHE_HOME}/nuget/packages"
 export NUGET_PLUGINS_CACHE_PATH="${XDG_CACHE_HOME}/nuget/plugins"
 ## DOTNET TOOLS ================================================================
