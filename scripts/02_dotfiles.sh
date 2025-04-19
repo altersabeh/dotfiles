@@ -478,13 +478,15 @@ del_if_exists "${HOME}/.julia"
 # JVM DEVEL ====================================================================
 ## JVM VERSION MANAGERS ========================================================
 ### COURSIER ===================================================================
-export CS_HOME="${XDG_DATA_HOME}/coursier"
-export COURSIER_MIRRORS="${XDG_CONFIG_HOME}/coursier/mirror.properties"
-prepend_to_path "${CS_HOME}/bin"
+export COURSIER_CACHE="${XDG_CACHE_HOME}/coursier"
+export COURSIER_CONFIG_DIR="${XDG_CONFIG_HOME}/coursier"
+export COURSIER_INSTALL_DIR="${XDG_DATA_HOME}/coursier/bin"
+export COURSIER_MIRRORS="${COURSIER_CONFIG_DIR}/mirror.properties"
+prepend_to_path "${COURSIER_INSTALL_DIR}"
 if command_exists cs; then
-  if [ ! -f "${COURSIER_MIRRORS}" ]; then
+  if [ ! -d "${COURSIER_CONFIG_DIR}" ]; then
     CUSTOM_COURSIER_MIRRORS="${CUSTOM_CONFIG_DIR}/coursier/mirror.properties"
-    mkdir -p "${XDG_CONFIG_HOME}/coursier"
+    mkdir -p "${COURSIER_CONFIG_DIR}"
     ln -s "${CUSTOM_COURSIER_MIRRORS}" "${COURSIER_MIRRORS}"
   fi
 fi
