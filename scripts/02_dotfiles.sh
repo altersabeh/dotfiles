@@ -819,7 +819,9 @@ if command_exists python; then
 fi
 ## PYTHON PACKAGE MANAGERS =====================================================
 ### PDM ========================================================================
+export PDM_CACHE_DIR="${XDG_CACHE_HOME}/pdm"
 export PDM_HOME="${XDG_DATA_HOME}/pdm"
+export PDM_LOG_DIR="${XDG_STATE_HOME}/pdm/logs"
 prepend_to_path "${PDM_HOME}/bin"
 ### PIP ========================================================================
 PIP_CONFIG_FILE="${XDG_CONFIG_HOME}/pip/pip.conf"
