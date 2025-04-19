@@ -195,7 +195,7 @@ prepend_to_path "${CUDA_PATH}/bin"
 prepend_to_ld_library_path "${CUDA_PATH}/lib64"
 ## C FAMILY PACKAGE MANAGERS ===================================================
 ### CONAN ======================================================================
-export CONAN_USER_HOME="${XDG_CONFIG_HOME}"
+export CONAN_HOME="${XDG_CONFIG_HOME}" # conan >= 2.0
 ### VCPKG ======================================================================
 export VCPKG_ROOT="${XDG_DATA_HOME}/vcpkg"
 export VCPKG_DOWNLOADS="${XDG_CACHE_HOME}/vcpkg/downloads"
