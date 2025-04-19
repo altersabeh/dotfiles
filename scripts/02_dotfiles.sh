@@ -1027,6 +1027,8 @@ if command_exists pry; then
     ln -s "${CUSTOM_PRYRC}" "${PRYRC}"
   fi
 fi
+### RUBOCOP =======================================================================
+export RUBOCOP_CACHE_ROOT="${XDG_CACHE_HOME}/rubocop"
 ### RUBY =======================================================================
 ### SOLARGRAPH =================================================================
 export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
