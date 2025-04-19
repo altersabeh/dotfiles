@@ -328,6 +328,8 @@ prepend_to_path "${MIX_HOME}/escripts"
 ## ELIXIR TOOLS ================================================================
 ### ELIXIR =====================================================================
 export ELIXIR_ERL_OPTIONS="-kernel shell_history enabled shell_history_path '${XDG_STATE_HOME}/elixir'"
+### HEX ========================================================================
+export HEX_HOME="${XDG_CACHE_HOME}/hex"
 # END ELIXIR DEVEL =============================================================
 
 # GO DEVEL =====================================================================
