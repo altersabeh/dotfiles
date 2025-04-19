@@ -996,7 +996,7 @@ if command_exists irb; then
 fi
 ### GEM ========================================================================
 export GEM_HOME="${XDG_DATA_HOME}/gem"
-export GEM_SPEC_CACHE="${XDG_CACHE_HOME}/gem"
+export GEM_SPEC_CACHE="${XDG_CACHE_HOME}/gem/specs"
 export GEMRC="${XDG_CONFIG_HOME}/gem/gemrc"
 prepend_to_path "${GEM_HOME}/bin"
 if command_exists gem; then
