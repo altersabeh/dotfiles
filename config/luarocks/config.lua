@@ -3,7 +3,7 @@ rocks_trees = {
 }
 lua_interpreter = "lua";
 variables = {
-  LUA_DIR = "/home/altersabeh/.local/share/luaenv/versions/current",
-  LUA_INCDIR = "/home/altersabeh/.local/share/luaenv/versions/current/include",
-  LUA_BINDIR = "/home/altersabeh/.local/share/luaenv/versions/current/bin",
+  LUA_DIR = os.getenv("LUAENV_ROOT") .. "/versions/current",
+  LUA_INCDIR = os.getenv("LUAENV_ROOT") .. "/versions/current/include",
+  LUA_BINDIR = os.getenv("LUAENV_ROOT") .. "/versions/current/bin",
 }
