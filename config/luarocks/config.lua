@@ -1,5 +1,5 @@
 rocks_trees = {
-  { root = home .. "/.local/share/luarocks" },
+  { root = os.getenv("LUAROCKS_TREE") },
 }
 lua_interpreter = "lua";
 variables = {
