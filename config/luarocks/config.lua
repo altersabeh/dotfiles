@@ -1,9 +1,5 @@
 rocks_trees = {
-<<<<<<< HEAD
-  { root = os.getenv("LUAROCKS_TREE") },
-=======
-  { root = os_getenv("LUAROCKS_TREE") },
->>>>>>> a92bd4db2b740038ac00b232e90f10972e7ac8dd
+  { root = os_etenv("LUAROCKS_TREE") },
 }
 lua_interpreter = "lua";
 variables = {
