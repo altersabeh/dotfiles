@@ -6,12 +6,6 @@
 # in the Cabal file. We recommend uncommenting them and filling them out if
 # you intend to use 'stack new'.
 # See https://docs.haskellstack.org/en/stable/yaml_configuration/#templates
-templates:
-  params:
-    author-name: AlterSabeh
-    author-email: betamaximum22
-    #    copyright:
-    github-username: altersabeh
 
 # The following parameter specifies Stack's output styles; STYLES is a
 # colon-delimited sequence of key=value, where 'key' is a style name and
