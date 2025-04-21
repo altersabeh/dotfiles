@@ -1,4 +1,5 @@
 lua_interpreter = "lua";
+local_cache = os_getenv("XDG_CACHE_HOME") .. "/luarocks"
 rocks_trees = {
   { root = os_etenv("LUAROCKS_TREE") },
 }
