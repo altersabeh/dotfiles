@@ -548,6 +548,7 @@ export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"
 export MAVEN_CONFIG="${XDG_CONFIG_HOME}/maven/settings.xml" # custom environment variable
 export MAVEN_REPOSITORY="${XDG_CACHE_HOME}/maven/repository" # custom environment variable
 export MAVEN_OPTS="-Dmaven.repo.local=${MAVEN_REPOSITORY}"
+export MAVEN_USER_HOME="${XDG_DATA_HOME}/maven" # for maven wrapper
 if command_exists mvn; then
   if [ ! -f "${MAVEN_CONFIG}" ]; then
     CUSTOM_MAVEN_CONFIG="${CUSTOM_CONFIG_DIR}/maven/settings.xml"
