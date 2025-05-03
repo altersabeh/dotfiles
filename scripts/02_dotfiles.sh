@@ -744,13 +744,14 @@ prepend_to_path "${COMPOSER_HOME}/vendor/bin"
 export PHIVE_HOME="${XDG_DATA_HOME}/phive"
 ### PHP ========================================================================
 export PHP_DTRACE=yes
-export PHP_INI_SCAN_DIR="${XDG_CONFIG_HOME}/php"
+export PHP_INI_SCAN_DIR="${PHP_INI_SCAN_DIR}:${XDG_CONFIG_HOME}/php/etc"
 export PHP_HISTFILE="${XDG_STATE_HOME}/php/history" # php >= 8.4
+export PHPRC="${XDG_CONFIG_HOME}/php/php.ini"
 if command_exists php; then
   mkdir -p "${XDG_STATE_HOME}/php"
-  if [ ! -d "${PHP_INI_SCAN_DIR}" ]; then
-    CUSTOM_PHP_INI_SCAN_DIR="${CUSTOM_CONFIG_DIR}/php"
-    ln -s "${CUSTOM_PHP_INI_SCAN_DIR}" "${PHP_INI_SCAN_DIR}"
+  if [ ! -d "${XDG_CONFIG_HOME}/php" ]; then
+    CUSTOM_PHP_CONFIG_DIR="${CUSTOM_CONFIG_DIR}/php"
+    ln -s "${CUSTOM_PHP_CONFIG_DIR}" "${XDG_CONFIG_HOME}/php"
   fi
 fi
 # END PHP DEVEL ================================================================
