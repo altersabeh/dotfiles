@@ -1,7 +1,7 @@
 # always execute this commands even if the file is sourced already
 if [ -n "${DOTFILES_SH_ALREADY_SOURCED}" ]; then
   eval_if_exists conda "shell.bash hook"
-  eval_if_exists oh-my-posh "init bash --config ${POSHTHEMES}/night-owl.omp.json"
+  eval_if_exists oh-my-posh "init bash --config ${CUSTOM_POSHTHEME}"
   eval_if_exists rakubrew "init Bash"
   eval_if_exists zoxide "init bash"
   eval_if_exists direnv "hook bash"

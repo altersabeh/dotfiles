@@ -1343,7 +1343,7 @@ if [ "${SHELL}" = "/bin/bash" ]; then
   ulimit -n 104857
 fi
 # OH MY POSH ===================================================================
-CUSTOM_POSHTHEME="${CUSTOM_CONFIG_DIR}/oh-my-posh/powerline.omp.json"
+export CUSTOM_POSHTHEME="${CUSTOM_CONFIG_DIR}/oh-my-posh/powerline.omp.json"
 eval_if_exists oh-my-posh "init bash --config ${CUSTOM_POSHTHEME}"
 # USE WINDOWS BROWSER IN WSL ===================================================
 if grep -q WSL /proc/version; then
