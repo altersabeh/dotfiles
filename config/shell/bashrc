@@ -115,6 +115,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [ -d ~/Documents/scripts ]; then
-  . ~/Documents/scripts/run.sh
+if [ -d ~/.local/share/dotfiles ]; then
+  . ~/.local/share/dotfiles/run.sh
 fi
