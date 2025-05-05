@@ -263,7 +263,7 @@ export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
 export DOTNET_ROLL_FORWARD="major"
 if command_exists dotnet; then
   mkdir -p "${DOTNET_CLI_HOME}"
-  if [ ! -f "${DOTNET_CLI_HOME}/tools" ]; then
+  if [ ! -L "${DOTNET_CLI_HOME}/tools" ]; then
     ln -s "${DOTNET_CLI_HOME}/.dotnet/tools" "${DOTNET_CLI_HOME}/tools"
   fi
 fi
