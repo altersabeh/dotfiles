@@ -1343,8 +1343,8 @@ if [ "${SHELL}" = "/bin/bash" ]; then
   ulimit -n 104857
 fi
 # OH MY POSH ===================================================================
-export POSHTHEMES="${XDG_CACHE_HOME}/oh-my-posh/themes"
-eval_if_exists oh-my-posh "init bash --config ${POSHTHEMES}/night-owl.omp.json"
+CUSTOM_POSHTHEME="${CUSTOM_CONFIG_DIR}/oh-my-posh/powerline.omp.json"
+eval_if_exists oh-my-posh "init bash --config ${CUSTOM_POSHTHEME}"
 # USE WINDOWS BROWSER IN WSL ===================================================
 if grep -q WSL /proc/version; then
   export BROWSER="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe %s"
