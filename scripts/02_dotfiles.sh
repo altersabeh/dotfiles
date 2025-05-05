@@ -262,8 +262,8 @@ export DOTNET_BUNDLE_EXTRACT_BASE_DIR="${XDG_CACHE_HOME}/dotnet/bundle"
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
 export DOTNET_ROLL_FORWARD="major"
 if command_exists dotnet; then
-  mkdir "${DOTNET_CLI_HOME}"
-  if [ ! -d "${DOTNET_CLI_HOME}/tools" ]; then
+  mkdir -p "${DOTNET_CLI_HOME}"
+  if [ ! -f "${DOTNET_CLI_HOME}/tools" ]; then
     ln -s "${DOTNET_CLI_HOME}/.dotnet/tools" "${DOTNET_CLI_HOME}/tools"
   fi
 fi
