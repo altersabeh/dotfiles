@@ -788,11 +788,11 @@ export PYENV_ROOT="${XDG_DATA_HOME}/pyenv"
 prepend_to_path "${PYENV_ROOT}/bin"
 eval_if_exists pyenv "init - --no-rehash bash"
 if command_exists pyenv; then
-  if [ ! -f "${PYENV_ROOT}/default-packages" ]; then
-    CUSTOM_PYENV_DEFAULT_PACKAGES="${CUSTOM_CONFIG_DIR}/xxenv/pyenv/default-packages"
-    ORIG_PYENV_DEFAULT_PACKAGES="${PYENV_ROOT}/default-packages"
-    ln -s "${CUSTOM_PYENV_DEFAULT_PACKAGES}" "${ORIG_PYENV_DEFAULT_PACKAGES}"
-  fi
+  # if [ ! -f "${PYENV_ROOT}/default-packages" ]; then
+  #   CUSTOM_PYENV_DEFAULT_PACKAGES="${CUSTOM_CONFIG_DIR}/xxenv/pyenv/default-packages"
+  #   ORIG_PYENV_DEFAULT_PACKAGES="${PYENV_ROOT}/default-packages"
+  #   ln -s "${CUSTOM_PYENV_DEFAULT_PACKAGES}" "${ORIG_PYENV_DEFAULT_PACKAGES}"
+  # fi
   PYENV_PYTHON_PATH="${PYENV_ROOT}/versions/$(pyenv global)"
   prepend_to_path "${PYENV_PYTHON_PATH}/bin"
   prepend_to_manpath "${PYENV_PYTHON_PATH}/share/man"
@@ -1066,6 +1066,7 @@ eval_if_exists swiftenv "init -"
 ### SWIFTLY ====================================================================
 export SWIFTLY_HOME_DIR="${XDG_DATA_HOME}/swiftly"
 export SWIFTLY_BIN_DIR="${SWIFTLY_HOME_DIR}/bin"
+append_to_path "${SWIFTLY_BIN_DIR}"
 source_if_exists "${SWIFTLY_HOME_DIR}/env.sh"
 ## SWIFT PACKAGE MANAGERS ======================================================
 ### COCOAPODS ==================================================================
