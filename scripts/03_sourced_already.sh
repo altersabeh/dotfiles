@@ -3,7 +3,6 @@ if [ -n "${DOTFILES_SH_ALREADY_SOURCED}" ]; then
   eval_if_exists conda "shell.bash hook"
   eval_if_exists oh-my-posh "init bash --config ${CUSTOM_POSHTHEME}"
   eval_if_exists rakubrew "init Bash"
-  eval_if_exists zoxide "init bash"
   eval_if_exists direnv "hook bash"
 
   alias_if_exists "dust" "du"
@@ -31,4 +30,6 @@ if [ -n "${DOTFILES_SH_ALREADY_SOURCED}" ]; then
   del_if_exists "${HOME}/.java"
   del_if_exists "${HOME}/.julia"
   del_if_exists "${HOME}/.vscode-R"
+
+  eval_if_exists zoxide "init bash"
 fi

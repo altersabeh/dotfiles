@@ -1333,11 +1333,6 @@ fi
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export XINITRC="${XDG_CONFIG_HOME}/X11/xinitrc"
 export XSERVERRC="${XDG_CONFIG_HOME}/X11/xserverrc"
-# ZOXIDE =======================================================================
-export _ZO_ECHO=1
-eval_if_exists zoxide "init bash"
-alias_if_exists "z" "cd"
-# END UTILITIES ================================================================
 
 # CUSTOMIZATION ================================================================
 # CUSTOM LIMITS
@@ -1352,6 +1347,12 @@ if grep -q WSL /proc/version; then
   export BROWSER="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe %s"
 fi
 # END CUSTOMIZATION ============================================================
+
+# ZOXIDE =======================================================================
+export _ZO_ECHO=1
+eval_if_exists zoxide "init bash"
+alias_if_exists "z" "cd"
+# END UTILITIES ================================================================
 
 # ENVIRONMENT VARIABLES ========================================================
 export DOTFILES_SH_ALREADY_SOURCED=1
