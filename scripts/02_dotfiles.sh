@@ -63,7 +63,7 @@ if [ "${SHELL}" = "/bin/bash" ]; then
   HOME_BASHRC_PATH="${HOME}/.bashrc"
   ORIG_BASHRC_PATH="${XDG_CONFIG_HOME}/bash/bashrc"
   CUSTOM_BASHRC_PATH="${CUSTOM_CONFIG_DIR}/shell/bashrc"
-  if [ ! -f "${CUSTOM_BASHRC_PATH}" ]; then
+  if [ ! -f "${ORIG_BASHRC_PATH}" ]; then
     [ -f "${HOME_BASHRC_PATH}" ] && rm "${HOME_BASHRC_PATH}" # remove the existing .bashrc
     mkdir -p "${XDG_CONFIG_HOME}/bash"
     ln -s "${CUSTOM_BASHRC_PATH}" "${ORIG_BASHRC_PATH}"
