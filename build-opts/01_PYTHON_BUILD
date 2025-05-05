@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# add --disable-gil
+# disabling test modules will fail the build when optimizations are enabled
 export PYTHON_CONFIGURE_OPTS="
   --enable-shared
   --disable-gil
@@ -10,7 +10,7 @@ export PYTHON_CONFIGURE_OPTS="
   --enable-loadable-sqlite-extensions
   --enable-ipv6
   --enable-big-digits=30
-  --disable-test-modules
+  --enable-test-modules
   --with-pkg-config=yes
   --with-static-libpython
   --with-lto=no
