@@ -4,23 +4,24 @@ export R_CONFIGURE_OPTS="
   --enable-R-profiling
   --enable-memory-profiling
   --enable-R-shlib
-  --disable-R-static-lib
+  --enable-R-static-lib
   --enable-BLAS-shlib
   --enable-prebuilt-html
-  --disable-lto
+  --enable-lto
   --enable-java
   --enable-byte-compiled-packages
-  --enable-static
-  --enable-shared
-  --enable-fast-install
+  --enable-shared=yes
+  --enable-fast-install=yes
   --enable-long-double
   --enable-openmp
   --enable-largefile
   --enable-nls
   --disable-rpath
   --enable-year2038
+  --with-C23
   --with-blas
   --with-lapack
+  --with-2025blas
   --with-readline
   --with-pcre2
   --with-pcre1
@@ -37,8 +38,6 @@ export R_CONFIGURE_OPTS="
   --with-internal-wcwidth
   --with-recommended-packages
   --with-ICU
-  --with-static-cairo=no
-  --with-aix-soname=both
   --with-x
   --with-libdeflate-compression
 "
