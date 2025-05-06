@@ -369,11 +369,11 @@ export GOPLSCACHE="${XDG_CACHE_HOME}/gopls"
 ### GHCUP ======================================================================
 export GHCUP_INSTALL_BASE_PREFIX="${XDG_DATA_HOME}"
 source_if_exists "${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/env"
-if command_exists ghc; then
-  GHC_VERSION="$(ghc --numeric-version)"
-  GHCUP_GHC_PATH="${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/ghc/${GHC_VERSION}"
-  prepend_to_manpath "${GHCUP_GHC_PATH}/share/man"
-fi
+# if command_exists ghc; then
+#   GHC_VERSION="$(ghc --numeric-version)"
+#   GHCUP_GHC_PATH="${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/ghc/${GHC_VERSION}"
+#   prepend_to_manpath "${GHCUP_GHC_PATH}/share/man"
+# fi
 ## HASKELL PACKAGE MANAGERS ====================================================
 ### CABAL ======================================================================
 # export CABAL_CONFIG="${XDG_CONFIG_HOME}/cabal/config"
