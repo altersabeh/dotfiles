@@ -376,16 +376,16 @@ if command_exists ghc; then
 fi
 ## HASKELL PACKAGE MANAGERS ====================================================
 ### CABAL ======================================================================
-export CABAL_CONFIG="${XDG_CONFIG_HOME}/cabal/config"
+# export CABAL_CONFIG="${XDG_CONFIG_HOME}/cabal/config"
 export CABAL_DIR="${XDG_DATA_HOME}/cabal"
 prepend_to_path "${CABAL_DIR}/bin"
-if command_exists cabal; then
-  if [ ! -f "${CABAL_CONFIG}" ]; then
-    CUSTOM_CABAL_CONFIG="${CUSTOM_CONFIG_DIR}/cabal/config"
-    mkdir -p "${XDG_CONFIG_HOME}/cabal"
-    ln -s "${CUSTOM_CABAL_CONFIG}" "${CABAL_CONFIG}"
-  fi
-fi
+# if command_exists cabal; then
+#   if [ ! -f "${CABAL_CONFIG}" ]; then
+#     CUSTOM_CABAL_CONFIG="${CUSTOM_CONFIG_DIR}/cabal/config"
+#     mkdir -p "${XDG_CONFIG_HOME}/cabal"
+#     ln -s "${CUSTOM_CABAL_CONFIG}" "${CABAL_CONFIG}"
+#   fi
+# fi
 ### STACK ======================================================================
 export STACK_XDG=1
 export STACK_CONFIG_YAML="${XDG_CONFIG_HOME}/stack/config.yaml"
