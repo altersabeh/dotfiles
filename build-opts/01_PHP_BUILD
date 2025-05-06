@@ -19,19 +19,19 @@ export PHP_BUILD_CONFIGURE_OPTS="
   --enable-libgcc
   --enable-ipv6
   --enable-dtrace
-  --with-libxml
-  --with-openssl
+  --with-libxml=shared
+  --with-openssl=shared
   --with-system-ciphers
-
+  --with-openssl-argon2
   --with-pcre-jit
-  --with-sqlite3
-  --with-zlib
-  --enable-bcmath
-  --with-bz2
-  --enable-calendar
-  --enable-ctype
-  --with-curl
-  --enable-dba
+  --with-sqlite3=shared
+  --with-zlib=shared
+  --enable-bcmath=shared
+  --with-bz2=shared
+  --enable-calendar=shared
+  --enable-ctype=shared
+  --with-curl=shared
+  --enable-dba=shared
   --with-qdbm
   --with-db4
   --with-tcadb
@@ -39,76 +39,76 @@ export PHP_BUILD_CONFIGURE_OPTS="
   --with-cdb
   --enable-inifile
   --enable-flatfile
-  --enable-dl-test
-  --enable-dom
-  --with-enchant
-  --enable-exif
-  --with-ffi
-  --enable-fileinfo
-  --enable-filter
-  --enable-ftp
+  --enable-dl-test=shared
+  --enable-dom=shared
+  --with-enchant=shared
+  --enable-exif=shared
+  --with-ffi=shared
+  --enable-fileinfo=shared
+  --enable-filter=shared
+  --enable-ftp=shared
   --with-ftp-ssl
-  --enable-gd
+  --enable-gd=shared
   --with-avif
   --with-webp
   --with-jpeg
   --with-xpm
   --with-freetype
   --enable-gd-jis-conv
-  --with-gettext
-  --with-gmp
-  --with-iconv
-  --enable-intl
-  --with-ldap
+  --with-gettext=shared
+  --with-gmp=shared
+  --with-iconv=shared
+  --enable-intl=shared
+  --with-ldap=shared
   --with-ldap-sasl
-  --enable-mbstring
+  --enable-mbstring=shared
   --enable-mbregex
-  --with-mysqli
+  --with-mysqli=shared
   --with-odbcver=0
-  --with-unixODBC
-  --enable-opcache
+  --with-unixODBC=shared
+  --enable-opcache=shared
   --enable-huge-code-pages
   --enable-opcache-jit
   --with-capstone
-  --enable-pcntl
-  --enable-pdo
-  --with-pdo-dblib
-  --with-pdo-firebird
-  --with-pdo-mysql=mysqlnd
-  --with-pdo-odbc=unixODBC
-  --with-pdo-pgsql
-  --with-pdo-sqlite
-  --with-pgsql
-  --enable-phar
-  --enable-posix
+  --enable-pcntl=shared
+  --enable-pdo=shared
+  --with-pdo-dblib=shared
+  --with-pdo-firebird=shared
+  --with-pdo-mysql=shared
+  --with-pdo-odbc=shared,unixODBC
+  --with-pdo-pgsql=shared
+  --with-pdo-sqlite=shared
+  --with-pgsql=shared
+  --enable-phar=shared
+  --enable-posix=shared
   --with-libedit
-  --with-readline
-  --enable-session
-  --enable-shmop
+  --with-readline=shared
+  --enable-session=shared
+  --enable-shmop=shared
   --enable-simplexml
-  --with-snmp
-  --enable-soap
-  --enable-sockets
-  --with-sodium
+  --with-snmp=shared
+  --enable-soap=shared
+  --enable-sockets=shared
+  --with-sodium=shared
   --with-password-argon2
-  --enable-sysvmsg
-  --enable-sysvsem
-  --enable-sysvshm
-  --with-tidy
-  --enable-tokenizer
+  --enable-sysvmsg=shared
+  --enable-sysvsem=shared
+  --enable-sysvshm=shared
+  --with-tidy=shared
+  --enable-tokenizer=shared
   --enable-xml
   --with-expat
-  --enable-xmlreader
-  --enable-xmlwriter
-  --with-xsl
-  --enable-zend-test
-  --with-zip
-  --enable-mysqlnd
+  --enable-xmlreader=shared
+  --enable-xmlwriter=shared
+  --with-xsl=shared
+  --enable-zend-test=shared
+  --with-zip=shared
+  --enable-mysqlnd=shared
   --enable-mysqlnd-compression-support
   --with-pear
   --enable-fiber-asm
-  --enable-shared
-  --enable-static
+  --enable-shared=yes
+  --enable-static=yes
   --enable-fast-install
 "
 
