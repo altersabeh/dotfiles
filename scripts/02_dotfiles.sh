@@ -453,8 +453,8 @@ if command_exists npm; then
   mkdir -p "${XDG_DATA_HOME}/node"
   if [ ! -f "${NPM_CONFIG_USERCONFIG}" ]; then
     CUSTOM_NPM_CONFIG_USERCONFIG="${CUSTOM_CONFIG_DIR}/npm/npmrc"
-    ln -s "${CUSTOM_NPM_CONFIG_USERCONFIG}" "${NPM_CONFIG_USERCONFIG}"
     mkdir -p "${XDG_CONFIG_HOME}/npm"
+    ln -s "${CUSTOM_NPM_CONFIG_USERCONFIG}" "${NPM_CONFIG_USERCONFIG}"
   fi
 fi
 ### PNPM =======================================================================
