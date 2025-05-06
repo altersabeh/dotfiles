@@ -367,7 +367,8 @@ export GOPLSCACHE="${XDG_CACHE_HOME}/gopls"
 # HASKELL DEVEL ================================================================
 ## HASKELL VERSION MANAGERS ====================================================
 ### GHCUP ======================================================================
-export GHCUP_INSTALL_BASE_PREFIX="${XDG_DATA_HOME}"
+# export GHCUP_INSTALL_BASE_PREFIX="${XDG_DATA_HOME}"
+export GHCUP_USE_XDG_DIRS=1
 source_if_exists "${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/env"
 # if command_exists ghc; then
 #   GHC_VERSION="$(ghc --numeric-version)"
