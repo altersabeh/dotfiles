@@ -1046,6 +1046,9 @@ export TRAVIS_CONFIG_PATH="${XDG_CONFIG_HOME}/travis"
 
 # RUST DEVEL ===================================================================
 ## RUST TOOLS =======================================================
+### CARGO ======================================================================
+export CARGO_HOME="${XDG_DATA_HOME}/cargo"
+source_if_exists "${CARGO_HOME}/env"
 ### RUSTUP =====================================================================
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 if command_exists rustup; then
@@ -1053,10 +1056,6 @@ if command_exists rustup; then
   RUSTUP_RUSTC_PATH="${RUSTUP_HOME}/toolchains/${RUSTC_TOOLCHAIN}"
   prepend_to_manpath "${RUSTUP_RUSTC_PATH}/share/man"
 fi
-## RUST PACKAGE MANAGERS =======================================================
-### CARGO ======================================================================
-export CARGO_HOME="${XDG_DATA_HOME}/cargo"
-source_if_exists "${CARGO_HOME}/env"
 # END RUST DEVEL ===============================================================
 
 # SWIFT DEVEL ==================================================================
