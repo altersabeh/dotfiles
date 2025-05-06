@@ -369,10 +369,10 @@ export GOPLSCACHE="${XDG_CACHE_HOME}/gopls"
 ### GHCUP ======================================================================
 # export GHCUP_INSTALL_BASE_PREFIX="${XDG_DATA_HOME}"
 export GHCUP_USE_XDG_DIRS=1
-source_if_exists "${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/env"
+source_if_exists "${XDG_DATA_HOME}/ghcup/env"
 # if command_exists ghc; then
 #   GHC_VERSION="$(ghc --numeric-version)"
-#   GHCUP_GHC_PATH="${GHCUP_INSTALL_BASE_PREFIX}/.ghcup/ghc/${GHC_VERSION}"
+#   GHCUP_GHC_PATH="${XDG_DATA_HOME}/ghcup/ghc/${GHC_VERSION}"
 #   prepend_to_manpath "${GHCUP_GHC_PATH}/share/man"
 # fi
 ## HASKELL PACKAGE MANAGERS ====================================================
@@ -389,18 +389,18 @@ prepend_to_path "${CABAL_DIR}/bin"
 # fi
 ### STACK ======================================================================
 export STACK_XDG=1
-export STACK_CONFIG_YAML="${XDG_CONFIG_HOME}/stack/config.yaml"
+# export STACK_CONFIG_YAML="${XDG_CONFIG_HOME}/stack/config.yaml"
 if command_exists stack; then
   if [ ! -d "${XDG_DATA_HOME}/stack/hooks" ]; then
     CUSTOM_STACK_HOOKS="${CUSTOM_CONFIG_DIR}/stack/hooks"
     mkdir -p "${XDG_DATA_HOME}/stack"
     ln -s "${CUSTOM_STACK_HOOKS}" "${XDG_DATA_HOME}/stack/hooks"
   fi
-  if [ ! -f "${STACK_CONFIG_YAML}" ]; then
-    CUSTOM_STACK_CONFIG_YAML="${CUSTOM_CONFIG_DIR}/stack/config.yaml"
-    mkdir -p "${XDG_CONFIG_HOME}/stack"
-    ln -s "${CUSTOM_STACK_CONFIG_YAML}" "${STACK_CONFIG_YAML}"
-  fi
+#  if [ ! -f "${STACK_CONFIG_YAML}" ]; then
+#    CUSTOM_STACK_CONFIG_YAML="${CUSTOM_CONFIG_DIR}/stack/config.yaml"
+#    mkdir -p "${XDG_CONFIG_HOME}/stack"
+#    ln -s "${CUSTOM_STACK_CONFIG_YAML}" "${STACK_CONFIG_YAML}"
+#  fi
 fi
 # END HASKELL DEVEL ============================================================
 
@@ -1045,7 +1045,7 @@ export TRAVIS_CONFIG_PATH="${XDG_CONFIG_HOME}/travis"
 # END RUBY DEVEL ===============================================================
 
 # RUST DEVEL ===================================================================
-## RUST VERSION MANAGERS =======================================================
+## RUST TOOLS =======================================================
 ### RUSTUP =====================================================================
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 if command_exists rustup; then
