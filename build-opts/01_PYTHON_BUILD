@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 # disabling test modules will fail the build when optimizations are enabled
+# --disable-gil is still experimental
 export PYTHON_CONFIGURE_OPTS="
   --enable-shared
-  --disable-gil
+
   --enable-experimental-jit=no
   --enable-optimizations
   --disable-bolt
