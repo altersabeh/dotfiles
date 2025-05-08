@@ -1350,8 +1350,8 @@ fi
 
 # ZOXIDE =======================================================================
 export _ZO_ECHO=1
-eval_if_exists zoxide "init bash"
-alias_if_exists "z" "cd"
+eval_if_exists zoxide "init bash --cmd cd"
+# alias_if_exists "z" "cd"
 # END UTILITIES ================================================================
 
 # ENVIRONMENT VARIABLES ========================================================
