@@ -4,6 +4,7 @@ if [ -n "${DOTFILES_SH_ALREADY_SOURCED}" ]; then
   eval_if_exists oh-my-posh "init bash --config ${CUSTOM_POSHTHEME}"
   eval_if_exists direnv "hook bash"
   eval_if_exists mise "activate bash"
+  eval_if_exists goenv "init - --no-rehash bash"
   eval_if_exists nodenv "init - --no-rehash bash"
   eval_if_exists phpenv "init - --no-rehash bash"
   eval_if_exists plenv "init - bash"
@@ -13,7 +14,7 @@ if [ -n "${DOTFILES_SH_ALREADY_SOURCED}" ]; then
   eval_if_exists renv "init - --no-rehash bash"
   eval_if_exists zoxide "init bash --cmd cd"
 
-  alias_if_exists "dust" "du"
+  # alias_if_exists "dust" "du"
   alias_if_exists "R" "r"
   alias_if_exists "reply --cfg ${XDG_CONFIG_HOME}/reply/replyrc" "reply"
   alias_if_exists "Rscript" "rscript"
@@ -39,3 +40,5 @@ if [ -n "${DOTFILES_SH_ALREADY_SOURCED}" ]; then
   del_if_exists "${HOME}/.julia"
   del_if_exists "${HOME}/.vscode-R"
 fi
+
+export DOTFILES_SH_ALREADY_SOURCED=1
