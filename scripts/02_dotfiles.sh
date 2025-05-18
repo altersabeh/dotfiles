@@ -252,7 +252,7 @@ append_to_path "${PUB_CACHE}/bin"
 ## DART TOOLS ==================================================================
 ### DART =======================================================================
 export ANALYZER_STATE_LOCATION_OVERRIDE="${XDG_CACHE_HOME}/dart-server"
-del_if_exists "${HOME}/.dart-tool"
+# del_if_exists "${HOME}/.dart-tool"
 # END DART DEVEL ===============================================================
 
 # DOTNET DEVEL =================================================================
@@ -401,6 +401,13 @@ if command_exists stack; then
 #    mkdir -p "${XDG_CONFIG_HOME}/stack"
 #    ln -s "${CUSTOM_STACK_CONFIG_YAML}" "${STACK_CONFIG_YAML}"
 #  fi
+fi
+### GHC ========================================================================
+export GHC_PACKAGE_PATH="${XDG_DATA_HOME}/ghc:"
+if command_exists ghc; then
+  if [ ! -d "${GHC_PACKAGE_PATH}" ]; then
+    mkdir -p "${GHC_PACKAGE_PATH}"
+  fi
 fi
 # END HASKELL DEVEL ============================================================
 
@@ -1254,7 +1261,7 @@ eval_if_exists direnv "hook bash"
 # DOCKER =======================================================================
 export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 # DUST =========================================================================
-alias_if_exists "dust" "du"
+# alias_if_exists "dust" "du"
 # FOUNDRY ======================================================================
 export FOUNDRY_DIR="${XDG_DATA_HOME}/foundry"
 prepend_to_path "${FOUNDRY_DIR}/bin"
@@ -1355,7 +1362,6 @@ eval_if_exists zoxide "init bash --cmd cd"
 # END UTILITIES ================================================================
 
 # ENVIRONMENT VARIABLES ========================================================
-export DOTFILES_SH_ALREADY_SOURCED=1
 export _JAVA_OPTIONS
 export ADA_INCLUDE_PATH
 export ADA_OBJECTS_PATH
