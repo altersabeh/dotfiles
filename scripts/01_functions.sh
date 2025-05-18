@@ -77,6 +77,26 @@ prepend_to_ada_include_path() {
   fi
 }
 
+# Function to append a path to GOPATH if it's not already included
+append_to_gopath() {
+  local path_to_add="$1"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$GOPATH:" != *":$path_to_add:"* ]]; then
+      GOPATH="${GOPATH:+${GOPATH}:}$path_to_add"
+    fi
+  fi
+}
+
+# Function to prepend a path to GOPATH if it's not already included
+prepend_to_gopath() {
+  local path_to_add="$1"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$GOPATH:" != *":$path_to_add:"* ]]; then
+      GOPATH="$path_to_add${GOPATH:+:${GOPATH}}"
+    fi
+  fi
+}
+
 # Function to append a path to PATH if it's not already included
 append_to_path() {
   local path_to_add="$1"
