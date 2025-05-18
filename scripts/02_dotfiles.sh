@@ -280,6 +280,8 @@ export NUGET_PLUGINS_CACHE_PATH="${XDG_CACHE_HOME}/nuget/plugins"
 ## DOTNET TOOLS ================================================================
 ### MONO =======================================================================
 # export MONO_REGISTRY_PATH="${XDG_CACHE_HOME}/mono/registry"
+export MONO_PATH="${XDG_DATA_HOME}/mono"
+export MONO_GAC_PATH="${XDG_DATA_HOME}/mono/gac"
 ### OMNISHARP ==================================================================
 export OMNISHARPHOME="${XDG_CONFIG_HOME}/omnisharp"
 # END DOTNET DEVEL =============================================================
@@ -350,14 +352,13 @@ fi
 export MAGEFILE_CACHE="${XDG_CACHE_HOME}/magefile"
 ## GO TOOLS ====================================================================
 ### GO =========================================================================
+export GOBIN="${XDG_DATA_HOME}/go/bin"
 export GOCACHE="${XDG_CACHE_HOME}/go/build"
 export GOENV="${XDG_DATA_HOME}/go/env"
 export GOMODCACHE="${XDG_CACHE_HOME}/go/mod"
 export GOPATH="${XDG_DATA_HOME}/go"
 export GOTELEMETRYDIR="${XDG_CACHE_HOME}/go/telemetry"
-if command_exists go; then
-  prepend_to_path "${GOPATH}/bin"
-fi
+prepend_to_path "${GOBIN}"
 ### GOLANGCI-LINT ==============================================================
 export GOLANGCI_LINT_CACHE="${XDG_CACHE_HOME}/golangci-lint"
 ### GOPLS ======================================================================
