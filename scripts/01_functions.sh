@@ -137,6 +137,26 @@ prepend_to_julia_depot_path() {
   fi
 }
 
+# Function to append a path to PYTHONPATH if it's not already included
+append_to_pythonpath() {
+  local path_to_add="$1"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$PYTHONPATH:" != *":$path_to_add:"* ]]; then
+      export PYTHONPATH="${PYTHONPATH:+${PYTHONPATH}:}$path_to_add"
+    fi
+  fi
+}
+
+# Function to prepend a path to PYTHONPATH if it's not already included
+prepend_to_pythonpath() {
+  local path_to_add="$1"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$PYTHONPATH:" != *":$path_to_add:"* ]]; then
+      export PYTHONPATH="$path_to_add${PYTHONPATH:+:${PYTHONPATH}}"
+    fi
+  fi
+}
+
 # Function to append a path to PATH if it's not already included
 append_to_path() {
   local path_to_add="$1"
