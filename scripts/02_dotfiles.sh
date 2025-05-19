@@ -410,6 +410,11 @@ if command_exists stack; then
 #  fi
 fi
 ### GHC ========================================================================
+if command_exists ghc; then
+  if [ ! -d "${XDG_DATA_HOME}/ghc" ]; then
+    mkdir -p "${XDG_DATA_HOME}/ghc"
+  fi
+fi
 prepend_to_ghc_package_path "${XDG_DATA_HOME}/ghc"
 # END HASKELL DEVEL ============================================================
 
