@@ -707,10 +707,8 @@ fi
 ## PERL TOOLS ==================================================================
 ### CPANM ======================================================================
 prepend_to_path "${XDG_DATA_HOME}/perl/bin"
-if command_exists cpanm; then
-  export PERL_CPANM_HOME="${XDG_CACHE_HOME}/cpanm"
-  export PERL_CPANM_OPT="--prompt --reinstall --notest -l ${XDG_DATA_HOME}/perl"
-fi
+export PERL_CPANM_HOME="${XDG_CACHE_HOME}/cpanm"
+export PERL_CPANM_OPT="--prompt --reinstall --notest -l ${XDG_DATA_HOME}/perl"
 ### PERL
 if command_exists perl; then
   export PERL_LOCAL_LIB_ROOT="${XDG_DATA_HOME}/perl${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
