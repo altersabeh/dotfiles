@@ -157,6 +157,26 @@ prepend_to_pythonpath() {
   fi
 }
 
+# Function to append a path to NODE_PATH if it's not already included
+append_to_node_path() {
+  local path_to_add="$1"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$NODE_PATH:" != *":$path_to_add:"* ]]; then
+      export NODE_PATH="${NODE_PATH:+${NODE_PATH}:}$path_to_add"
+    fi
+  fi
+}
+
+# Function to prepend a path to NODE_PATH if it's not already included
+prepend_to_node_path() {
+  local path_to_add="$1"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$NODE_PATH:" != *":$path_to_add:"* ]]; then
+      export NODE_PATH="$path_to_add${NODE_PATH:+:${NODE_PATH}}"
+    fi
+  fi
+}
+
 # Function to append a path to PATH if it's not already included
 append_to_path() {
   local path_to_add="$1"
