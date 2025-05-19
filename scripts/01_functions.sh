@@ -117,6 +117,26 @@ prepend_to_ghc_package_path() {
   fi
 }
 
+# Function to append a path to JULIA_DEPOT_PATH if it's not already included
+append_to_julia_depot_path() {
+  local path_to_add="$1"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$JULIA_DEPOT_PATH:" != *":$path_to_add:"* ]]; then
+      export JULIA_DEPOT_PATH="${JULIA_DEPOT_PATH:+${JULIA_DEPOT_PATH}:}$path_to_add"
+    fi
+  fi
+}
+
+# Function to prepend a path to JULIA_DEPOT_PATH if it's not already included
+prepend_to_julia_depot_path() {
+  local path_to_add="$1"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$JULIA_DEPOT_PATH:" != *":$path_to_add:"* ]]; then
+      export JULIA_DEPOT_PATH="$path_to_add${JULIA_DEPOT_PATH:+:${JULIA_DEPOT_PATH}}"
+    fi
+  fi
+}
+
 # Function to append a path to PATH if it's not already included
 append_to_path() {
   local path_to_add="$1"
