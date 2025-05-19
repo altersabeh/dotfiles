@@ -152,7 +152,7 @@ prepend_to_ld_library_path() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$LD_LIBRARY_PATH:" != *":$path_to_add:"* ]]; then
-      export D_LIBRARY_PATH="$path_to_add${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+      export LD_LIBRARY_PATH="$path_to_add${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
     fi
   fi
 }
