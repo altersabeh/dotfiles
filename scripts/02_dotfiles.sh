@@ -415,7 +415,8 @@ if command_exists ghc; then
     mkdir -p "${XDG_DATA_HOME}/ghc"
   fi
 fi
-prepend_to_ghc_package_path "${XDG_DATA_HOME}/ghc"
+prepend_to_ghc_package_path "${XDG_DATA_HOME}/ghc:"
+del_if_exists "${HOME}/.ghc"
 # END HASKELL DEVEL ============================================================
 
 # JS AND TS DEVEL ==============================================================
