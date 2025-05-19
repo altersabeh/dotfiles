@@ -32,6 +32,7 @@ if [ -n "${DOTFILES_SH_ALREADY_SOURCED}" ]; then
   # do not delete when using dart in vscode
   # del_if_exists "${HOME}/.dart-tool"
   del_if_exists "${HOME}/.dotnet"
+  del_if_exists "${HOME}/.ghc"
   del_if_exists "${HOME}/.g8"
   del_if_exists "${HOME}/.metals"
   del_if_exists "${HOME}/.ServiceHub"
