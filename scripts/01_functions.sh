@@ -9,7 +9,7 @@ get_conda_envs() {
 append_to_classpath() {
   local path_to_add="$1"
   if [[ ":$CLASSPATH:" != *":$path_to_add:"* ]]; then
-    CLASSPATH="${CLASSPATH:+${CLASSPATH}:}$path_to_add"
+    export CLASSPATH="${CLASSPATH:+${CLASSPATH}:}$path_to_add"
   fi
 }
 
@@ -17,7 +17,7 @@ append_to_classpath() {
 prepend_to_classpath() {
   local path_to_add="$1"
   if [[ ":$CLASSPATH:" != *":$path_to_add:"* ]]; then
-    CLASSPATH="$path_to_add${CLASSPATH:+:${CLASSPATH}}"
+    export CLASSPATH="$path_to_add${CLASSPATH:+:${CLASSPATH}}"
   fi
 }
 
@@ -25,7 +25,7 @@ prepend_to_classpath() {
 append_to_manpath() {
   local path_to_add="$1"
   if [[ ":$MANPATH:" != *":$path_to_add:"* ]]; then
-    MANPATH="${MANPATH:+${MANPATH}:}$path_to_add"
+    export MANPATH="${MANPATH:+${MANPATH}:}$path_to_add"
   fi
 }
 
@@ -33,7 +33,7 @@ append_to_manpath() {
 prepend_to_manpath() {
   local path_to_add="$1"
   if [[ ":$MANPATH:" != *":$path_to_add:"* ]]; then
-    MANPATH="$path_to_add${MANPATH:+:${MANPATH}}"
+    export MANPATH="$path_to_add${MANPATH:+:${MANPATH}}"
   fi
 }
 
@@ -42,7 +42,7 @@ append_to_ada_objects_path() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$ADA_OBJECTS_PATH:" != *":$path_to_add:"* ]]; then
-      ADA_OBJECTS_PATH="${ADA_OBJECTS_PATH:+${ADA_OBJECTS_PATH}:}$path_to_add"
+      export ADA_OBJECTS_PATH="${ADA_OBJECTS_PATH:+${ADA_OBJECTS_PATH}:}$path_to_add"
     fi
   fi
 }
@@ -52,7 +52,7 @@ prepend_to_ada_objects_path() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$ADA_OBJECTS_PATH:" != *":$path_to_add:"* ]]; then
-      ADA_OBJECTS_PATH="$path_to_add${ADA_OBJECTS_PATH:+:${ADA_OBJECTS_PATH}}"
+      export ADA_OBJECTS_PATH="$path_to_add${ADA_OBJECTS_PATH:+:${ADA_OBJECTS_PATH}}"
     fi
   fi
 }
@@ -62,7 +62,7 @@ append_to_ada_include_path() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$ADA_INCLUDE_PATH:" != *":$path_to_add:"* ]]; then
-      ADA_INCLUDE_PATH="${ADA_INCLUDE_PATH:+${ADA_INCLUDE_PATH}:}$path_to_add"
+      export ADA_INCLUDE_PATH="${ADA_INCLUDE_PATH:+${ADA_INCLUDE_PATH}:}$path_to_add"
     fi
   fi
 }
@@ -72,7 +72,7 @@ prepend_to_ada_include_path() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$ADA_INCLUDE_PATH:" != *":$path_to_add:"* ]]; then
-      ADA_INCLUDE_PATH="$path_to_add${ADA_INCLUDE_PATH:+:${ADA_INCLUDE_PATH}}"
+      export ADA_INCLUDE_PATH="$path_to_add${ADA_INCLUDE_PATH:+:${ADA_INCLUDE_PATH}}"
     fi
   fi
 }
@@ -82,7 +82,7 @@ append_to_gopath() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$GOPATH:" != *":$path_to_add:"* ]]; then
-      GOPATH="${GOPATH:+${GOPATH}:}$path_to_add"
+      export GOPATH="${GOPATH:+${GOPATH}:}$path_to_add"
     fi
   fi
 }
@@ -92,7 +92,27 @@ prepend_to_gopath() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$GOPATH:" != *":$path_to_add:"* ]]; then
-      GOPATH="$path_to_add${GOPATH:+:${GOPATH}}"
+      export GOPATH="$path_to_add${GOPATH:+:${GOPATH}}"
+    fi
+  fi
+}
+
+# Function to append a path to GHC_PACKAGE_PATH if it's not already included
+append_to_ghc_package_path() {
+  local path_to_add="$1"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$GHC_PACKAGE_PATH:" != *":$path_to_add:"* ]]; then
+      export GHC_PACKAGE_PATH="${GHC_PACKAGE_PATH:+${GHC_PACKAGE_PATH}:}$path_to_add"
+    fi
+  fi
+}
+
+# Function to prepend a path to GHC_PACKAGE_PATH if it's not already included
+prepend_to_ghc_package_path() {
+  local path_to_add="$1"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$GHC_PACKAGE_PATH:" != *":$path_to_add:"* ]]; then
+      export GHC_PACKAGE_PATH="$path_to_add${GHC_PACKAGE_PATH:+:${GHC_PACKAGE_PATH}}"
     fi
   fi
 }
@@ -102,7 +122,7 @@ append_to_path() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$PATH:" != *":$path_to_add:"* ]]; then
-      PATH="${PATH:+${PATH}:}$path_to_add"
+      export PATH="${PATH:+${PATH}:}$path_to_add"
     fi
   fi
 }
@@ -112,7 +132,7 @@ prepend_to_path() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$PATH:" != *":$path_to_add:"* ]]; then
-      PATH="$path_to_add${PATH:+:${PATH}}"
+      export PATH="$path_to_add${PATH:+:${PATH}}"
     fi
   fi
 }
@@ -122,7 +142,7 @@ append_to_ld_library_path() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$LD_LIBRARY_PATH:" != *":$path_to_add:"* ]]; then
-      LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+${LD_LIBRARY_PATH}:}$path_to_add"
+      export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+${LD_LIBRARY_PATH}:}$path_to_add"
     fi
   fi
 }
@@ -132,7 +152,7 @@ prepend_to_ld_library_path() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$LD_LIBRARY_PATH:" != *":$path_to_add:"* ]]; then
-      LD_LIBRARY_PATH="$path_to_add${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+      export D_LIBRARY_PATH="$path_to_add${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
     fi
   fi
 }
@@ -142,7 +162,7 @@ append_to_library_path() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$LIBRARY_PATH:" != *":$path_to_add:"* ]]; then
-      LIBRARY_PATH="${LIBRARY_PATH:+${LIBRARY_PATH}:}$path_to_add"
+      export LIBRARY_PATH="${LIBRARY_PATH:+${LIBRARY_PATH}:}$path_to_add"
     fi
   fi
 }
@@ -152,7 +172,7 @@ prepend_to_library_path() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$LIBRARY_PATH:" != *":$path_to_add:"* ]]; then
-      LIBRARY_PATH="$path_to_add${LIBRARY_PATH:+:${LIBRARY_PATH}}"
+      export LIBRARY_PATH="$path_to_add${LIBRARY_PATH:+:${LIBRARY_PATH}}"
     fi
   fi
 }
@@ -162,7 +182,7 @@ append_to_cpath() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$CPATH:" != *":$path_to_add:"* ]]; then
-      CPATH="${CPATH:+${CPATH}:}$path_to_add"
+      export CPATH="${CPATH:+${CPATH}:}$path_to_add"
     fi
   fi
 }
@@ -172,7 +192,7 @@ prepend_to_cpath() {
   local path_to_add="$1"
   if [ -d "$path_to_add" ]; then
     if [[ ":$CPATH:" != *":$path_to_add:"* ]]; then
-      CPATH="$path_to_add${CPATH:+:${CPATH}}"
+      export CPATH="$path_to_add${CPATH:+:${CPATH}}"
     fi
   fi
 }
@@ -181,7 +201,7 @@ prepend_to_cpath() {
 add_to_java_options() {
   local option_to_add="$1"
   if [[ "$_JAVA_OPTIONS" != *"$option_to_add"* ]]; then
-    _JAVA_OPTIONS="${_JAVA_OPTIONS:+${_JAVA_OPTIONS} }$option_to_add"
+    export _JAVA_OPTIONS="${_JAVA_OPTIONS:+${_JAVA_OPTIONS} }$option_to_add"
   fi
 }
 
