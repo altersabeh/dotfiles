@@ -149,6 +149,7 @@ fi
 # ADA DEVEL ====================================================================
 ## ADA PACKAGE MANAGERS ========================================================
 ### ALIRE ======================================================================
+export ALIRE_SETTINGS_DIR="${XDG_CONFIG_DIR}/alire"
 prepend_to_path "${XDG_DATA_HOME}/alire/bin"
 ## ADA TOOLS ===================================================================
 ### GNAT =======================================================================
@@ -710,12 +711,10 @@ prepend_to_path "${XDG_DATA_HOME}/perl/bin"
 export PERL_CPANM_HOME="${XDG_CACHE_HOME}/cpanm"
 export PERL_CPANM_OPT="--prompt --reinstall --notest -l ${XDG_DATA_HOME}/perl"
 ### PERL
-if command_exists perl; then
-  export PERL_LOCAL_LIB_ROOT="${XDG_DATA_HOME}/perl${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
-  export PERL_MB_OPT="--install_base ${XDG_DATA_HOME}/perl"
-  export PERL_MM_OPT="INSTALL_BASE=${XDG_DATA_HOME}/perl"
-  export PERL5LIB="${XDG_DATA_HOME}/perl/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
-fi
+export PERL_LOCAL_LIB_ROOT="${XDG_DATA_HOME}/perl${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+export PERL_MB_OPT="--install_base ${XDG_DATA_HOME}/perl"
+export PERL_MM_OPT="INSTALL_BASE=${XDG_DATA_HOME}/perl"
+export PERL5LIB="${XDG_DATA_HOME}/perl/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
 ### PERLCRITIC =================================================================
 export PERLCRITIC="${XDG_CONFIG_HOME}/perlcritic/perlcriticrc"
 if command_exists perlcritic; then
