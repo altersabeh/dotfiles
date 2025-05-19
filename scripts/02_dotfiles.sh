@@ -357,6 +357,12 @@ export GOCACHE="${XDG_CACHE_HOME}/go/build"
 export GOENV="${XDG_DATA_HOME}/go/env"
 export GOMODCACHE="${XDG_CACHE_HOME}/go/mod"
 export GOTELEMETRYDIR="${XDG_CACHE_HOME}/go/telemetry"
+if command_exists go; then
+  if [ ! -d "${XDG_DATA_HOME}/go" ]; then
+    mkdir -p "${XDG_DATA_HOME}/go"
+    mkdir -p "${XDG_DATA_HOME}/go/bin"
+  fi
+fi
 prepend_to_gopath "${XDG_DATA_HOME}/go"
 prepend_to_path "${GOBIN}"
 ### GOLANGCI-LINT ==============================================================
@@ -404,12 +410,7 @@ if command_exists stack; then
 #  fi
 fi
 ### GHC ========================================================================
-export GHC_PACKAGE_PATH="${XDG_DATA_HOME}/ghc:"
-if command_exists ghc; then
-  if [ ! -d "${GHC_PACKAGE_PATH}" ]; then
-    mkdir -p "${GHC_PACKAGE_PATH}"
-  fi
-fi
+prepend_to_ghc_package_path "${XDG_DATA_HOME}/ghc"
 # END HASKELL DEVEL ============================================================
 
 # JS AND TS DEVEL ==============================================================
