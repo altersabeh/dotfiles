@@ -500,8 +500,13 @@ export JULIAUP_DEPOT_PATH="${XDG_DATA_HOME}/julia"
 prepend_to_path "${XDG_DATA_HOME}/juliaup/bin"
 ## JULIA TOOLS =================================================================
 ### JULIA ======================================================================
-export JULIA_DEPOT_PATH="${XDG_DATA_HOME}/julia:${JULIA_DEPOT_PATH}"
 export JULIA_HISTORY="${XDG_STATE_HOME}/julia/history"
+if command_exists julia; then
+  if [ ! -d "${XDG_DATA_HOME}/julia" ]; then
+    mkdir -p "${XDG_DATA_HOME}/julia"
+  fi
+fi
+prepend_to_julia_depot_path "${XDG_DATA_HOME}/julia:"
 del_if_exists "${HOME}/.julia"
 # END JULIA DEVEL ==============================================================
 
