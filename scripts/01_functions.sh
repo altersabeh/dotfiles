@@ -8,32 +8,40 @@ get_conda_envs() {
 # Function to append a path to CLASSPATH if it's not already included
 append_to_classpath() {
   local path_to_add="$1"
-  if [[ ":$CLASSPATH:" != *":$path_to_add:"* ]]; then
-    export CLASSPATH="${CLASSPATH:+${CLASSPATH}:}$path_to_add"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$CLASSPATH:" != *":$path_to_add:"* ]]; then
+      export CLASSPATH="${CLASSPATH:+${CLASSPATH}:}$path_to_add"
+    fi
   fi
 }
 
 # Function to prepend a path to CLASSPATH if it's not already included
 prepend_to_classpath() {
   local path_to_add="$1"
-  if [[ ":$CLASSPATH:" != *":$path_to_add:"* ]]; then
-    export CLASSPATH="$path_to_add${CLASSPATH:+:${CLASSPATH}}"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$CLASSPATH:" != *":$path_to_add:"* ]]; then
+      export CLASSPATH="$path_to_add${CLASSPATH:+:${CLASSPATH}}"
+    fi
   fi
 }
 
 # Function to appemd a path to MANPATH if it's not already included
 append_to_manpath() {
   local path_to_add="$1"
-  if [[ ":$MANPATH:" != *":$path_to_add:"* ]]; then
-    export MANPATH="${MANPATH:+${MANPATH}:}$path_to_add"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$MANPATH:" != *":$path_to_add:"* ]]; then
+      export MANPATH="${MANPATH:+${MANPATH}:}$path_to_add"
+    fi
   fi
 }
 
 # Function to prepend a path to MANPATH if it's not already included
 prepend_to_manpath() {
   local path_to_add="$1"
-  if [[ ":$MANPATH:" != *":$path_to_add:"* ]]; then
-    export MANPATH="$path_to_add${MANPATH:+:${MANPATH}}"
+  if [ -d "$path_to_add" ]; then
+    if [[ ":$MANPATH:" != *":$path_to_add:"* ]]; then
+      export MANPATH="$path_to_add${MANPATH:+:${MANPATH}}"
+    fi
   fi
 }
 
