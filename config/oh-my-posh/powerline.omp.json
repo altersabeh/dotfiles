@@ -430,7 +430,8 @@
           "background_templates": [
             "{{ if eq .OS \"linux\" }}#D80150{{ end }}",
             "{{ if eq .OS \"darwin\" }}#FF605C{{ end }}",
-            "{{ if eq .OS \"windows\" }}#11B7EB{{ end }}"
+            "{{ if eq .OS \"windows\" }}#11B7EB{{ end }}",
+            "{{ if .WSL }}#00BFFF{{ end }}"
           ],
           "foreground": "#433a3a",
           "properties": {
@@ -441,7 +442,7 @@
           "style": "diamond",
           "leading_diamond": "",
           "trailing_diamond": "",
-          "template": "{{ if .WSL }}WSL at {{ end }}{{.Icon}}",
+          "template": "{{ if .WSL }} WSL at {{ end }}{{.Icon}} ",
           "type": "os"
         },
         {
