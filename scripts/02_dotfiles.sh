@@ -1355,6 +1355,8 @@ export XSERVERRC="${XDG_CONFIG_HOME}/X11/xserverrc"
 if [ "${SHELL}" = "/bin/bash" ]; then
   ulimit -n 104857
 fi
+# BLE-SH =======================================================================
+source "${XDG_DATA_HOME}/blesh/ble.sh"
 # OH MY POSH ===================================================================
 export CUSTOM_POSHTHEME="${CUSTOM_CONFIG_DIR}/oh-my-posh/powerline.omp.json"
 eval_if_exists oh-my-posh "init bash --config ${CUSTOM_POSHTHEME}"

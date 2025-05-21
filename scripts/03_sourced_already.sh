@@ -24,6 +24,7 @@ if [ -n "${DOTFILES_SH_ALREADY_SOURCED}" ]; then
   alias_if_exists "lsd -A" "ls"
   alias_if_exists "z" "cd"
 
+  source_if_exists "${XDG_DATA_HOME}/blesh/ble.sh"
   source_if_exists "${EVM_HOME}/scripts/evm"
   source_if_exists "${SDKMAN_DIR}/bin/sdkman-init.sh"
   source_if_exists "${OPAMROOT}/opam-init/init.sh"
