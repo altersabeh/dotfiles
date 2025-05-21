@@ -1148,9 +1148,8 @@ prepend_to_path "${CLEAN_HOME}/bin"
 # FACTOR =======================================================================
 prepend_to_path "${XDG_DATA_HOME}/factor"
 # MOJO =========================================================================
-# export MODULAR_HOME="${XDG_DATA_HOME}/modular"
-# export MAGIC_VERSION="${MODULAR_HOME}"
-# prepend_to_path "${MODULAR_HOME}/bin"
+export MODULAR_HOME="${XDG_DATA_HOME}/modular"
+prepend_to_path "${MODULAR_HOME}/bin"
 # ODIN =========================================================================
 export ODIN_ROOT="${XDG_DATA_HOME}/odin"
 prepend_to_path "${ODIN_ROOT}"
