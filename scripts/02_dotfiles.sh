@@ -1367,6 +1367,7 @@ fi
 # END CUSTOMIZATION ============================================================
 
 # ZOXIDE =======================================================================
+export _ZO_DOCTOR=0
 export _ZO_ECHO=1
 eval_if_exists zoxide "init bash --cmd cd"
 # alias_if_exists "z" "cd"
