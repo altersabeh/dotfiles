@@ -89,7 +89,7 @@ prepend_to_path "${AQUA_ROOT_DIR}/bin"
 ### ASDF =======================================================================
 export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
 export ASDF_DATA_DIR="${XDG_DATA_HOME}/asdf"
-source_if_exists "${ASDF_DATA_DIR}/asdf.sh"
+source_if_exists "${ASDF_DATA_HOME}/asdf.sh"
 if command_exists asdf; then
   if [ ! -f "${ASDF_CONFIG_FILE}" ]; then
     CUSTOM_ASDF_CONFIG_FILE="${CUSTOM_CONFIG_DIR}/asdf/asdfrc"
@@ -1356,7 +1356,7 @@ if [ "${SHELL}" = "/bin/bash" ]; then
   ulimit -n 104857
 fi
 # BLE-SH =======================================================================
-source "${XDG_DATA_HOME}/blesh/ble.sh"
+source "${XDG_DATA_HOME}/blesh/ble.sh" # needs to be sourced directly
 # OH MY POSH ===================================================================
 export CUSTOM_POSHTHEME="${CUSTOM_CONFIG_DIR}/oh-my-posh/powerline.omp.json"
 eval_if_exists oh-my-posh "init bash --config ${CUSTOM_POSHTHEME}"
