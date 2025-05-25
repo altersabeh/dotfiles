@@ -56,7 +56,10 @@ eval_if_exists shenv "init -"
 # eval_if_exists basalt "global init bash"
 ### SHELL ======================================================================
 item="$(ps -cp "$$" -o command="")"
+export HISTCONTROL="ignoreboth"
 export HISTFILE="${XDG_STATE_HOME}/${item}/history"
+export HISTFILESIZE=-1
+export HISTSIZE=-1
 mkdir -p "${XDG_STATE_HOME}/${item}"
 ### BASH =======================================================================
 if [ "${SHELL}" = "/bin/bash" ]; then
