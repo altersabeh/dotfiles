@@ -564,6 +564,9 @@ del_if_exists "${HOME}/.java"
 #   fi
 # fi
 ## JVM BUILD TOOLS =============================================================
+### AMPER ======================================================================
+export AMPER_BOOTSTRAP_CACHE_DIR="${XDG_CACHE_HOME}/amper/bootstrap"
+export AMPER_CACHE_ROOT="${XDG_CACHE_HOME}/amper"
 ### ANT ========================================================================
 ### GRADLE =====================================================================
 export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"
