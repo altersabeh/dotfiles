@@ -1361,7 +1361,7 @@ fi
 # BLE-SH =======================================================================
 source "${XDG_DATA_HOME}/blesh/ble.sh" # needs to be sourced directly
 # OH MY POSH ===================================================================
-export CUSTOM_POSHTHEME="${CUSTOM_CONFIG_DIR}/oh-my-posh/powerline.omp.json"
+export CUSTOM_POSHTHEME="${CUSTOM_CONFIG_DIR}/oh-my-posh/clean-detailed.omp.json"
 eval_if_exists oh-my-posh "init bash --config ${CUSTOM_POSHTHEME}"
 # USE WINDOWS BROWSER IN WSL ===================================================
 if grep -q WSL /proc/version; then
