@@ -29,7 +29,9 @@ sscilab() {
 erlxenv() {
     if [ "$1" = "install" ]; then
         shift
-        evm install "$@" -y --with-docs # $ERLANG_CONFIGURE_OPTS
+        evm install "$1" -y # --with-docs # $ERLANG_CONFIGURE_OPTS
+        version="${1%.*}"
+        wget -qO- http://erlang.org/download/otp_doc_man_$version.tar.gz | tar -xzf - -C $EVM_HOME/versions/$1/lib/erlang
     else
         evm "$@"
     fi
