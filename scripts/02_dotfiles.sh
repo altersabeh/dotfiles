@@ -349,7 +349,7 @@ prepend_to_path "${GOENV_ROOT}/bin"
 eval_if_exists goenv "init - --no-rehash bash"
 if command_exists goenv; then
   GOENV_GO_PATH="$GOENV_ROOT/versions/$(goenv global)"
-  prepend_to_path "${GOENV_GO_PATH}/bin"
+  # prepend_to_path "${GOENV_GO_PATH}/bin"
 fi
 ## GO PACKAGE MANAGERS =========================================================
 ### MAGE =======================================================================
@@ -443,7 +443,7 @@ if command_exists nodenv; then
   #   ln -s "${CUSTOM_NODENV_DEFAULT_PACKAGES}" "${ORIG_NODENV_DEFAULT_PACKAGES}"
   # fi
   NODENV_NODE_PATH="$NODENV_ROOT/versions/$(nodenv global)"
-  prepend_to_path "${NODENV_NODE_PATH}/bin"
+  # prepend_to_path "${NODENV_NODE_PATH}/bin"
   prepend_to_manpath "${NODENV_NODE_PATH}/share/man"
   prepend_to_manpath "${NODENV_NODE_PATH}/lib/node_modules/npm/man"
 fi
@@ -646,7 +646,7 @@ if command_exists luaenv; then
   #   ln -s "${CUSTOM_LUAENV_DEFAULT_ROCKS}" "${ORIG_LUAENV_DEFAULT_ROCKS}"
   # fi
   LUAENV_LUA_PATH="$LUAENV_ROOT/versions/$(luaenv global)"
-  prepend_to_path "${LUAENV_LUA_PATH}/bin"
+  # prepend_to_path "${LUAENV_LUA_PATH}/bin"
   prepend_to_manpath "${LUAENV_LUA_PATH}/share/man"
 fi
 ## LUA PACKAGE MANAGERS ========================================================
@@ -704,7 +704,7 @@ prepend_to_path "${PLENV_ROOT}/bin"
 eval_if_exists plenv "init - bash"
 if command_exists plenv; then
   PLENV_PERL_PATH="${PLENV_ROOT}/versions/$(plenv global)"
-  prepend_to_path "${PLENV_PERL_PATH}/bin"
+  # prepend_to_path "${PLENV_PERL_PATH}/bin"
   prepend_to_manpath "${PLENV_PERL_PATH}/man"
 fi
 ## PERL TOOLS ==================================================================
@@ -751,7 +751,7 @@ prepend_to_path "${PHPENV_ROOT}/bin"
 eval_if_exists phpenv "init - --no-rehash bash"
 if command_exists phpenv; then
   PHPENV_PHP_PATH="${PHPENV_ROOT}/versions/$(phpenv global)"
-  prepend_to_path "${PHPENV_PHP_PATH}/bin"
+  # prepend_to_path "${PHPENV_PHP_PATH}/bin"
   prepend_to_manpath "${PHPENV_PHP_PATH}/share/man"
 fi
 ## PHP PACKAGE MANAGERS ========================================================
@@ -815,7 +815,7 @@ if command_exists pyenv; then
   #   ln -s "${CUSTOM_PYENV_DEFAULT_PACKAGES}" "${ORIG_PYENV_DEFAULT_PACKAGES}"
   # fi
   PYENV_PYTHON_PATH="${PYENV_ROOT}/versions/$(pyenv global)"
-  prepend_to_path "${PYENV_PYTHON_PATH}/bin"
+  # prepend_to_path "${PYENV_PYTHON_PATH}/bin"
   prepend_to_manpath "${PYENV_PYTHON_PATH}/share/man"
 fi
 ### PYTHONBREW =================================================================
@@ -935,7 +935,7 @@ prepend_to_path "${RENV_ROOT}/bin"
 eval_if_exists renv "init - --no-rehash bash"
 if command_exists renv; then
   RENV_R_PATH="${RENV_ROOT}/versions/$(renv global)"
-  prepend_to_path "${RENV_R_PATH}/bin"
+  # prepend_to_path "${RENV_R_PATH}/bin"
   prepend_to_manpath "${RENV_R_PATH}/share/man"
 fi
 ## R TOOLS =====================================================================
@@ -1001,7 +1001,7 @@ if command_exists rbenv; then
   #   ln -s "${CUSTOM_RBENV_DEFAULT_GEMS}" "${ORIG_RBENV_DEFAULT_GEMS}"
   # fi
   RBENV_RUBY_PATH="${RBENV_ROOT}/versions/$(rbenv global)"
-  prepend_to_path "${RBENV_RUBY_PATH}/bin"
+  # prepend_to_path "${RBENV_RUBY_PATH}/bin"
   prepend_to_manpath "${RBENV_RUBY_PATH}/share/man"
 fi
 ### RVM ========================================================================
