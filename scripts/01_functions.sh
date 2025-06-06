@@ -273,6 +273,15 @@ add_to_java_options() {
   fi
 }
 
+# Function to add an options to SBT_OPTS if it's not already included
+add_to_sbt_opts() {
+    local option_to_add="$1"
+  if [[ "$SBT_OPTS" != *"$option_to_add"* ]]; then
+    export SBT_OPTS="${SBT_OPTS:+${SBT_OPTS} }$option_to_add"
+  fi
+}
+
+
 # Function to check if command exist
 command_exists() {
   command -v "$1" >/dev/null 2>&1
