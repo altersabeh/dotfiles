@@ -297,7 +297,7 @@ export EVM_HOME="${XDG_DATA_HOME}/evm"
 source_if_exists "${EVM_HOME}/scripts/evm"
 if command_exists erl; then
   ERLANG_VERSION="$(erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), "releases", erlang:system_info(otp_release), "OTP_VERSION"])), io:fwrite(Version), halt().' -noshell)"
-  EVM_ERLANG_PATH="${EVM_HOME}/erlang_versions/otp_src_${ERLANG_VERSION}"
+  EVM_ERLANG_PATH="${EVM_HOME}/versions/${ERLANG_VERSION}"
   prepend_to_manpath "${EVM_ERLANG_PATH}/lib/erlang/man"
 fi
 ### KERL =======================================================================
