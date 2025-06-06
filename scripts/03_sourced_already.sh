@@ -42,6 +42,8 @@ if [ -n "${DOTFILES_SH_ALREADY_SOURCED}" ]; then
   del_if_exists "${HOME}/.java"
   del_if_exists "${HOME}/.julia"
   del_if_exists "${HOME}/.vscode-R"
+
+  remove_path_duplicates
 fi
 
 export DOTFILES_SH_ALREADY_SOURCED=1

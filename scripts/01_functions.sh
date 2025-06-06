@@ -338,3 +338,30 @@ determine_installed_gcc() {
   GCC_MAJOR_VERSION="$("${GCC_PATH}"/bin/gcc --version | awk '/gcc/ { print $3 }' | cut -d. -f1)"
   X86_64_LIB_PATH="${GCC_PATH}/lib/gcc/x86_64-linux-gnu/${GCC_MAJOR_VERSION}"
 }
+
+# Remove duplicate entry in PATH environment variable
+remove_path_duplicates() {
+    local new_path=""
+    local path_array
+
+    # Split PATH by colon into an array
+    IFS=':' read -ra path_array <<< "$PATH"
+
+    # Iterate through each path
+    for path in "${path_array[@]}"; do
+        # Skip empty paths
+        if [[ -n "$path" ]]; then
+            # Check if path is already in new_path
+            if [[ ":$new_path:" != *":$path:"* ]]; then
+                if [[ -z "$new_path" ]]; then
+                    new_path="$path"
+                else
+                    new_path="$new_path:$path"
+                fi
+            fi
+        fi
+    done
+
+    # Export the cleaned PATH
+    export PATH="$new_path"
+}
