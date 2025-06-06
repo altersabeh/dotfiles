@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# This is a modified version of the /etc/update-motd.sh script
+# This is a modified version of the /etc/profile.d/update-motd.sh script
 # Delete the original script and use this one instead
 # This script stops the creation of the ~/.motd_shown file
 # Requires root access
