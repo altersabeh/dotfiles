@@ -281,6 +281,13 @@ add_to_sbt_opts() {
   fi
 }
 
+# Function to add an options to MAVEN_OPTS if it's not already included
+add_to_maven_opts() {
+  local option_to_add="$1"
+  if [[ "$MAVEN_OPTS" != *"$option_to_add"* ]]; then
+    export MAVEN_OPTS="${MAVEN_OPTS:+${MAVEN_OPTS} }$option_to_add"
+  fi
+}
 
 # Function to check if command exist
 command_exists() {
