@@ -549,12 +549,9 @@ prepend_to_path "${BALLERINA_HOME}/bin"
 #   append_to_classpath "${GROOVY_HOME}/lib/*"
 # fi
 ### JAVA =======================================================================
-if command_exists java; then
-  add_to_java_options "-Djava.util.prefs.userRoot=${XDG_CONFIG_HOME}/java"
-  add_to_java_options "-Djavafx.cachedir=${XDG_CACHE_HOME}/openjfx"
-  # add_to_java_options "-proc:none"
-  prepend_to_classpath "."
-fi
+add_to_java_options "-Djava.util.prefs.userRoot=${XDG_CONFIG_HOME}/java"
+add_to_java_options "-Djavafx.cachedir=${XDG_CACHE_HOME}/openjfx"
+prepend_to_classpath "."
 del_if_exists "${HOME}/.java"
 ### KOTLIN =====================================================================
 # if [ -n "${KOTLIN_HOME}" ]; then
