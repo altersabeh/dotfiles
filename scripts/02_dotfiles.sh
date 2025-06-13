@@ -480,6 +480,7 @@ fi
 ### PNPM =======================================================================
 export PNPM_HOME="${XDG_DATA_HOME}/pnpm"
 prepend_to_path "${PNPM_HOME}"
+prepend_to_path "${PNPM_HOME}/bin"
 if command_exists pnpm; then
   if [ ! -f "${XDG_CONFIG_HOME}/pnpm/rc" ]; then
     CUSTOM_PNPM_RC="${CUSTOM_CONFIG_DIR}/pnpm/rc"
