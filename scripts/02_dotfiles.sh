@@ -1097,6 +1097,7 @@ eval_if_exists swiftenv "init -"
 ### SWIFTLY ====================================================================
 export SWIFTLY_HOME_DIR="${XDG_DATA_HOME}/swiftly"
 export SWIFTLY_BIN_DIR="${SWIFTLY_HOME_DIR}/bin"
+export SWIFTLY_TOOLCHAINS_DIR="${SWIFTLY_HOME_DIR}/toolchains"
 append_to_path "${SWIFTLY_BIN_DIR}"
 source_if_exists "${SWIFTLY_HOME_DIR}/env.sh"
 ## SWIFT PACKAGE MANAGERS ======================================================
