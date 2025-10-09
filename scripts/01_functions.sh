@@ -331,12 +331,14 @@ alias_if_exists() {
 determine_installed_gcc() {
   if command -v "${XDG_DATA_HOME}/gcc/bin/gcc" >/dev/null 2>&1; then
     GCC_PATH="${XDG_DATA_HOME}/gcc"
-  else
+  elif command -v gcc >/dev/null 2>&1; then
     GCC_PATH="$(dirname "$(dirname "$(command -v gcc)")")"
   fi
 
-  GCC_MAJOR_VERSION="$("${GCC_PATH}"/bin/gcc --version | awk '/gcc/ { print $3 }' | cut -d. -f1)"
-  X86_64_LIB_PATH="${GCC_PATH}/lib/gcc/x86_64-linux-gnu/${GCC_MAJOR_VERSION}"
+  if [[ -n "$GCC_PATH" ]]; then
+    GCC_MAJOR_VERSION="$("${GCC_PATH}"/bin/gcc --version | awk '/gcc/ { print $3 }' | cut -d. -f1)"
+    X86_64_LIB_PATH="${GCC_PATH}/lib/gcc/x86_64-linux-gnu/${GCC_MAJOR_VERSION}"
+  fi
 }
 
 # Remove duplicate entry in PATH environment variable
