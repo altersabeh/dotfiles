@@ -58,7 +58,7 @@ function genozip() {
     rm "${HOME}/.genozip_license.v15"
 }
 
-lein() {
+function lein() {
     ln -sf "${MAVEN_CUSTOM_REPO}" "${HOME}/.m2"
     command lein "$@"
     rm "${HOME}/.m2"
