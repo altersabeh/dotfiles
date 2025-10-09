@@ -1370,7 +1370,7 @@ if [ "${SHELL}" = "/bin/bash" ]; then
   ulimit -n 104857
 fi
 # BLE-SH =======================================================================
-source "${XDG_DATA_HOME}/blesh/ble.sh" # needs to be sourced directly
+[ -f "${XDG_DATA_HOME}/blesh/ble.sh" ] && source "${XDG_DATA_HOME}/blesh/ble.sh" # needs to be sourced directly
 # OH MY POSH ===================================================================
 export CUSTOM_POSHTHEME="${CUSTOM_CONFIG_DIR}/oh-my-posh/clean-detailed.omp.json"
 eval_if_exists oh-my-posh "init bash --config ${CUSTOM_POSHTHEME}"

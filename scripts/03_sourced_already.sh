@@ -1,6 +1,6 @@
 # always execute this commands even if the file is sourced already
 if [ -n "${DOTFILES_SH_ALREADY_SOURCED}" ]; then
-  source "${XDG_DATA_HOME}/blesh/ble.sh" # needs to be loaded first
+  [ -f "${XDG_DATA_HOME}/blesh/ble.sh" ] && source "${XDG_DATA_HOME}/blesh/ble.sh" # needs to be loaded first
 
   eval_if_exists conda "shell.bash hook"
   eval_if_exists oh-my-posh "init bash --config ${CUSTOM_POSHTHEME}"
