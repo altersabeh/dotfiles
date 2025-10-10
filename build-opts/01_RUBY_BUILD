@@ -30,5 +30,4 @@ export RUBY_CONFIGURE_OPTS="
   --with-valgrind
   --with-rdoc=ri
   --with-mantype=man
-  --with-openssl-dir=/usr
 "
