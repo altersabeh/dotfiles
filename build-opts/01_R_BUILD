@@ -4,9 +4,7 @@ export R_CONFIGURE_OPTS="
   --enable-R-profiling
   --enable-memory-profiling
   --enable-R-shlib
-  --enable-R-static-lib
   --enable-BLAS-shlib
-  --enable-prebuilt-html
   --enable-lto
   --enable-java
   --enable-byte-compiled-packages
@@ -31,7 +29,7 @@ export R_CONFIGURE_OPTS="
   --with-jpeglib
   --with-libtiff
   --with-system-tre
-  --with-valgrind-instrumentation=1
+  --with-valgrind-instrumentation=2
   --with-internal-tzcode
   --with-internal-towlower
   --with-internal-iswxxxxx
