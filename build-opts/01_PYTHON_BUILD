@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
 # disabling test modules will fail the build when optimizations are enabled
-# --disable-gil is still experimental
+# --disable-gil makes the library have a *t suffix
 export PYTHON_CONFIGURE_OPTS="
   --enable-shared
-
-  --enable-experimental-jit=no
   --enable-optimizations
   --disable-bolt
+  --enable-safety
+  --enable-experimental-jit=no
   --enable-loadable-sqlite-extensions
   --enable-ipv6
   --enable-big-digits=30
   --enable-test-modules
   --with-pkg-config=yes
   --with-static-libpython
-  --with-lto=no
+  --with-lto=yes
   --with-hash-algorithm=siphash13
   --with-system-expat
   --with-system-libmpdec
@@ -23,11 +23,13 @@ export PYTHON_CONFIGURE_OPTS="
   --with-doc-strings
   --with-mimalloc
   --with-pymalloc
-  --with-freelists
   --with-c-locale-coercion
   --with-valgrind
   --with-dtrace
-  --with-readline
+  --with-readline=readline
+  --with-computed-gotos
+  --with-tail-call-interp
+  --with-remote-debug 
   --with-ensurepip=upgrade
   --with-ssl-default-suites=python
   --with-builtin-hashlib-hashes=md5,sha1,sha2,sha3,blake2
