@@ -657,7 +657,7 @@ if command_exists luaenv; then
   #   ORIG_LUAENV_DEFAULT_ROCKS="${LUAENV_ROOT}/default-rocks"
   #   ln -s "${CUSTOM_LUAENV_DEFAULT_ROCKS}" "${ORIG_LUAENV_DEFAULT_ROCKS}"
   # fi
-  LUAENV_LUA_PATH="$LUAENV_ROOT/versions/$(luaenv global)"
+  export LUAENV_LUA_PATH="$LUAENV_ROOT/versions/$(luaenv global)"
   # prepend_to_path "${LUAENV_LUA_PATH}/bin"
   prepend_to_manpath "${LUAENV_LUA_PATH}/share/man"
 fi
