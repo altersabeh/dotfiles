@@ -508,8 +508,9 @@ fi
 # JULIA DEVEL ==================================================================
 ## JULIA VERSION MANAGERS ======================================================
 ### JULIAUP ====================================================================
+export JULIAUP_BIN_DIR="${XDG_DATA_HOME}/juliaup/bin"
 export JULIAUP_DEPOT_PATH="${XDG_DATA_HOME}/julia"
-prepend_to_path "${XDG_DATA_HOME}/juliaup/bin"
+prepend_to_path "${JULIAUP_BIN_DIR}"
 ## JULIA TOOLS =================================================================
 ### JULIA ======================================================================
 export JULIA_HISTORY="${XDG_STATE_HOME}/julia/history"
