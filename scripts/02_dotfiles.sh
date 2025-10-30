@@ -255,7 +255,7 @@ export PUB_CACHE="${XDG_DATA_HOME}/pub"
 append_to_path "${PUB_CACHE}/bin"
 ## DART TOOLS ==================================================================
 ### DART =======================================================================
-export ANALYZER_STATE_LOCATION_OVERRIDE="${XDG_CACHE_HOME}/dart-server"
+export ANALYZER_STATE_LOCATION_OVERRIDE="${XDG_CACHE_HOME}/dart/server"
 # del_if_exists "${HOME}/.dart-tool"
 # END DART DEVEL ===============================================================
 
@@ -1110,7 +1110,7 @@ export MINT_LINK_PATH="${XDG_DATA_HOME}/mint/bin"
 prepend_to_path "${MINT_LINK_PATH}"
 ## SWIFT TOOLS =================================================================
 ### SOURCEKIT LSP ==============================================================
-del_if_exists "${HOME}/.sourcekit-lsp"
+# del_if_exists "${HOME}/.sourcekit-lsp"
 ### SWIFTLINT ==================================================================
 export LINUX_SOURCEKIT_LIB_PATH="/usr/libexec/swift/lib/libsourcekitdInProc.so"
 # END SWIFT DEVEL ==============================================================
