@@ -18,6 +18,7 @@ export PHP_BUILD_CONFIGURE_OPTS="
   --with-valgrind
   --disable-zts
   --with-layout=PHP
+  --enable-sigchild
   --enable-libgcc
   --enable-short-tags
   --enable-ipv6
@@ -61,7 +62,6 @@ export PHP_BUILD_CONFIGURE_OPTS="
   --enable-gd-jis-conv
   --with-gettext
   --with-gmp
-  --with-mhash
   --with-iconv
   --enable-intl
   --with-ldap
@@ -69,27 +69,25 @@ export PHP_BUILD_CONFIGURE_OPTS="
   --enable-mbstring
   --enable-mbregex
   --with-mysqli
-  --with-odbcver=0
   --with-unixODBC
-  --enable-opcache=shared
   --enable-huge-code-pages
   --enable-opcache-jit
   --with-capstone
   --enable-pcntl
+  --enable-pdo
   --with-pdo-dblib
   --with-pdo-firebird
   --with-pdo-mysql
   --with-pdo-odbc=unixODBC
   --with-pdo-pgsql
   --with-pdo-sqlite
-  --enable-pdo
   --with-pgsql
   --enable-phar
   --enable-posix
   --with-libedit
   --with-readline
   --enable-session
-  --with-mm
+  --without-mm
   --enable-shmop
   --enable-simplexml
   --with-snmp
@@ -110,12 +108,12 @@ export PHP_BUILD_CONFIGURE_OPTS="
   --enable-zend-test
   --with-zip
   --enable-mysqlnd
+  --with-mysqlnd-ssl
   --enable-mysqlnd-compression-support
   --with-pear
   --enable-fiber-asm
-  --enable-shared=yes
-  --enable-static=yes
-  --enable-fast-install
+  --enable-gcc-global-regs
+  --enable-zend-signals
 "
 
 export PHP_BUILD_CONFIGURE_OPTS_SHARED="
@@ -232,4 +230,4 @@ export PHP_BUILD_CONFIGURE_OPTS_SHARED="
 
 export PHP_CONFIGURE_OPTS=${PHP_BUILD_CONFIGURE_OPTS}
 
-export PHP_BUILD_INSTALL_EXTENSION="imagick=3.8.0"
+# export PHP_BUILD_INSTALL_EXTENSION="imagick=3.8.0"
