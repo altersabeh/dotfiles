@@ -264,7 +264,10 @@ export ANALYZER_STATE_LOCATION_OVERRIDE="${XDG_CACHE_HOME}/dart/server"
 ### DOTNET =====================================================================
 export DOTNET_BUNDLE_EXTRACT_BASE_DIR="${XDG_CACHE_HOME}/dotnet/bundle"
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
+export DOTNET_INSTALL_DIR="${XDG_DATA_HOME}/dotnet"
 export DOTNET_ROLL_FORWARD="major"
+export DOTNET_ROOT="${DOTNET_INSTALL_DIR}"
+prepend_to_path "${DOTNET_ROOT}"
 if command_exists dotnet; then
   mkdir -p "${DOTNET_CLI_HOME}"
   if [ ! -L "${DOTNET_CLI_HOME}/tools" ]; then
@@ -281,6 +284,7 @@ source_if_exists "${DNVM_HOME}/env"
 export NUGET_HTTP_CACHE_PATH="${XDG_CACHE_HOME}/nuget/cache"
 export NUGET_PACKAGES="${XDG_CACHE_HOME}/nuget/packages"
 export NUGET_PLUGINS_CACHE_PATH="${XDG_CACHE_HOME}/nuget/plugins"
+export NUGET_SCRATCH="${XDG_CACHE_HOME}/nuget/scratch"
 ## DOTNET TOOLS ================================================================
 ### MONO =======================================================================
 # export MONO_REGISTRY_PATH="${XDG_CACHE_HOME}/mono/registry"
