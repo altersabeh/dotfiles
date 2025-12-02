@@ -604,7 +604,7 @@ add_to_sbt_opts "-Dsbt.ivy.home=${XDG_CACHE_HOME}/ivy2"
 add_to_sbt_opts "-Dsbt.boot.directory=${XDG_CACHE_HOME}/sbt/boot"
 ## OTHER JVM TOOLS =============================================================
 ### BLOOP ======================================================================
-export SCALA_CLI_EXTRA_TIMEOUT="60.seconds"
+export SCALA_CLI_EXTRA_TIMEOUT="600.seconds"
 ### GITER8 =====================================================================
 del_if_exists "${HOME}/.g8"
 ### JBANG ======================================================================
