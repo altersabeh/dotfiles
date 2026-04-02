@@ -347,6 +347,7 @@ export HEX_HOME="${XDG_CACHE_HOME}/hex"
 ## GO VERSION MANAGERS =========================================================
 ### GOENV ======================================================================
 export GOENV_GOPATH_PREFIX="${GOPATH}"
+export GOENV_PATH_ORDER=front
 export GOENV_PREPEND_GOPATH=1
 export GOENV_ROOT="${XDG_DATA_HOME}/goenv"
 prepend_to_path "${GOENV_ROOT}/bin"
