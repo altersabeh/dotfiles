@@ -17,7 +17,7 @@ export RUBY_CONFIGURE_OPTS="
   --disable-install-capi
   --enable-install-static-library
   --enable-yjit
-  --enable-rjit
+  --enable-zjit
   --enable-dln
   --enable-debug-env
   --enable-mkmf-verbose
