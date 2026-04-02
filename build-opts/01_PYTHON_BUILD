@@ -29,7 +29,7 @@ export PYTHON_CONFIGURE_OPTS="
   --with-readline=readline
   --with-computed-gotos
   --with-tail-call-interp
-  --with-remote-debug 
+  --with-remote-debug
   --with-ensurepip=upgrade
   --with-ssl-default-suites=python
   --with-builtin-hashlib-hashes=md5,sha1,sha2,sha3,blake2
