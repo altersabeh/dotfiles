@@ -1331,6 +1331,14 @@ if command_exists rg; then
     ln -s "${CUSTOM_RIPGREP_CONFIG}" "${RIPGREP_CONFIG_PATH}"
   fi
 fi
+# RPMBUILD =====================================================================
+if command_exists rpm; then
+  if [ ! -d "${XDG_CONFIG_HOME}/rpm" ]; then
+    CUSTOM_RPM_MACROS="${CUSTOM_CONFIG_DIR}/rpm/macros"
+    mkdir -p "${XDG_CONFIG_HOME}/rpm"
+    ln -s "${CUSTOM_RPM_MACROS}" "${XDG_CONFIG_HOME}/rpm/macros"
+  fi
+fi
 # SDCV =========================================================================
 export SDCV_HISTFILE="${XDG_STATE_HOME}/sdcv/history"
 export STARDICT_DATA_DIR="${XDG_DATA_HOME}/stardict"
