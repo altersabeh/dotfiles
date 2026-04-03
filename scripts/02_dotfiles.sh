@@ -41,6 +41,7 @@ CUSTOM_PROFILE_CONFIG="${CUSTOM_CONFIG_DIR}/shell/profile"
 if [ "${ORIG_PROFILE_CONFIG}" != "${CUSTOM_PROFILE_CONFIG}" ]; then
   [ -f "${ORIG_PROFILE_CONFIG}" ] && rm "${ORIG_PROFILE_CONFIG}" # remove the existing .profile
   ln -s "${CUSTOM_PROFILE_CONFIG}" "${ORIG_PROFILE_CONFIG}"
+  chmod a-w "${ORIG_PROFILE_CONFIG}" # make the .profile read-only to prevent accidental modifications
 fi
 
 # SHELL DEVEL ==================================================================
