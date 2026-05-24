@@ -509,6 +509,9 @@ export TS_NODE_HISTORY="${XDG_STATE_HOME}/ts-node/history"
 if command_exists ts-node; then
   mkdir -p "${XDG_STATE_HOME}/ts-node"
 fi
+### VITE PLUS ==================================================================
+export VP_HOME="${XDG_DATA_HOME}/vite-plus"
+source_if_exists "${VP_HOME}/env"
 # END JS AND TS DEVEL ==========================================================
 
 # JULIA DEVEL ==================================================================
