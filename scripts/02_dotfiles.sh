@@ -585,6 +585,8 @@ export AMPER_CACHE_ROOT="${XDG_CACHE_HOME}/amper"
 ### ANT ========================================================================
 ### GRADLE =====================================================================
 export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"
+### KOTLIN TOOLCHAIN ===========================================================
+export KOTLIN_CLI_BOOTSTRAP_CACHE_DIR="${XDG_CACHE_HOME}/kotlin-cli"
 ### MAVEN ======================================================================
 export MAVEN_CONFIG="${XDG_CONFIG_HOME}/maven/settings.xml" # custom environment variable
 export MAVEN_REPOSITORY="${XDG_CACHE_HOME}/maven/repository" # custom environment variable
