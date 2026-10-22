@@ -1295,6 +1295,8 @@ fi
 # CHEAT.SH =====================================================================
 export CHTSH="${XDG_DATA_HOME}/cht.sh"
 export CHTSH_CONFIG="${XDG_CONFIG_HOME}/cht.sh/config"
+# COPILOT ======================================================================
+export COPILOT_HOME="${XDG_DATA_HOME}/copilot"
 # DIRENV =======================================================================
 eval_if_exists direnv "hook bash"
 # DOCKER =======================================================================
