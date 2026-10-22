@@ -248,8 +248,10 @@ export DUB_HOME="${XDG_DATA_HOME}/dub"
 export DVM_ROOT="${XDG_DATA_HOME}/dvm"
 source_if_exists "${XDG_DATA_HOME}/dvm/scripts/dvm"
 ### FVM ========================================================================
-export FVM_HOME="${XDG_DATA_HOME}/fvm"
-prepend_to_path "$FVM_HOME/default/bin"
+export FVM_INSTALL_DIR="${XDG_DATA_HOME}/fvm"
+export FVM_CACHE_PATH="${XDG_DATA_HOME}/fvm"
+prepend_to_path "${FVM_INSTALL_DIR}/bin"
+prepend_to_path "${FVM_CACHE_PATH}/default/bin"
 ## DART PACKAGE MANAGERS =======================================================
 ### PUB ========================================================================
 export PUB_CACHE="${XDG_DATA_HOME}/pub"
