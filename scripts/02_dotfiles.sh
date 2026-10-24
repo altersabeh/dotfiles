@@ -680,6 +680,7 @@ if command_exists luaenv; then
 fi
 ## LUA PACKAGE MANAGERS ========================================================
 ### LUAROCKS ===================================================================
+export LUAROCKS_LUA_DIR=$(dirname "$(dirname "$(which lua)")")
 export LUAROCKS_CONFIG="${XDG_CONFIG_HOME}/luarocks/config.lua"
 export LUAROCKS_TREE="${XDG_DATA_HOME}/luarocks"
 if command_exists luarocks; then
