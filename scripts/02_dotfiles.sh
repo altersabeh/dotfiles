@@ -102,6 +102,8 @@ if command_exists asdf; then
   fi
 fi
 ### MISE =======================================================================
+export MISE_CACHE_DIR="${XDG_CACHE_HOME}/mise"
+export MISE_CONFIG_DIR="${XDG_CONFIG_HOME}/mise"
 export MISE_DATA_DIR="${XDG_DATA_HOME}/mise"
 export MISE_INSTALL_PATH="${MISE_DATA_DIR}/bin/mise"
 prepend_to_path "${MISE_DATA_DIR}/bin"
@@ -1116,8 +1118,8 @@ eval_if_exists swiftenv "init -"
 export SWIFTLY_HOME_DIR="${XDG_DATA_HOME}/swiftly"
 export SWIFTLY_BIN_DIR="${SWIFTLY_HOME_DIR}/bin"
 export SWIFTLY_TOOLCHAINS_DIR="${SWIFTLY_HOME_DIR}/toolchains"
+# source_if_exists "${SWIFTLY_HOME_DIR}/env.sh"
 append_to_path "${SWIFTLY_BIN_DIR}"
-source_if_exists "${SWIFTLY_HOME_DIR}/env.sh"
 ## SWIFT PACKAGE MANAGERS ======================================================
 ### COCOAPODS ==================================================================
 export CP_HOME_DIR="${XDG_CACHE_HOME}/cocoapods"
