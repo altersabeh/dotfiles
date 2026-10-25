@@ -108,6 +108,11 @@ export MISE_DATA_DIR="${XDG_DATA_HOME}/mise"
 export MISE_INSTALL_PATH="${MISE_DATA_DIR}/bin/mise"
 prepend_to_path "${MISE_DATA_DIR}/bin"
 eval_if_exists mise "activate bash"
+if command_exists mise; then
+  CUSTOM_MISE_CONFIG_DIR="${CUSTOM_CONFIG_DIR}/mise"
+  mkdir -p "${MISE_CONFIG_DIR}"
+  rsync -a "${CUSTOM_MISE_CONFIG_DIR}/" "${MISE_CONFIG_DIR}/" 
+fi
 ### PIXI =======================================================================
 export PIXI_HOME="${XDG_DATA_HOME}/pixi"
 prepend_to_path "${PIXI_HOME}/bin"
