@@ -271,7 +271,8 @@ export DOTNET_BUNDLE_EXTRACT_BASE_DIR="${XDG_CACHE_HOME}/dotnet/bundle"
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}/dotnet"
 export DOTNET_INSTALL_DIR="${XDG_DATA_HOME}/dotnet"
 export DOTNET_ROLL_FORWARD="major"
-export DOTNET_ROOT="${DOTNET_INSTALL_DIR}"
+export DOTNET_OPENSSL_VERSION_OVERRIDE=4 # OpenSSL 4.0
+# export DOTNET_ROOT="${DOTNET_INSTALL_DIR}"
 prepend_to_path "${DOTNET_ROOT}"
 if command_exists dotnet; then
   mkdir -p "${DOTNET_CLI_HOME}"
