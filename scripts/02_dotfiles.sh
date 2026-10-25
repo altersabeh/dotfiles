@@ -517,7 +517,8 @@ fi
 export VP_DATA_DIR="${XDG_DATA_HOME}/vite-plus"
 export VP_BIN_DIR="${XDG_DATA_HOME}/vite-plus/bin"
 export VP_CACHE_DIR="${XDG_CACHE_HOME}/vite-plus"
-source_if_exists "${VP_DATA_DIR}/env"
+export VP_CONFIG_DIR="${XDG_CONFIG_HOME}/vite-plus"
+source_if_exists "${VP_CONFIG_DIR}/env"
 # END JS AND TS DEVEL ==========================================================
 
 # JULIA DEVEL ==================================================================
