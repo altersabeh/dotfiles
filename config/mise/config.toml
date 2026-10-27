@@ -1,0 +1,11 @@
+[tools]
+dotnet = "latest"
+elixir = "latest"
+erlang = "latest"
+go = "latest"
+lua = "latest"
+node = "latest"
+perl = "latest"
+php = "latest"
+python = "latest"
+ruby = "latest"
