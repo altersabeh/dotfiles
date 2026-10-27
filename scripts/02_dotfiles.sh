@@ -110,8 +110,9 @@ prepend_to_path "${MISE_DATA_DIR}/bin"
 eval_if_exists mise "activate bash"
 if command_exists mise; then
   CUSTOM_MISE_CONFIG_DIR="${CUSTOM_CONFIG_DIR}/mise"
-  mkdir -p "${MISE_CONFIG_DIR}"
-  rsync -a "${CUSTOM_MISE_CONFIG_DIR}/" "${MISE_CONFIG_DIR}/" 
+  if [ ! -L "${MISE_CONFIG_DIR}" ]; then
+    ln -s "${CUSTOM_MISE_CONFIG_DIR}" "${MISE_CONFIG_DIR}"
+  fi
 fi
 ### PIXI =======================================================================
 export PIXI_HOME="${XDG_DATA_HOME}/pixi"
@@ -793,6 +794,7 @@ if command_exists phpenv; then
 fi
 ## PHP PACKAGE MANAGERS ========================================================
 ### COMPOSER ===================================================================
+export COMPOSER_IPRESOLVE=4 # IPv4 only
 export COMPOSER_HOME="${XDG_DATA_HOME}/composer"
 export COMPOSER_CACHE_DIR="${XDG_CACHE_HOME}/composer"
 prepend_to_path "${COMPOSER_HOME}/bin"
