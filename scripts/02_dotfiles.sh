@@ -319,9 +319,13 @@ fi
 ### KERL =======================================================================
 export KERL_BASE_DIR="${XDG_DATA_HOME}/kerl"
 export KERL_CONFIG="${XDG_CONFIG_HOME}/kerl/kerlrc"
+export KERL_DOWNLOAD_DIR="${XDG_CACHE_HOME}/kerl/archives"
+export KERL_BUILD_DIR="${XDG_CACHE_HOME}/kerl/builds"
 export KERL_DEFAULT_INSTALL_DIR="${KERL_BASE_DIR}/versions"
-export KERL_DOC_TARGETS=man
+export KERL_GITS_DIR="${XDG_CACHE_HOME}/kerl/gits"
+export KERL_DOC_TARGETS="man chunks"
 export KERL_BUILD_DOCS=yes
+export KERL_BUILD_PLT=yes
 ## ERLANG PACKAGE MANAGERS =====================================================
 ### REBAR3 =====================================================================
 prepend_to_path "${XDG_CACHE_HOME}/rebar3/bin"
